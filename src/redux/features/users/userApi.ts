@@ -62,6 +62,24 @@ export const usersEndPoint = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+    // delete ac department
+    createTempUser: build.mutation({
+      query: (data) => ({
+        url: `${URL}/temp-user`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+    createUser: build.mutation({
+      query: (data) => {
+        return {
+          url: `${URL}`,
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
   }),
   overrideExisting: true,
 });
@@ -72,4 +90,6 @@ export const {
   useDeleteUsersMutation,
   useGetAllUsersQuery,
   useGetSingleUsersQuery,
+  //
+  useCreateTempUserMutation,
 } = usersEndPoint;

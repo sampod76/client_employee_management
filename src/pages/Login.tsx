@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import PHForm from "../components/form/PHForm";
 import PHInput from "../components/form/PHInput";
+import ForgetPassword from "./ForgetPassword";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,26 +47,37 @@ const Login = () => {
   };
 
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <div
+    <div className="flex h-screen justify-center items-center container mx-auto">
+      <Row
         style={{
-          padding: "0.5rem",
-          marginBottom: "1rem",
-          borderRadius: "0.25rem",
-          borderWidth: "1px",
-          borderColor: "black",
+          borderRadius: "30px",
+          background: "#e0e0e0",
+          boxShadow: "20px 20px 60px #bebebe, -20px -20px 60px #ffffff",
         }}
+        justify="center"
+        align="middle"
+        // style={{ height: "100vh" }}
+        className="w-fit h-fit p-16"
       >
-        <PHForm onSubmit={onSubmit}>
-          <PHInput type="email" name="email" label="Email" />
-          <PHInput type="text" name="password" label="Password" />
-          <Button htmlType="submit">Login</Button>
-          <Button style={{ marginLeft: "15px" }}>
-            <Link to={"/register"}>register</Link>
-          </Button>
-        </PHForm>
-      </div>
-    </Row>
+        <div>
+          <PHForm onSubmit={onSubmit}>
+            <h1 className="text-center text-lg font-bold py-2">Login</h1>
+            <hr />
+            <PHInput type="email" name="email" label="Email" />
+            <PHInput type="text" name="password" label="Password" />
+            <Button className="w-[50%]" htmlType="submit">
+              Login
+            </Button>
+            <Button className="w-[50%]">
+              <Link to={"/register"}>register</Link>
+            </Button>
+            <Link className="text-end mt-5" to={"/forget-password"}>
+              Forget password
+            </Link>
+          </PHForm>
+        </div>
+      </Row>
+    </div>
   );
 };
 

@@ -37,10 +37,10 @@ export type IGender = "male" | "female" | "other";
 export enum ENUM_USER_ROLE {
   admin = "admin",
   superAdmin = "superAdmin",
-  buyer = "buyer",
+  employee = "employee",
   seller = "seller",
 }
-export type I_USER_ROLE = "admin" | "superAdmin" | "buyer" | "seller";
+export type I_USER_ROLE = "admin" | "superAdmin" | "employee" | "seller";
 export type IUser = {
   _id: string;
   userUniqueId: string;

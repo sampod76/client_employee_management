@@ -20,6 +20,7 @@ const userRole = {
 
 const Sidebar = () => {
   const token = useAppSelector(useCurrentToken);
+  console.log("🚀 ~ Sidebar ~ token:", token);
   const currentUser = useAppSelector(selectCurrentUser);
 
   let user;
@@ -57,7 +58,7 @@ const Sidebar = () => {
           alignItems: "center",
         }}
       >
-        <h1>PH Uni</h1>
+        <h1 className="text-lg font-bold">EMS</h1>
       </div>
       <Menu
         theme="dark"

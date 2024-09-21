@@ -13,11 +13,14 @@ const MainLayout = () => {
   };
 
   return (
-    <Layout style={{ height: "100%" }}>
+    <Layout className="" style={{ height: "100%" }}>
       <Sidebar />
       <Layout>
         <Header>
-          <Button onClick={handleLogout}>Logout</Button>{" "}
+          <div className="flex justify-between  items-center h-full">
+            <div></div>
+            <Button onClick={handleLogout}>Logout</Button>
+          </div>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
           <div

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Link } from "react-router-dom";
 import App from "../App";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -8,10 +8,13 @@ import { routeGenerator } from "../utils/routesGenerator";
 import { employeePaths } from "./employee.routes";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import ChangePassword from "../pages/ChangePassword";
-import Dashboard from "../Dashborad";
 
 import RecordRTCApp from "../pages/screen-recorder/Screen-recorder";
 import FaceUnlock from "../pages/face-unlock/face-unlock";
+import { Button, Result } from "antd";
+import ForgotPassword from "../pages/ForgetPassword";
+import VerifyOtp from "../pages/VerifyOtp";
+import ResetPassword from "../pages/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +25,7 @@ const router = createBrowserRouter([
     path: "/admin",
     element: (
       <ProtectedRoute role="admin">
-        <Dashboard />
+        <App />
       </ProtectedRoute>
     ),
     children: routeGenerator(adminPaths),
@@ -31,7 +34,7 @@ const router = createBrowserRouter([
     path: "/employee",
     element: (
       <ProtectedRoute role="employee">
-        <Dashboard />
+        <App />
       </ProtectedRoute>
     ),
     children: routeGenerator(employeePaths),
@@ -59,8 +62,34 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
+    path: "/forget-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/verify-otp",
+    element: <VerifyOtp />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
+  },
+  {
     path: "*",
-    element: <h1 className="text-center text-5xl"> Not found</h1>,
+    element: (
+      <div className="text-center text-5xl">
+        {" "}
+        <Result
+          status="404"
+          title="404"
+          subTitle="Sorry, the page you visited does not exist."
+          extra={
+            <Button type="primary">
+              <Link to="/">Back Home</Link>
+            </Button>
+          }
+        />
+      </div>
+    ),
   },
 ]);
 

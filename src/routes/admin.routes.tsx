@@ -6,7 +6,6 @@ export const adminPaths = [
     path: "dashboard",
     element: <AdminDashboard />,
   },
-
   {
     name: "Employee Management",
     children: [
@@ -16,6 +15,10 @@ export const adminPaths = [
         element: <h1>Employee request</h1>,
       },
     ],
+  },
+  {
+    path: "dashboard2",
+    element: <AdminDashboard />,
   },
 ];
 

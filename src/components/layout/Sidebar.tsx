@@ -10,6 +10,7 @@ import {
   useCurrentToken,
 } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
+import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -58,9 +59,12 @@ const Sidebar = () => {
           alignItems: "center",
         }}
       >
-        <h1 className="text-lg font-bold text-center p-5">
+        <Link
+          to={`/${currentUser?.role}/dashboard`}
+          className="text-lg text-white font-bold text-center p-5"
+        >
           EMS <br /> ({currentUser?.role!})
-        </h1>
+        </Link>
       </div>
       <Menu
         theme="dark"

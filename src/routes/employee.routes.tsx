@@ -1,3 +1,4 @@
+import CheckInOut from "../pages/checkInOut/checkInOut";
 import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
 
 export const employeePaths = [
@@ -6,11 +7,11 @@ export const employeePaths = [
     path: "dashboard",
     element: <EmployeeDashboard />,
   },
-  // {
-  //   name: "Offered Course",
-  //   path: "offered-course",
-  //   element: <OfferedCourse />,
-  // },
+  {
+    name: "Check In/Out",
+    path: "check-in-out",
+    element: <CheckInOut />,
+  },
   // {
   //   name: "My Schedule",
   //   path: "schedule",

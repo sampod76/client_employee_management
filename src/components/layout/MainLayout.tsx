@@ -1,12 +1,13 @@
 import { Button, Layout } from "antd";
 import Sidebar from "./Sidebar";
-import { useAppDispatch } from "../../redux/hooks";
-import { logout } from "../../redux/features/auth/authSlice";
-import { Outlet } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { logout, selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { Link, Outlet } from "react-router-dom";
 import UserAvatarUI from "../ui/NavUI/UserAvatarUI";
 const { Header, Content } = Layout;
 
 const MainLayout = () => {
+  const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
@@ -19,7 +20,14 @@ const MainLayout = () => {
       <Layout>
         <Header>
           <div className="flex justify-between  items-center h-full">
-            <div></div>
+            <div>
+              <Link
+                to={`/${user?.role}/dashboard`}
+                className="text-lg text-white"
+              >
+                <p>Home</p>
+              </Link>
+            </div>
             <div>
               <UserAvatarUI />
             </div>

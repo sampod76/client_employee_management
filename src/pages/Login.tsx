@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import PHForm from "../components/form/PHForm";
 import PHInput from "../components/form/PHInput";
 import ForgetPassword from "./ForgetPassword";
+import { ErrorModal } from "../utils/modalHook";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ const Login = () => {
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
-    const toastId = toast.loading("Logging in");
 
     try {
       const res = await login(data).unwrap();
@@ -32,17 +32,11 @@ const Login = () => {
           token: res.data.accessToken,
         })
       );
-      toast.success("Logged in", { id: toastId, duration: 2000 });
 
-      if (res.data.needsPasswordChange) {
-        navigate(`/change-password`);
-      } else {
-        // navigate(`/${user.role}/dashboard`);
-        navigate(`/`);
-      }
+      navigate(`/${user.role}/dashboard`);
     } catch (err) {
       console.log("🚀 ~ onSubmit ~ err:", err);
-      toast.error("Something went wrong", { id: toastId, duration: 2000 });
+      ErrorModal(err);
     }
   };
 

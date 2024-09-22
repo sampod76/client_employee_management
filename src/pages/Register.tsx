@@ -170,7 +170,7 @@ const Register = () => {
             name="password"
             label="Password"
           />
-          <Button htmlType="submit" className="w-full">
+          <Button htmlType="submit" loading={tempLoading} className="w-full">
             Register
           </Button>
           {haveOtp && (
@@ -189,6 +189,7 @@ const Register = () => {
                 onClick={() => submitFrom()}
                 style={{ width: 200 }}
                 className=""
+                loading={isLoading}
               >
                 Submit
               </Button>

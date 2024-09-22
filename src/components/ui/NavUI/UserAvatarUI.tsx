@@ -22,7 +22,7 @@ const UserAvatarUI = () => {
     },
     {
       key: "2",
-      label: <Link to={"/dashboard"}>Dashboard</Link>,
+      label: <Link to={`/${user?.role}/dashboard`}>Dashboard</Link>,
     },
 
     {

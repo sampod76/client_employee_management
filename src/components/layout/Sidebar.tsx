@@ -58,7 +58,9 @@ const Sidebar = () => {
           alignItems: "center",
         }}
       >
-        <h1 className="text-lg font-bold">EMS</h1>
+        <h1 className="text-lg font-bold text-center p-5">
+          EMS <br /> ({currentUser?.role!})
+        </h1>
       </div>
       <Menu
         theme="dark"

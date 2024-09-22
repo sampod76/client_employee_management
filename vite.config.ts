@@ -5,10 +5,10 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3001, // Set the dev server port to 3001
+    port: 3000, // Set the dev server port to 3000
   },
   preview: {
-    port: 3001,
+    port: 3000,
   },
   optimizeDeps: {
     include: ["@tensorflow-models/face-landmarks-detection", "react-webcam"],

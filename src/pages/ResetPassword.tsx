@@ -118,7 +118,7 @@ export default function ResetPassword() {
 
         <Form.Item>
           <Button
-            loading={isLoading}
+            loading={isLoading || loginLoading}
             type="primary"
             htmlType="submit"
             className="login-form-button w-full"

@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { Outlet } from "react-router-dom";
+import UserAvatarUI from "../ui/NavUI/UserAvatarUI";
 const { Header, Content } = Layout;
 
 const MainLayout = () => {
@@ -19,7 +20,9 @@ const MainLayout = () => {
         <Header>
           <div className="flex justify-between  items-center h-full">
             <div></div>
-            <Button onClick={handleLogout}>Logout</Button>
+            <div>
+              <UserAvatarUI />
+            </div>
           </div>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>

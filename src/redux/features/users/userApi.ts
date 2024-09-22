@@ -5,9 +5,19 @@ import { tagTypes } from "../../tag-types";
 const URL = "/users";
 
 export const usersEndPoint = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (builder) => ({
+    tempSignUp: builder.mutation({
+      query: (data) => ({
+        url: "/users/temp-user",
+        method: "POST",
+        body: data,
+      }),
+
+      invalidatesTags: [tagTypes.auth],
+    }),
+
     // get all academic departments
-    getAllUsers: build.query({
+    getAllUsers: builder.query({
       query: (arg: Record<string, any>) => {
         return {
           url: URL,
@@ -26,7 +36,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
     }),
 
     // get single academic department
-    getSingleUsers: build.query({
+    getSingleUsers: builder.query({
       query: (id: string | string[] | undefined) => ({
         url: `${URL}/${id}`,
         method: "GET",
@@ -35,7 +45,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
       providesTags: [tagTypes.user],
     }),
     // create a new academic department
-    addUsers: build.mutation({
+    addUsers: builder.mutation({
       query: (data) => ({
         url: URL,
         method: "POST",
@@ -44,7 +54,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.user],
     }),
     // update ac department
-    updateUsers: build.mutation({
+    updateUsers: builder.mutation({
       query: ({ data, id }) => ({
         url: `${URL}/${id}`,
         method: "PATCH",
@@ -55,7 +65,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
     }),
 
     // delete ac department
-    deleteUsers: build.mutation({
+    deleteUsers: builder.mutation({
       query: (id) => ({
         url: `${URL}/${id}`,
         method: "DELETE",
@@ -63,7 +73,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.user],
     }),
     // delete ac department
-    createTempUser: build.mutation({
+    createTempUser: builder.mutation({
       query: (data) => ({
         url: `${URL}/temp-user`,
         method: "POST",
@@ -71,7 +81,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
-    createUser: build.mutation({
+    createUser: builder.mutation({
       query: (data) => {
         return {
           url: `${URL}`,

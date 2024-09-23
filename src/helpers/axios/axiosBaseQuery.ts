@@ -27,8 +27,6 @@ export const axiosBaseQuery =
     contentType,
     withCredentials = true,
   }) => {
-    console.log(data, "data");
-    console.log(contentType, "contentType");
     try {
       const result = (await axiosInstance({
         url: baseUrl + url,

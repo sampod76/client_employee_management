@@ -5,6 +5,14 @@ export enum tagTypes {
   profile = "profile",
   category = "category",
   auth = "auth",
+  CheckInOut = "CheckInOut",
+  Employee = "Employee",
+  Projects = "Projects",
+  TaskManagement = "TaskManagement",
+  Leaves = "Leaves",
+  LoginHistory = "LoginHistory",
+  Friendship = "Friendship",
+  ChatMessages = "ChatMessages",
 }
 
 export const tagTypesList = [
@@ -13,5 +21,12 @@ export const tagTypesList = [
   tagTypes.user,
   tagTypes.category,
   tagTypes.profile,
+  tagTypes.Projects,
+  tagTypes.Employee,
+  tagTypes.TaskManagement,
+  tagTypes.Leaves,
+  tagTypes.LoginHistory,
   tagTypes.auth,
+  tagTypes.Friendship,
+  tagTypes.ChatMessages,
 ];

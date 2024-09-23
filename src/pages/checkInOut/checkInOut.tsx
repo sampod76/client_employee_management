@@ -12,66 +12,44 @@ import LocalIPComponent from "../../components/CheckInOut/IpGet";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { SuccessModal } from "../../utils/modalHook";
+import { useAddCheckInMutation } from "../../redux/features/employee/checkInOutApi";
 
 export default function CheckInOut() {
   const user = useAppSelector(selectCurrentUser);
   const ref = useRef(null);
   const [image, setImage] = useState(null);
   const [screenshot, takeScreenshot] = useScreenshot();
-const []=use
+  const [addCheckin, { isLoading }] = useAddCheckInMutation();
   const getImage = async (submitType: string) => {
     try {
       // Capture the screenshot
       const img = await takeScreenshot(ref.current);
-      // Extract file type from base64 data
-      const fileType = img.split(";")[0].split(":")[1]; // e.g., "image/png"
-      const base64Data = img.split(",")[1]; // Base64-encoded image data
 
-      // Convert base64 image to a Blob
-      const blob = new Blob([Buffer.from(base64Data, "base64")], {
-        type: fileType,
-      });
+      // Convert Base64 image to a Blob using fetch
+      const response = await fetch(img);
+      const blob = await response.blob();
 
-      // const getFilesToken = await axiosInstance({
-      //   url: `${getBaseUrl}/aws/create-aws-upload-files-token`,
-      //   method: "POST",
-      //   data: {
-      //     images: [
-      //       {
-      //         mimetype: fileType,
-      //         filename:
-      //           `Screenshot_${crypto.randomUUID()}.` + fileType.split("/")[1],
-      //         uid: crypto.randomUUID(),
-      //       },
-      //     ],
-      //   },
-      //   withCredentials: true,
-      // });
+      // Prepare form data
+      const formData = new FormData();
+      formData.append("provide", blob, crypto.randomUUID() + "screenshot.png"); // Adjust filename as needed
 
-      // const serverResponseObjects = getFilesToken?.data?.images[0];
-      // console.log(
-      //   "🚀 ~ getImage ~ serverResponseObjects:",
-      //   serverResponseObjects
-      // );
-
-      // const response = await axiosInstance({
-      //   url: serverResponseObjects.pre_url,
-      //   method: "PUT",
-      //   data: blob,
-      //   withCredentials: true,
-      // });
-
-
-
-      message.success("Successfully " + submitType);
+      // Upload the image
+      const res = await addCheckin(formData).unwrap();
+      console.log("🚀 ~ getImage ~ res:", res);
+      message.success(`Successfully ${submitType}`);
     } catch (error) {
       console.error("Error uploading image:", error);
+      message.error(`Failed to ${submitType}`);
     }
   };
 
   return (
     <div ref={ref}>
       <div className="flex justify-center items-center gap-4 border-8 p-5 rounded-lg">
+        <div className="text-lg mx-5 font-bold">
+          <h1>Name:{user?.name?.firstName + " " + user?.name?.lastName}</h1>
+          <h1>Email:{user?.email}</h1>
+        </div>
         <WebcamCapture setImage={setImage} />
         <div className="flex flex-col justify-center items-center gap-4">
           <ClockComponents />
@@ -85,6 +63,7 @@ const []=use
       <div className="flex justify-center items-center  my-4 gap-4">
         <Button
           type="primary"
+          loading={isLoading}
           className="w-40 h-full"
           style={{ marginBottom: "10px" }}
           onClick={() => getImage("check-in")}
@@ -114,3 +93,36 @@ const []=use
   );
   //   return <></>;
 }
+
+/* 
+
+   // const getFilesToken = await axiosInstance({
+      //   url: `${getBaseUrl}/aws/create-aws-upload-files-token`,
+      //   method: "POST",
+      //   data: {
+      //     images: [
+      //       {
+      //         mimetype: fileType,
+      //         filename:
+      //           `Screenshot_${crypto.randomUUID()}.` + fileType.split("/")[1],
+      //         uid: crypto.randomUUID(),
+      //       },
+      //     ],
+      //   },
+      //   withCredentials: true,
+      // });
+
+      // const serverResponseObjects = getFilesToken?.data?.images[0];
+      // console.log(
+      //   "🚀 ~ getImage ~ serverResponseObjects:",
+      //   serverResponseObjects
+      // );
+
+      // const response = await axiosInstance({
+      //   url: serverResponseObjects.pre_url,
+      //   method: "PUT",
+      //   data: blob,
+      //   withCredentials: true,
+      // });
+
+*/

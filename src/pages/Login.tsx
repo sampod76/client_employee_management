@@ -12,6 +12,7 @@ import PHInput from "../components/form/PHInput";
 import ForgetPassword from "./ForgetPassword";
 import { ErrorModal } from "../utils/modalHook";
 import { useLoginMutation } from "../redux/features/auth/authApi";
+import { setToLocalStorage } from "../utils/local-storage";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Login = () => {
           token: res.accessToken,
         })
       );
-
+      setToLocalStorage("accessToken", res.accessToken);
       navigate(`/${user.role}/dashboard`);
     } catch (err) {
       console.log("🚀 ~ onSubmit ~ err:", err);

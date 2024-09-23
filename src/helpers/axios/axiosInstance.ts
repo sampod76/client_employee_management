@@ -4,8 +4,10 @@ import {
   getFromLocalStorage,
   setToLocalStorage,
 } from "../../utils/local-storage";
+import { useAppSelector } from "../../redux/hooks";
+import { useCurrentToken } from "../../redux/features/auth/authSlice";
 // import { message } from 'antd';
-
+// const token = useAppSelector(useCurrentToken);
 const instance = axios.create();
 instance.defaults.headers.post["Content-Type"] = "application/json";
 instance.defaults.headers["Accept"] = "application/json";
@@ -15,7 +17,8 @@ instance.defaults.timeout = 60000;
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    const accessToken = getFromLocalStorage("token");
+    const accessToken = getFromLocalStorage("accessToken");
+
     if (accessToken) {
       config.headers.Authorization = accessToken;
     }
@@ -58,7 +61,8 @@ instance.interceptors.response.use(
         const accessToken = response?.data?.data?.accessToken;
         // axios.defaults.headers.common['Authorization'] = accessToken;
         config.headers["Authorization"] = accessToken;
-        setToLocalStorage("token", accessToken);
+        setToLocalStorage("accessToken", accessToken);
+        // console.log(JSON.parse(localStorage.getItem("persist:auth")));
         return instance(config);
       } catch (error: any) {
         // removeUserInfo(authKey);

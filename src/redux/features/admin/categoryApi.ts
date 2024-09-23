@@ -39,7 +39,7 @@ export const categoryApi = baseApi.injectEndpoints({
         return {
           url: CATEGORY_URL,
           method: "POST",
-          body: data,
+          data: data,
         };
       },
       invalidatesTags: [tagTypes.category],
@@ -50,7 +50,7 @@ export const categoryApi = baseApi.injectEndpoints({
         return {
           url: `${CATEGORY_URL}/${id}`,
           method: "PATCH",
-          body: data,
+          data: data,
         };
       },
       invalidatesTags: [tagTypes.category],

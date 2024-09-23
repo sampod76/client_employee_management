@@ -28,7 +28,10 @@ const MainLayout = () => {
                 <p>Home</p>
               </Link>
             </div>
-            <div>
+            <div className="flex  justify-center items-center gap-4">
+              <Button type="primary">
+                <Link to={`/${user?.role}/check-in-out`}>Check in/out</Link>
+              </Button>
               <UserAvatarUI />
             </div>
           </div>

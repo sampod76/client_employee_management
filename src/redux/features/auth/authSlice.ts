@@ -26,13 +26,16 @@ export type TuserData = {
     firstName: string;
     lastName: string;
   };
-  role: string;
+
   email: string;
   contactNumber: string;
   gender: string;
   dateOfBirth?: string;
   address?: string;
   profileImage?: IFileAfterUpload;
+  userId: string;
+  roleBaseUserId: string;
+  role: string;
 };
 
 type TAuthState = {

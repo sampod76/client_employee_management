@@ -11,15 +11,26 @@ import ClockComponents from "../../components/CheckInOut/clock";
 import LocalIPComponent from "../../components/CheckInOut/IpGet";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
-import { SuccessModal } from "../../utils/modalHook";
-import { useAddCheckInMutation } from "../../redux/features/employee/checkInOutApi";
+import { ErrorModal, SuccessModal } from "../../utils/modalHook";
+import {
+  useAddCheckInMutation,
+  useAddCheckOutMutation,
+  useGetAllCheckInOutQuery,
+} from "../../redux/features/employee/checkInOutApi";
 
 export default function CheckInOut() {
   const user = useAppSelector(selectCurrentUser);
+  const { data, isLoading: getDateloading } = useGetAllCheckInOutQuery(
+    { employeeUserId: user?.userId, toDay: "yes" },
+    { skip: !Boolean(user?.userId) }
+  );
+  const getData = data?.data || [];
   const ref = useRef(null);
   const [image, setImage] = useState(null);
   const [screenshot, takeScreenshot] = useScreenshot();
   const [addCheckin, { isLoading }] = useAddCheckInMutation();
+  const [addCheckOut, { isLoading: checkoutLoading }] =
+    useAddCheckOutMutation();
   const getImage = async (submitType: string) => {
     try {
       // Capture the screenshot
@@ -34,12 +45,15 @@ export default function CheckInOut() {
       formData.append("provide", blob, crypto.randomUUID() + "screenshot.png"); // Adjust filename as needed
 
       // Upload the image
-      const res = await addCheckin(formData).unwrap();
-      console.log("🚀 ~ getImage ~ res:", res);
+      if (submitType === "check-in") {
+        await addCheckin(formData).unwrap();
+      } else {
+        await addCheckOut(formData).unwrap();
+      }
+
       message.success(`Successfully ${submitType}`);
     } catch (error) {
-      console.error("Error uploading image:", error);
-      message.error(`Failed to ${submitType}`);
+      ErrorModal(error);
     }
   };
 
@@ -64,6 +78,7 @@ export default function CheckInOut() {
         <Button
           type="primary"
           loading={isLoading}
+          disabled={getData[0]?.checkInTime && true}
           className="w-40 h-full"
           style={{ marginBottom: "10px" }}
           onClick={() => getImage("check-in")}
@@ -72,6 +87,8 @@ export default function CheckInOut() {
         </Button>
         <Button
           type="default"
+          disabled={getData[0]?.checkOutTime && true}
+          loading={checkoutLoading}
           className="w-40 h-full bg-indigo-700"
           style={{ marginBottom: "10px" }}
           onClick={() => getImage("check-out")}
@@ -80,7 +97,7 @@ export default function CheckInOut() {
         </Button>
       </div>
       {/* Conditionally render the Image component only if 'image' is available */}
-      {screenshot && (
+      {/* {screenshot && (
         <CustomImageTag
           width={750}
           height={500}
@@ -88,7 +105,30 @@ export default function CheckInOut() {
           alt={"Screenshot"}
           className="w-[500px] h-52 rounded-2xl border p-2 ring-2"
         />
-      )}
+      )} */}
+      <div className="flex justify-start items-center gap-5 flex-wrap">
+        {getData.length &&
+          getData[0].provide.map((image: any, i: number) => (
+            <div key={i} className="text-lg">
+              {i == 0 ? (
+                <p className="border p-2 my-1 w-fit rounded-lg text-center">
+                  Check in
+                </p>
+              ) : (
+                <p className="border p-2 my-1 w-fit rounded-lg text-center">
+                  check out
+                </p>
+              )}
+              <CustomImageTag
+                width={750}
+                height={500}
+                src={image}
+                alt={"Screenshot"}
+                className="w-[500px] h-52 rounded-2xl border p-2 ring-2"
+              />
+            </div>
+          ))}
+      </div>
     </div>
   );
   //   return <></>;

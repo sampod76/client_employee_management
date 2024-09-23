@@ -25,7 +25,7 @@ export default function ClockComponents() {
           Digital Clock
         </h1>
         <div className="flex items-center justify-center">
-          <div className="rounded-lg border-8 border-green-400 p-4">
+          <div className="rounded-lg border-8 border-green-400 p-8">
             <span className="text-6xl text-green-400">
               {bangladeshTime.toLocaleTimeString()}
             </span>

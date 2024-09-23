@@ -39,7 +39,7 @@ export const chatmessagesApi = baseApi.injectEndpoints({
         return {
           url: URL,
           method: "POST",
-          body: data,
+          data: data,
         };
       },
       invalidatesTags: [tagTypes.ChatMessages],
@@ -50,7 +50,7 @@ export const chatmessagesApi = baseApi.injectEndpoints({
         return {
           url: `${URL}/${id}`,
           method: "PATCH",
-          body: data,
+          data: data,
         };
       },
       invalidatesTags: [tagTypes.ChatMessages],

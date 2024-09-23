@@ -17,7 +17,7 @@ instance.defaults.timeout = 60000;
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    const accessToken = getFromLocalStorage("accessToken");
+    const accessToken = getFromLocalStorage("token");
 
     if (accessToken) {
       config.headers.Authorization = accessToken;
@@ -48,7 +48,7 @@ instance.interceptors.response.use(
   async function (error) {
     const config = error?.config;
 
-    if (error?.response?.status === 403 && !config?._retry) {
+    if (error?.response?.status === 401 && !config?._retry) {
       config._retry = true;
       try {
         // const response = await getRefreshToken();
@@ -61,7 +61,7 @@ instance.interceptors.response.use(
         const accessToken = response?.data?.data?.accessToken;
         // axios.defaults.headers.common['Authorization'] = accessToken;
         config.headers["Authorization"] = accessToken;
-        setToLocalStorage("accessToken", accessToken);
+        setToLocalStorage("token", accessToken);
         // console.log(JSON.parse(localStorage.getItem("persist:auth")));
         return instance(config);
       } catch (error: any) {

@@ -40,7 +40,7 @@ export const checkInOutApi = baseApi.injectEndpoints({
         return {
           url: URL + "/check-in",
           method: "POST",
-          body: data,
+          data: data,
           contentType: "multipart/form-data",
         };
       },
@@ -51,7 +51,8 @@ export const checkInOutApi = baseApi.injectEndpoints({
         return {
           url: URL + "/check-out",
           method: "POST",
-          body: data,
+          data: data,
+          contentType: "multipart/form-data",
         };
       },
       invalidatesTags: [tagTypes.CheckInOut],
@@ -62,7 +63,7 @@ export const checkInOutApi = baseApi.injectEndpoints({
         return {
           url: `${URL}/${id}`,
           method: "PATCH",
-          body: data,
+          data: data,
         };
       },
       invalidatesTags: [tagTypes.CheckInOut],

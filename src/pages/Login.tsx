@@ -35,7 +35,7 @@ const Login = () => {
           token: res.accessToken,
         })
       );
-      setToLocalStorage("accessToken", res.accessToken);
+      setToLocalStorage("token", res.accessToken);
       navigate(`/${user.role}/dashboard`);
     } catch (err) {
       console.log("🚀 ~ onSubmit ~ err:", err);

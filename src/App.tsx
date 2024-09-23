@@ -14,7 +14,7 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   const token = useAppSelector(useCurrentToken);
-  console.log("🚀 ~ ProtectedRoute ~ token:", token);
+  // console.log("🚀 ~ ProtectedRoute ~ token:", token);
   if (!token) {
     return <Navigate to="/login" replace={true} />;
   }

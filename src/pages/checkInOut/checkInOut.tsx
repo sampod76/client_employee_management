@@ -101,7 +101,7 @@ export default function CheckInOut() {
         <CustomImageTag
           width={750}
           height={500}
-          src={screenshot}
+          // src={screenshot}
           alt={"Screenshot"}
           className="w-[500px] h-52 rounded-2xl border p-2 ring-2"
         />

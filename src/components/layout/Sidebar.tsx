@@ -21,7 +21,7 @@ const userRole = {
 
 const Sidebar = () => {
   const token = useAppSelector(useCurrentToken);
-  console.log("🚀 ~ Sidebar ~ token:", token);
+  // console.log("🚀 ~ Sidebar ~ token:", token);
   const currentUser = useAppSelector(selectCurrentUser);
 
   let user;

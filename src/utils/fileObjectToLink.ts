@@ -19,7 +19,7 @@ export default function fileObjectToLink(src: any) {
     // console.log("🚀 ~ sadfsadf", src);
     imageSrc = src.cdn + "/" + src.path;
   } else if (typeof src === "object" && src.url) {
-    console.log("🚀 ~ fffasdfnk ~ src:", src);
+    // console.log("🚀 ~ fffasdfnk ~ src:", src);
     imageSrc = src.url;
   } else if (src?.server_url) {
     imageSrc = backendBaseUrl + "/" + src.server_url;

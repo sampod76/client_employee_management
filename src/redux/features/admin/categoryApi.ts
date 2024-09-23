@@ -1,3 +1,4 @@
+import { IMeta } from "../../../types/common";
 import { baseApi } from "../../api/baseApi";
 import { tagTypes } from "../../tag-types";
 
@@ -13,7 +14,12 @@ export const categoryApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
       providesTags: [tagTypes.category],
     }),
 
@@ -24,6 +30,7 @@ export const categoryApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      transformResponse: (response: any) => ({ data: response }),
       providesTags: [tagTypes.category],
     }),
 

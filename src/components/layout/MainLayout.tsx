@@ -15,7 +15,7 @@ const MainLayout = () => {
   };
 
   return (
-    <Layout className="" style={{ height: "100%" }}>
+    <Layout className="max-w-[1990px] mx-auto" style={{ height: "100%" }}>
       <Sidebar />
       <Layout>
         <Header>

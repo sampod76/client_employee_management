@@ -1,4 +1,5 @@
 import { TResponseRedux } from "../../../types";
+import { IMeta } from "../../../types/common";
 import { baseApi } from "../../api/baseApi";
 import { tagTypes } from "../../tag-types";
 
@@ -10,7 +11,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/users/temp-user",
         method: "POST",
-        body: data,
+        data: data,
       }),
 
       invalidatesTags: [tagTypes.auth],
@@ -25,11 +26,10 @@ export const usersEndPoint = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: TResponseRedux<any>) => {
-        // console.log(response);
+      transformResponse: (response: any, meta: IMeta) => {
         return {
-          data: response.data,
-          meta: response.meta,
+          data: response,
+          meta,
         };
       },
       providesTags: [tagTypes.user],
@@ -49,7 +49,13 @@ export const usersEndPoint = baseApi.injectEndpoints({
       query: (data) => ({
         url: URL,
         method: "POST",
-        body: data,
+        data: data,
+        contentType: "multipart/form-data",
+
+        // headers: {
+        //   "Content-Type": "multipart/form-data;",
+        // },
+        // formData: true,
       }),
       invalidatesTags: [tagTypes.user],
     }),
@@ -58,7 +64,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
       query: ({ data, id }) => ({
         url: `${URL}/${id}`,
         method: "PATCH",
-        body: data,
+        data: data,
         // contentType: "multipart/form-data",
       }),
       invalidatesTags: [tagTypes.user],
@@ -77,7 +83,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
       query: (data) => ({
         url: `${URL}/temp-user`,
         method: "POST",
-        body: data,
+        data: data,
       }),
       invalidatesTags: [tagTypes.user],
     }),
@@ -86,7 +92,7 @@ export const usersEndPoint = baseApi.injectEndpoints({
         return {
           url: `${URL}`,
           method: "POST",
-          body: data,
+          data: data,
         };
       },
     }),

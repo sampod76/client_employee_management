@@ -15,6 +15,7 @@ import { Button, Result } from "antd";
 import ForgotPassword from "../pages/ForgetPassword";
 import VerifyOtp from "../pages/VerifyOtp";
 import ResetPassword from "../pages/ResetPassword";
+import Dashboard from "../Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
     path: "/admin",
     element: (
       <ProtectedRoute role="admin">
-        <App />
+        <Dashboard />
       </ProtectedRoute>
     ),
     children: routeGenerator(adminPaths),
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
     path: "/employee",
     element: (
       <ProtectedRoute role="employee">
-        <App />
+        <Dashboard />
       </ProtectedRoute>
     ),
     children: routeGenerator(employeePaths),

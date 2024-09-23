@@ -11,25 +11,28 @@ const authApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.profile],
     }),
     login: builder.mutation({
-      query: (userInfo) => ({
-        url: "/auth/login",
-        method: "POST",
-        body: userInfo,
-      }),
+      query: (userInfo) => {
+        console.log("🚀 ~ userInfo:", userInfo);
+        return {
+          url: "/auth/login",
+          method: "POST",
+          data: userInfo,
+        };
+      },
       invalidatesTags: [tagTypes.profile],
     }),
     register: builder.mutation({
       query: (userInfo) => ({
         url: "/auth/register",
         method: "POST",
-        body: userInfo,
+        data: userInfo,
       }),
     }),
     changePassword: builder.mutation({
       query: (data) => ({
         url: "/auth/change-password",
         method: "POST",
-        body: data,
+        data: data,
       }),
     }),
     //
@@ -37,21 +40,21 @@ const authApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/auth/forgot-password",
         method: "POST",
-        body: data,
+        data: data,
       }),
     }),
     setOtp: builder.mutation({
       query: (data) => ({
         url: "/auth/set-otp",
         method: "POST",
-        body: data,
+        data: data,
       }),
     }),
     tokenToSetPassword: builder.mutation({
       query: (data) => ({
         url: "/auth/token-to-set-password",
         method: "POST",
-        body: data,
+        data: data,
       }),
     }),
   }),

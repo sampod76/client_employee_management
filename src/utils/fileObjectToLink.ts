@@ -16,7 +16,7 @@ export default function fileObjectToLink(src: any) {
 
   let imageSrc;
   if (src?.cdn) {
-    console.log("🚀 ~ sadfsadf", src);
+    // console.log("🚀 ~ sadfsadf", src);
     imageSrc = src.cdn + "/" + src.path;
   } else if (typeof src === "object" && src.url) {
     console.log("🚀 ~ fffasdfnk ~ src:", src);

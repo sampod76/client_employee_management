@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 export default function ClockComponents() {
   const [time, updateTime] = useState(new Date());
   const [ipAddress, setIpAddress] = useState("");
-  console.log("🚀 ~ ClockComponents ~ ipAddress:", ipAddress);
 
   useEffect(() => {
     // Timer update logic

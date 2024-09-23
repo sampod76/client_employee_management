@@ -12,7 +12,7 @@ import {
 const UserAvatarUI = () => {
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
-  console.log("🚀 ~ UserAvatarUI ~ user:", user);
+
   const navigate = useNavigate();
 
   const items: MenuProps["items"] = [

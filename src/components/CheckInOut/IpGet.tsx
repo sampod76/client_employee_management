@@ -33,7 +33,7 @@ const LocalIPComponent = () => {
     axios
       .get("https://api.ipify.org?format=json")
       .then((response) => {
-        console.log("🚀 ~ .then ~ response:", response);
+        // console.log("🚀 ~ .then ~ response:", response);
         setIpAddress(response.data.ip);
       })
       .catch((error) => {

@@ -19,6 +19,7 @@ import { useState } from "react";
 import { ErrorModal, SuccessModal } from "../utils/modalHook";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { multipleFilesUploader } from "../utils/handelFileUploderS3";
+import { instance } from "../helpers/axios/axiosInstance";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -35,34 +36,25 @@ const Register = () => {
     console.log(data);
 
     try {
-      if (fileList?.length) {
-        setImageLoading(true);
-        const res = await multipleFilesUploader(
-          //@ts-ignore
-          fileList.map((file) => file?.originFileObj)
-        );
-        console.log("🚀 ~ onSubmit ~ res:", res);
-        data.profileImage = res[0];
-      }
       const tempData = {
         email: data?.email,
         role: "employee",
       };
       const res1 = await tempSignUp(tempData).unwrap();
       console.log("🚀 ~ onSubmit ~ res1:", res1);
-      if (res1?.success) {
-        SuccessModal(
-          "Sign up successful",
-          "Please check your email for an OTP code"
-        );
-      }
+
+      SuccessModal(
+        "Sign up successful",
+        "Please check your email for an OTP code"
+      );
+
       const submitDate = {
         authData: {
           email: data.email,
           password: data.password,
           role: "employee",
           tempUser: {
-            tempUserId: res1.data._id,
+            tempUserId: res1._id,
             otp: null,
           },
         },
@@ -72,6 +64,7 @@ const Register = () => {
           // contactNumber: data.contactNumber,
         },
       };
+
       console.log("🚀 ~ onSubmit ~ submitDate:", submitDate);
       setFromData(submitDate);
       setHavOtp(true);
@@ -89,15 +82,26 @@ const Register = () => {
       }
       const all = { ...fromData } as any;
       all.authData.tempUser.otp = otp;
-
-      const res = await registration(fromData).unwrap();
+      const formData = new FormData();
+      console.log(fileList, "fileList");
+      if (fileList?.length) {
+        // setImageLoading(true);
+        // const res = await multipleFilesUploader(
+        //   //@ts-ignore
+        //   fileList.map((file) => file?.originFileObj)
+        // );
+        // console.log("🚀 ~ onSubmit ~ res:", res);
+        // data.profileImage = res[0];
+        //@ts-ignore
+        formData.append("profileImage", fileList[0].originFileObj);
+      }
+      formData.append("data", JSON.stringify(all));
+      const res = await registration(formData).unwrap();
 
       // const user = verifyToken(res.data.accessToken) as TUser;
       // dispatch(setUser({ user: user, token: res.data.accessToken }));
       // toast.success("Logged in", { id: toastId, duration: 2000 });
-      SuccessModal(
-        "Register successfully please please check your email and set Otp"
-      );
+      SuccessModal("Register successfully please ");
 
       navigate("/login");
       setIsReset(true);

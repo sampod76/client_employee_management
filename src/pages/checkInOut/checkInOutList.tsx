@@ -1,5 +1,3 @@
-"use client";
-
 import { Button, Dropdown, Input, Menu, Space, message } from "antd";
 
 import { ReloadOutlined } from "@ant-design/icons";
@@ -29,6 +27,7 @@ const CheckInOutList = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["employeeUserId"] = user?.userId;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -44,36 +43,79 @@ const CheckInOutList = () => {
   const checkInOutData = data?.data;
   //@ts-ignore
   const meta = data?.meta;
+  const LateStatus = (date: string) => {
+    // Ensure getData and getData[0] exist to prevent errors
 
+    const checkInTime = new Date(date).getTime();
+
+    const today = new Date(date);
+    const today9AM = new Date(today.setHours(9, 0, 0, 0)).getTime();
+    const isOnTime = checkInTime <= today9AM;
+
+    return (
+      <p className="text-white ">
+        {isOnTime ? (
+          <span className="bg-green-500 px-5 py-1 rounded-xl">On time</span>
+        ) : (
+          <span className="bg-red-500 px-5 py-1 rounded-xl">Late</span>
+        )}
+      </p>
+    );
+  };
   const columns = [
     {
-      title: "",
-      dataIndex: ["employee", "details", "profileImage"],
+      title: "Date",
+      // dataIndex: "createdAt",
+      ellipsis: true,
+      render: (record: any) => {
+        return (
+          <div className="flex justify-between gap-2 items-start">
+            <p>{new Date(record.createdAt).toDateString()}</p>
+            {LateStatus(record?.checkInTime)}
+          </div>
+        );
+      },
+      width: 250,
+    },
+    // {
+    //   title: "",
+    //   dataIndex: ["employee", "details", "profileImage"],
+    //   ellipsis: true,
+    //   render: (record: any) => (
+    //     <CustomImageTag
+    //       src={record}
+    //       width={550}
+    //       height={550}
+    //       preview={true}
+    //       className="w-8 h-8 md:h-12 md:w-12  rounded-full"
+    //       alt=""
+    //     />
+    //   ),
+    //   width: 100,
+    // },
+    {
+      title: "Employee",
+      dataIndex: ["employee", "details"],
       ellipsis: true,
       render: (record: any) => (
-        <CustomImageTag
-          src={record}
-          width={550}
-          height={550}
-          preview={true}
-          className="w-8 h-8 md:h-12 md:w-12  rounded-full"
-          alt=""
-        />
+        <div className="flex justify-start items-center gap-1">
+          <CustomImageTag
+            src={record.profileImage}
+            width={550}
+            height={550}
+            preview={true}
+            className="w-8 h-8 md:h-12 md:w-12  rounded-full"
+            alt=""
+          />
+          <p>{record.name.firstName + " " + record.name.lastName}</p>
+        </div>
       ),
-      width: 100,
+      width: 250,
     },
     {
-      title: "Name",
-      dataIndex: ["employee", "details", "name"],
-      ellipsis: true,
-      render: (record: any) => (
-        <p>{record.firstName + " " + record.lastName}</p>
-      ),
-      //  width: 130,
-    },
-    {
-      title: "Serial Number",
+      title: "Email",
       dataIndex: ["employee", "details", "email"],
+      width: 250,
     },
     {
       title: "Check in",

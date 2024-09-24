@@ -74,9 +74,7 @@ export default function CheckInOut() {
     return (
       <p className="text-white">
         {isOnTime ? (
-          <span className="bg-green-500 px-5 py-1 rounded-xl">
-            You are on time
-          </span>
+          <span className="bg-green-500 px-5 py-1 rounded-xl">On time</span>
         ) : (
           <span className="bg-red-500 px-5 py-1 rounded-xl">Late</span>
         )}

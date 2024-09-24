@@ -40,7 +40,11 @@ export const ConfirmModal = ({
   message,
   confirmBtnText,
   cancelBtnText,
-}: any) => {
+}: {
+  message?: string;
+  confirmBtnText?: string;
+  cancelBtnText?: string;
+}) => {
   return Swal.fire({
     title: "Are you sure?",
     text: message || "You won't be able to revert this!",

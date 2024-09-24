@@ -1,3 +1,4 @@
+import ProjectForm from "../pages/admin/project/CreateProject";
 import CheckInOut from "../pages/checkInOut/checkInOut";
 import CheckInOutList from "../pages/checkInOut/checkInOutList";
 import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
@@ -30,6 +31,21 @@ export const employeePaths = [
       {
         name: "Leave list",
         path: "leave-list",
+        element: <LeaveList />,
+      },
+    ],
+  },
+  {
+    name: "Project management",
+    children: [
+      {
+        name: "Create Project",
+        path: "create-project",
+        element: <ProjectForm />,
+      },
+      {
+        name: "Project list",
+        path: "project-list",
         element: <LeaveList />,
       },
     ],

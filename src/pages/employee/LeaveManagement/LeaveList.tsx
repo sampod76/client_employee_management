@@ -39,7 +39,7 @@ export default function LeaveList({ status }: { status?: string }) {
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("createdAt");
-  const [sortOrder, setSortOrder] = useState<string>("asc");
+  const [sortOrder, setSortOrder] = useState<string>("decs");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   query["limit"] = size;

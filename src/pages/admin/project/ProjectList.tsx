@@ -58,7 +58,7 @@ export default function ProjectList() {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useGetAllProjectsQuery({ ...query });
+  const { data, isLoading, isFetching } = useGetAllProjectsQuery({ ...query });
 
   //@ts-ignore
   const checkInOutData = data?.data;
@@ -191,7 +191,7 @@ export default function ProjectList() {
         </ActionBar>
 
         <UMTable
-          loading={isLoading}
+          loading={isLoading || isFetching}
           columns={columns}
           dataSource={checkInOutData}
           pageSize={size}

@@ -52,7 +52,7 @@ export const ConfirmModal = ({
     showCancelButton: true,
     confirmButtonColor: "#008000",
     cancelButtonColor: "#000",
-    confirmButtonText: confirmBtnText || "Yes, delete it!",
+    confirmButtonText: confirmBtnText || "Yes",
     cancelButtonText: cancelBtnText || "Cancel",
   });
 };

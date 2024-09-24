@@ -27,7 +27,7 @@ import {
   SuccessModal,
 } from "../../../utils/modalHook";
 import ModalComponent from "../../../components/Modal/ModalComponents";
-export default function LeaveList() {
+export default function LeaveList({ status }: { status?: string }) {
   const [deleteLeaves, { isLoading: deleteLoading }] =
     useDeleteLeavesMutation();
   const [addApprovedOrDeclined, { isLoading: ApprovedLoading }] =
@@ -46,8 +46,12 @@ export default function LeaveList() {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["sortOrder"] = sortOrder;
   if (user?.role !== "admin") {
     query["employeeUserId"] = user?.userId;
+  }
+  if (status) {
+    query["requestStatus"] = status;
   }
 
   const debouncedSearchTerm = useDebounced({
@@ -58,7 +62,7 @@ export default function LeaveList() {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useGetAllLeavesQuery({ ...query });
+  const { data, isLoading, isFetching } = useGetAllLeavesQuery({ ...query });
 
   //@ts-ignore
   const checkInOutData = data?.data;
@@ -87,7 +91,7 @@ export default function LeaveList() {
           try {
             const res = await addApprovedOrDeclined({
               id,
-              requestStatus: "approved",
+              data: { requestStatus: "approved" },
             }).unwrap();
             SuccessModal("Successfully Approved");
           } catch (error: any) {
@@ -105,7 +109,7 @@ export default function LeaveList() {
           try {
             const res = await deleteLeaves({
               id,
-              requestStatus: "declined",
+              data: { requestStatus: "declined" },
             }).unwrap();
             SuccessModal("Successfully Declined");
           } catch (error: any) {
@@ -264,9 +268,9 @@ export default function LeaveList() {
                     <Menu.Item key="approved">
                       <Button
                         type="link"
-                        style={{ color: "red" }}
+                        style={{ color: "green" }}
                         loading={deleteLoading}
-                        icon={<DeleteOutlined style={{ color: "red" }} />}
+                        icon={<DeleteOutlined style={{ color: "green" }} />}
                         onClick={() => handleApproved(record._id)}
                       >
                         Approved
@@ -318,7 +322,7 @@ export default function LeaveList() {
   return (
     <div>
       <div>
-        <h1>Leave list</h1>
+        <h1 className="capitalize text-lg font-bold">{status} Leave list</h1>
         <ActionBar>
           <Input
             size="large"
@@ -340,7 +344,7 @@ export default function LeaveList() {
         </ActionBar>
 
         <UMTable
-          loading={isLoading}
+          loading={isLoading || isFetching}
           columns={columns}
           dataSource={checkInOutData}
           pageSize={size}

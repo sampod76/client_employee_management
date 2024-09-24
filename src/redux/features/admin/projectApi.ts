@@ -40,6 +40,7 @@ export const projectsApi = baseApi.injectEndpoints({
           url: URL,
           method: "POST",
           data: data,
+          contentType: "multipart/form-data",
         };
       },
       invalidatesTags: [tagTypes.Projects],
@@ -51,6 +52,7 @@ export const projectsApi = baseApi.injectEndpoints({
           url: `${URL}/${id}`,
           method: "PATCH",
           data: data,
+          contentType: "multipart/form-data",
         };
       },
       invalidatesTags: [tagTypes.Projects],

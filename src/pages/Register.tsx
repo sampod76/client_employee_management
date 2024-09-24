@@ -92,7 +92,7 @@ const Register = () => {
         // );
         // console.log("🚀 ~ onSubmit ~ res:", res);
         // data.profileImage = res[0];
-        //@ts-ignore
+        // @ts-ignore
         formData.append("profileImage", fileList[0].originFileObj);
       }
       formData.append("data", JSON.stringify(all));

@@ -40,6 +40,7 @@ export const leavesApi = baseApi.injectEndpoints({
           url: URL,
           method: "POST",
           data: data,
+          contentType: "multipart/form-data",
         };
       },
       invalidatesTags: [tagTypes.Leaves],
@@ -51,6 +52,7 @@ export const leavesApi = baseApi.injectEndpoints({
           url: `${URL}/${id}`,
           method: "PATCH",
           data: data,
+          contentType: "multipart/form-data",
         };
       },
       invalidatesTags: [tagTypes.Leaves],

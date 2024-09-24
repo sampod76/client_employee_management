@@ -1,6 +1,8 @@
 import CheckInOut from "../pages/checkInOut/checkInOut";
 import CheckInOutList from "../pages/checkInOut/checkInOutList";
 import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
+import LeaveApplication from "../pages/employee/LeaveManagement/LeaveApplication";
+import LeaveList from "../pages/employee/LeaveManagement/LeaveList";
 
 export const employeePaths = [
   {
@@ -16,6 +18,21 @@ export const employeePaths = [
     name: "Check In/Out list",
     path: "check-in-out-list",
     element: <CheckInOutList />,
+  },
+  {
+    name: "Leave management",
+    children: [
+      {
+        name: "Leave Application",
+        path: "leave-application",
+        element: <LeaveApplication />,
+      },
+      {
+        name: "Leave list",
+        path: "leave-list",
+        element: <LeaveList />,
+      },
+    ],
   },
   // {
   //   name: "My Schedule",

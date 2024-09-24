@@ -40,6 +40,7 @@ export const taskManagementApi = baseApi.injectEndpoints({
           url: URL,
           method: "POST",
           data: data,
+          contentType: "multipart/form-data",
         };
       },
       invalidatesTags: [tagTypes.TaskManagement],
@@ -51,6 +52,7 @@ export const taskManagementApi = baseApi.injectEndpoints({
           url: `${URL}/${id}`,
           method: "PATCH",
           data: data,
+          contentType: "multipart/form-data",
         };
       },
       invalidatesTags: [tagTypes.TaskManagement],

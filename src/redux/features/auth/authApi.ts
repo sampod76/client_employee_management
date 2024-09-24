@@ -19,7 +19,7 @@ const authApi = baseApi.injectEndpoints({
           data: userInfo,
         };
       },
-      invalidatesTags: [tagTypes.profile],
+      invalidatesTags: [tagTypes.profile, tagTypes.LoginHistory],
     }),
     register: builder.mutation({
       query: (userInfo) => ({

@@ -28,7 +28,7 @@ const CheckInOutList = () => {
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   if (user?.role !== "admin") {
-    query["authorUserId"] = user?.userId;
+    query["employeeUserId"] = user?.userId;
   }
 
   const debouncedSearchTerm = useDebounced({

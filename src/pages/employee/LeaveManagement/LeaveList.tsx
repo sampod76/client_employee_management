@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import { useAppSelector, useDebounced } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
 import {
+  useApprovedOrDeclinedMutation,
   useDeleteLeavesMutation,
   useGetAllLeavesQuery,
 } from "../../../redux/features/admin/leavesApi";
@@ -29,6 +30,9 @@ import ModalComponent from "../../../components/Modal/ModalComponents";
 export default function LeaveList() {
   const [deleteLeaves, { isLoading: deleteLoading }] =
     useDeleteLeavesMutation();
+  const [addApprovedOrDeclined, { isLoading: ApprovedLoading }] =
+    useApprovedOrDeclinedMutation();
+
   const user = useAppSelector(selectCurrentUser);
   const query: Record<string, any> = {};
 
@@ -43,7 +47,7 @@ export default function LeaveList() {
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   if (user?.role !== "admin") {
-    query["authorUserId"] = user?.userId;
+    query["employeeUserId"] = user?.userId;
   }
 
   const debouncedSearchTerm = useDebounced({
@@ -68,6 +72,42 @@ export default function LeaveList() {
           try {
             const res = await deleteLeaves(id).unwrap();
             SuccessModal("Successfully Deleted");
+          } catch (error: any) {
+            ErrorModal(error);
+          }
+        }
+      }
+    );
+  };
+
+  const handleApproved = async (id: string) => {
+    ConfirmModal({ message: `Are you sure you want to Approved` }).then(
+      async (res) => {
+        if (res.isConfirmed) {
+          try {
+            const res = await addApprovedOrDeclined({
+              id,
+              requestStatus: "approved",
+            }).unwrap();
+            SuccessModal("Successfully Approved");
+          } catch (error: any) {
+            ErrorModal(error);
+          }
+        }
+      }
+    );
+  };
+
+  const handleDeclined = async (id: string) => {
+    ConfirmModal({ message: `Are you sure you want to Declined` }).then(
+      async (res) => {
+        if (res.isConfirmed) {
+          try {
+            const res = await deleteLeaves({
+              id,
+              requestStatus: "declined",
+            }).unwrap();
+            SuccessModal("Successfully Declined");
           } catch (error: any) {
             ErrorModal(error);
           }
@@ -191,30 +231,61 @@ export default function LeaveList() {
             <Dropdown
               overlay={
                 <Menu>
-                  <Menu.Item key="edit">
-                    <Button
-                      type="link"
-                      icon={<EditOutlined />}
-                      //   onClick={() => handleEdit(record._id)}
-                    >
-                      <Link
-                        to={`/${user?.role}/leave-application?id=${record._id}`}
+                  {user?.role !== "admin" && (
+                    <Menu.Item key="edit">
+                      <Button
+                        type="link"
+                        icon={<EditOutlined />}
+                        //   onClick={() => handleEdit(record._id)}
                       >
-                        Edit
-                      </Link>
-                    </Button>
-                  </Menu.Item>
-                  <Menu.Item key="delete">
-                    <Button
-                      type="link"
-                      style={{ color: "red" }}
-                      loading={deleteLoading}
-                      icon={<DeleteOutlined style={{ color: "red" }} />}
-                      onClick={() => handleDelete(record._id)}
-                    >
-                      Delete
-                    </Button>
-                  </Menu.Item>
+                        <Link
+                          to={`/${user?.role}/leave-application?id=${record._id}`}
+                        >
+                          Edit
+                        </Link>
+                      </Button>
+                    </Menu.Item>
+                  )}
+                  {user?.role !== "admin" && (
+                    <Menu.Item key="delete">
+                      <Button
+                        type="link"
+                        style={{ color: "red" }}
+                        loading={deleteLoading}
+                        icon={<DeleteOutlined style={{ color: "red" }} />}
+                        onClick={() => handleDelete(record._id)}
+                      >
+                        Delete
+                      </Button>
+                    </Menu.Item>
+                  )}
+
+                  {user?.role === "admin" && (
+                    <Menu.Item key="approved">
+                      <Button
+                        type="link"
+                        style={{ color: "red" }}
+                        loading={deleteLoading}
+                        icon={<DeleteOutlined style={{ color: "red" }} />}
+                        onClick={() => handleApproved(record._id)}
+                      >
+                        Approved
+                      </Button>
+                    </Menu.Item>
+                  )}
+                  {user?.role === "admin" && (
+                    <Menu.Item key="Declined">
+                      <Button
+                        type="link"
+                        style={{ color: "red" }}
+                        loading={deleteLoading}
+                        icon={<DeleteOutlined style={{ color: "red" }} />}
+                        onClick={() => handleDeclined(record._id)}
+                      >
+                        Declined
+                      </Button>
+                    </Menu.Item>
+                  )}
                 </Menu>
               }
             >

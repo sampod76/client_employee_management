@@ -57,6 +57,17 @@ export const leavesApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.Leaves],
     }),
+    approvedOrDeclined: build.mutation({
+      query: ({ data, id }) => {
+        return {
+          url: `${URL}/${id}`,
+          method: "PATCH",
+          data: data,
+          contentType: "multipart/form-data",
+        };
+      },
+      invalidatesTags: [tagTypes.Leaves],
+    }),
 
     deleteLeaves: build.mutation({
       query: (id) => ({
@@ -74,4 +85,5 @@ export const {
   useGetAllLeavesQuery,
   useGetSingleLeavesQuery,
   useUpdateLeavesMutation,
+  useApprovedOrDeclinedMutation,
 } = leavesApi;

@@ -6,6 +6,7 @@ import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
 import LeaveApplication from "../pages/employee/LeaveManagement/LeaveApplication";
 import LeaveList from "../pages/employee/LeaveManagement/LeaveList";
 import LoginHistory from "../pages/LoginHistory";
+import Profile from "../pages/Profile";
 
 export const employeePaths = [
   {
@@ -16,6 +17,10 @@ export const employeePaths = [
   {
     path: "check-in-out",
     element: <CheckInOut />,
+  },
+  {
+    path: "profile",
+    element: <Profile />,
   },
   {
     name: "Login history",

@@ -16,6 +16,7 @@ import ForgotPassword from "../pages/ForgetPassword";
 import VerifyOtp from "../pages/VerifyOtp";
 import ResetPassword from "../pages/ResetPassword";
 import Dashboard from "../Dashboard";
+import Profile from "../pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
     ),
     children: routeGenerator(employeePaths),
   },
-
+  {
+    path: "/profile",
+    element: <Profile />,
+    children: routeGenerator(adminPaths),
+  },
   {
     path: "/login",
     element: <Login />,

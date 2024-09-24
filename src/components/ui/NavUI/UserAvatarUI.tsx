@@ -18,7 +18,7 @@ const UserAvatarUI = () => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <Link to={"/profile"}> Profile</Link>,
+      label: <Link to={`/${user?.role}/profile`}> Profile</Link>,
     },
     {
       key: "2",

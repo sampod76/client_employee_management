@@ -26,9 +26,13 @@ import {
   SuccessModal,
 } from "../../../utils/modalHook";
 import ModalComponent from "../../../components/Modal/ModalComponents";
-export default function LeaveList() {
+import {
+  useDeleteProjectsMutation,
+  useGetAllProjectsQuery,
+} from "../../../redux/features/admin/projectApi";
+export default function ProjectList() {
   const [deleteLeaves, { isLoading: deleteLoading }] =
-    useDeleteLeavesMutation();
+    useDeleteProjectsMutation();
   const user = useAppSelector(selectCurrentUser);
   const query: Record<string, any> = {};
 
@@ -54,7 +58,7 @@ export default function LeaveList() {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useGetAllLeavesQuery({ ...query });
+  const { data, isLoading } = useGetAllProjectsQuery({ ...query });
 
   //@ts-ignore
   const checkInOutData = data?.data;
@@ -77,109 +81,27 @@ export default function LeaveList() {
   };
   const columns = [
     {
-      title: "Employee",
-      dataIndex: ["employee", "details"],
+      title: "Logo",
+      dataIndex: ["logo"],
       ellipsis: true,
       render: (record: any) => (
         <div className="flex justify-start items-center gap-1">
           <CustomImageTag
-            src={record.profileImage}
+            src={record}
             width={550}
             height={550}
             preview={true}
             className="w-8 h-8 md:h-12 md:w-12  rounded-full"
             alt=""
           />
-          <p>{record.name.firstName + " " + record.name.lastName}</p>
         </div>
       ),
+      width: 100,
+    },
+    {
+      title: "Title",
+      dataIndex: ["title"],
       width: 250,
-    },
-    {
-      title: "Email",
-      dataIndex: ["employee", "details", "email"],
-      width: 250,
-    },
-    {
-      title: "Leave Type",
-      dataIndex: "leaveType",
-      key: "leaveType",
-    },
-    {
-      title: "From Date",
-      dataIndex: "from",
-      key: "from",
-      width: 150,
-      render: (record: string) => {
-        return new Date(record).toLocaleDateString();
-      },
-    },
-    {
-      title: "To Date",
-      dataIndex: "to",
-      key: "to",
-      width: 150,
-      render: (record: string) => {
-        return new Date(record).toLocaleDateString();
-      },
-    },
-
-    {
-      title: "Day Type",
-      dataIndex: "dayType",
-      key: "dayType",
-    },
-    {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
-    },
-    {
-      title: "Reason",
-      dataIndex: "reason",
-      key: "reason",
-      width: 150,
-      render: (record: string) => {
-        return (
-          <ModalComponent buttonText="view reason">
-            <p>{record}</p>
-          </ModalComponent>
-        );
-      },
-    },
-    {
-      title: "Total",
-      dataIndex: "totalLeaveDays",
-      key: "totalLeaveDays",
-    },
-    {
-      title: "Status",
-      dataIndex: "requestStatus",
-      key: "status",
-      render: (status: string) => {
-        let color = "";
-        let text = "";
-
-        switch (status) {
-          case "pending":
-            color = "orange";
-            text = "Pending";
-            break;
-          case "approved":
-            color = "green";
-            text = "Approved";
-            break;
-          case "declined":
-            color = "red";
-            text = "Declined";
-            break;
-          default:
-            color = "gray";
-            text = "Unknown";
-        }
-
-        return <Tag color={color}>{text}</Tag>;
-      },
     },
 
     {
@@ -198,7 +120,7 @@ export default function LeaveList() {
                       //   onClick={() => handleEdit(record._id)}
                     >
                       <Link
-                        to={`/${user?.role}/leave-application?id=${record._id}`}
+                        to={`/${user?.role}/create-edit-project?id=${record._id}`}
                       >
                         Edit
                       </Link>

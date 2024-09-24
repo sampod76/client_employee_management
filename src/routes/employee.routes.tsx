@@ -1,4 +1,5 @@
-import ProjectForm from "../pages/admin/project/CreateProject";
+import CreateProject from "../pages/admin/project/CreateProject";
+import ProjectList from "../pages/admin/project/ProjectList";
 import CheckInOut from "../pages/checkInOut/checkInOut";
 import CheckInOutList from "../pages/checkInOut/checkInOutList";
 import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
@@ -40,13 +41,13 @@ export const employeePaths = [
     children: [
       {
         name: "Create Project",
-        path: "create-project",
-        element: <ProjectForm />,
+        path: "create-edit-project",
+        element: <CreateProject />,
       },
       {
         name: "Project list",
         path: "project-list",
-        element: <LeaveList />,
+        element: <ProjectList />,
       },
     ],
   },

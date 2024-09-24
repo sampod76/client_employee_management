@@ -1,113 +1,230 @@
-import React from "react";
-import { Form, Input, Button, DatePicker, Row, Col } from "antd";
+import React, { useState } from "react";
+import { Form, Input, Button, DatePicker, Row, Col, Upload } from "antd";
+import {
+  PictureOutlined,
+  UserOutlined,
+  MailOutlined,
+  CalendarOutlined,
+  FileOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import moment from "moment";
+import {
+  useAddProjectsMutation,
+  useGetSingleProjectsQuery,
+  useUpdateProjectsMutation,
+} from "../../../redux/features/admin/projectApi";
+import { ErrorModal, SuccessModal } from "../../../utils/modalHook";
+import { multipleFilesUploader } from "../../../utils/handelFileUploderS3";
+import UploadImage from "../../../components/ui/UploadImage";
+import { useLocation } from "react-router-dom";
+import LoadingSkeleton from "../../../components/ui/Loading/LoadingSkeleton";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
-const ProjectForm = () => {
-  const initialValues = {};
+const CreateProject = () => {
+  //
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const id = query.get("id");
+  //
+  const { data: getDate, isLoading: getLoading } = useGetSingleProjectsQuery(
+    id as string,
+    {
+      skip: !Boolean(id),
+    }
+  );
+  console.log(getDate);
+  const [addProject, { isLoading }] = useAddProjectsMutation();
+  const [updateProject, { isLoading: updateLoading }] =
+    useUpdateProjectsMutation();
+  const [image, setImageState] = useState([]);
+  const [imageLoading, setImageLoading] = useState(false);
+
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-    // Process form data before submitting if needed
-    console.log("Form Values:", values);
+  const onFinish = async (values: any) => {
+    try {
+      if (image) {
+        values.logo = {
+          url: image,
+          mimetype: "image/jpg",
+          filename: "logo.jpg",
+          path: "upload/images/logo.jpg",
+          platform: "imgbb",
+        };
+      }
+      values.startDate = values.dateRange[0];
+      values.endDate = values.dateRange[1];
+      if (id) {
+        const res = await updateProject(values).unwrap();
+        SuccessModal("Project Update Successfully");
+      } else {
+        const res = await addProject(values).unwrap();
+        SuccessModal("Project Created Successfully");
+      }
+    } catch (error) {
+      ErrorModal(error);
+    }
   };
-
-  return (
-    <Form
-      form={form}
-      layout="vertical"
-      onFinish={onFinish}
-      initialValues={{
-        ...initialValues,
-        startDate: initialValues?.startDate
-          ? moment(initialValues.startDate)
+  if (getLoading) {
+    return <LoadingSkeleton />;
+  }
+  const initial = getDate?.data
+    ? {
+        ...getDate?.data,
+        startDate: getDate?.data?.startDate
+          ? moment(getDate?.data.startDate)
           : null,
-        endDate: initialValues?.endDate ? moment(initialValues.endDate) : null,
-      }}
-    >
-      <Row gutter={16}>
-        <Col xs={24} sm={12} lg={6}>
-          <Form.Item
-            label="Project Title"
-            name="title"
-            rules={[
-              { required: true, message: "Please enter the project title!" },
-            ]}
-          >
-            <Input placeholder="Enter project title" />
-          </Form.Item>
-        </Col>
+        endDate: getDate?.data?.endDate ? moment(getDate?.data?.endDate) : null,
+      }
+    : {};
+  return (
+    <div className="shadow-2xl rounded-2xl p-5 shadow-indigo-400">
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={onFinish}
+        initialValues={initial}
+      >
+        <Row gutter={[16, 16]}>
+          <Col xs={24}>
+            <Form.Item
+              label="Project Title"
+              name="title"
+              rules={[
+                { required: true, message: "Please enter the project title!" },
+              ]}
+            >
+              <Input
+                prefix={<FileOutlined />}
+                placeholder="Enter project title"
+              />
+            </Form.Item>
+          </Col>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Form.Item label="Logo" name="logo">
-            <Input type="file" />
-          </Form.Item>
-        </Col>
-      </Row>
+          <Col xs={24} sm={24} md={12} lg={6}>
+            <div className="flex justify-center  my-1">
+              <UploadImage
+                setImageState={setImageState}
+                setImageLoading={setImageLoading}
+                name="image"
+              />
+            </div>
+          </Col>
 
-      <Row gutter={16}>
-        <Col xs={24} sm={12} lg={6}>
-          <Form.Item label="Start Date" name="startDate">
-            <DatePicker />
-          </Form.Item>
-        </Col>
+          <Col xs={24} sm={24} md={12} lg={6}>
+            <Form.Item
+              name="dateRange"
+              label="Date Range"
+              //   rules={[
+              //     { required: true, message: "Please select a date range!" },
+              //   ]}
+            >
+              <RangePicker
+                format="DD/MM/YYYY"
+                disabledDate={(current) =>
+                  current && current < moment().startOf("day")
+                }
+              />
+            </Form.Item>
+          </Col>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Form.Item label="End Date" name="endDate">
-            <DatePicker />
-          </Form.Item>
-        </Col>
-      </Row>
+          <Col xs={24} sm={24} md={12} lg={6}>
+            <Form.Item label="Client name" name="clientName">
+              <Input
+                // prefix={<MailOutlined />}
+                placeholder="Enter client name"
+                type="text"
+              />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={6}>
+            <Form.Item label="Client Email" name="clientEmail">
+              <Input
+                prefix={<MailOutlined />}
+                placeholder="Enter client email"
+                type="email"
+              />
+            </Form.Item>
+          </Col>
 
-      <Row gutter={16}>
-        <Col xs={24} sm={12} lg={6}>
-          <Form.Item label="Extended Dates" name="extended">
-            <RangePicker />
-          </Form.Item>
-        </Col>
+          <Col xs={24}>
+            <Form.Item label="Feature List" name="featureList">
+              <Form.List name="featureList">
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, fieldKey, ...restField }) => (
+                      <Row gutter={[16, 16]} key={key} align="middle">
+                        <Col xs={24} sm={12} md={18}>
+                          <Form.Item
+                            {...restField}
+                            name={[name, "title"]}
+                            //@ts-ignore
+                            fieldKey={[fieldKey, "title"]}
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please enter a feature",
+                              },
+                            ]}
+                          >
+                            <Input placeholder="Enter feature" />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={2}>
+                          <Button
+                            type="link"
+                            onClick={() => remove(name)}
+                            icon={<MinusCircleOutlined />}
+                            danger
+                            className="!pb-8"
+                          >
+                            Remove
+                          </Button>
+                        </Col>
+                      </Row>
+                    ))}
+                    <Form.Item>
+                      <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        block
+                        icon={<PlusOutlined />}
+                      >
+                        Add Feature
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List>
+            </Form.Item>
+          </Col>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Form.Item label="Client Name" name="clientName">
-            <Input placeholder="Enter client name" />
-          </Form.Item>
-        </Col>
-      </Row>
+          <Col xs={24}>
+            <Form.Item label="Description" name="description">
+              <TextArea rows={4} placeholder="Enter project description" />
+            </Form.Item>
+          </Col>
 
-      <Row gutter={16}>
-        <Col xs={24} sm={12} lg={6}>
-          <Form.Item label="Client Email" name="clientEmail">
-            <Input placeholder="Enter client email" />
-          </Form.Item>
-        </Col>
-
-        <Col xs={24} sm={12} lg={6}>
-          <Form.Item label="Feature List" name="featureList">
-            <Input placeholder="Enter features (comma separated)" />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row gutter={16}>
-        <Col xs={24}>
-          <Form.Item label="Description" name="description">
-            <TextArea rows={4} placeholder="Enter project description" />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col xs={24}>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Col>
-      </Row>
-    </Form>
+          <Col xs={24}>
+            <Form.Item>
+              <Button
+                loading={isLoading || imageLoading}
+                type="primary"
+                htmlType="submit"
+              >
+                Submit
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+    </div>
   );
 };
 
-export default ProjectForm;
+export default CreateProject;

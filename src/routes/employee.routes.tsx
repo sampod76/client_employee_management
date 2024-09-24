@@ -32,7 +32,7 @@ export const employeePaths = [
     children: [
       {
         name: "Leave Application",
-        path: "leave-application",
+        path: "leave-application-and-editor",
         element: <LeaveApplication />,
       },
       {

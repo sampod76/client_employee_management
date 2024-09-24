@@ -21,6 +21,7 @@ import { multipleFilesUploader } from "../../../utils/handelFileUploderS3";
 import UploadImage from "../../../components/ui/UploadImage";
 import { useLocation } from "react-router-dom";
 import LoadingSkeleton from "../../../components/ui/Loading/LoadingSkeleton";
+import dayjs from "dayjs";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -60,7 +61,7 @@ const CreateProject = () => {
       values.startDate = values.dateRange[0];
       values.endDate = values.dateRange[1];
       if (id) {
-        const res = await updateProject(values).unwrap();
+        const res = await updateProject({ id, data: values }).unwrap();
         SuccessModal("Project Update Successfully");
       } else {
         const res = await addProject(values).unwrap();
@@ -76,10 +77,11 @@ const CreateProject = () => {
   const initial = getDate?.data
     ? {
         ...getDate?.data,
-        startDate: getDate?.data?.startDate
-          ? moment(getDate?.data.startDate)
-          : null,
-        endDate: getDate?.data?.endDate ? moment(getDate?.data?.endDate) : null,
+
+        dateRange: [
+          dayjs(getDate?.data?.startDate, "YYYY-MM-DD"),
+          dayjs(getDate?.data?.endDate, "YYYY-MM-DD"),
+        ],
       }
     : {};
   return (
@@ -213,7 +215,7 @@ const CreateProject = () => {
           <Col xs={24}>
             <Form.Item>
               <Button
-                loading={isLoading || imageLoading}
+                loading={isLoading || imageLoading || updateLoading}
                 type="primary"
                 htmlType="submit"
               >

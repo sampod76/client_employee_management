@@ -151,7 +151,7 @@ export default function LeaveList() {
       key: "from",
       width: 150,
       render: (record: string) => {
-        return new Date(record).toLocaleDateString();
+        return new Date(record).toDateString();
       },
     },
     {
@@ -160,7 +160,7 @@ export default function LeaveList() {
       key: "to",
       width: 150,
       render: (record: string) => {
-        return new Date(record).toLocaleDateString();
+        return new Date(record).toDateString();
       },
     },
 
@@ -239,7 +239,7 @@ export default function LeaveList() {
                         //   onClick={() => handleEdit(record._id)}
                       >
                         <Link
-                          to={`/${user?.role}/leave-application?id=${record._id}`}
+                          to={`/${user?.role}/leave-application-and-editor?id=${record._id}`}
                         >
                           Edit
                         </Link>

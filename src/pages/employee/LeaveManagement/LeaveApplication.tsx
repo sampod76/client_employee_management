@@ -14,13 +14,32 @@ import {
 import moment from "moment";
 import DivContainer from "../../../components/ui/DivContainer";
 import { ErrorModal, SuccessModal } from "../../../utils/modalHook";
-import { useAddLeavesMutation } from "../../../redux/features/admin/leavesApi";
+import {
+  useAddLeavesMutation,
+  useGetSingleLeavesQuery,
+  useUpdateLeavesMutation,
+} from "../../../redux/features/admin/leavesApi";
 import { multipleFilesUploader } from "../../../utils/handelFileUploderS3";
+import { useLocation } from "react-router-dom";
+import dayjs from "dayjs";
+import LoadingSkeleton from "../../../components/ui/Loading/LoadingSkeleton";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 const LeaveForm = () => {
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const id = query.get("id");
+  //
+  const { data: leaveDate, isLoading: leaveLoading } = useGetSingleLeavesQuery(
+    id as string,
+    { skip: !Boolean(id) }
+  );
+
+  const [updateLeaves, { isLoading: updateLoading }] =
+    useUpdateLeavesMutation();
+  //
   const [applyLeaves, { isLoading }] = useAddLeavesMutation();
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<File[]>([]);
@@ -34,17 +53,35 @@ const LeaveForm = () => {
     try {
       values.from = values.dateRange[0];
       values.to = values.dateRange[1];
-
-      const res = await applyLeaves(values).unwrap();
-      console.log("🚀 ~ onFinish ~ res:", res);
-      SuccessModal("Successfully applied");
-      form.resetFields();
+      if (id) {
+        const res = await updateLeaves({ id, data: values }).unwrap();
+        SuccessModal("Successfully update");
+      } else {
+        const res = await applyLeaves(values).unwrap();
+        SuccessModal("Successfully applied");
+        form.resetFields();
+      }
     } catch (error) {
       ErrorModal(error);
     } finally {
       setImageLoading(false);
     }
   };
+
+  if (leaveLoading) {
+    return <LoadingSkeleton />;
+  }
+
+  const initial = leaveDate?.data
+    ? {
+        ...leaveDate?.data,
+        // dateRange: [moment(leaveDate?.data.from), moment(leaveDate?.data?.to)],
+        dateRange: [
+          dayjs(leaveDate?.data.from, "YYYY-MM-DD"),
+          dayjs(leaveDate?.data?.to, "YYYY-MM-DD"),
+        ],
+      }
+    : {};
 
   return (
     <div>
@@ -55,6 +92,7 @@ const LeaveForm = () => {
           onFinish={onFinish}
           validateMessages={validateMessages}
           style={{ width: "100%" }}
+          initialValues={initial}
         >
           <Row gutter={[16, 16]} style={{ width: "100%" }}>
             <Col xs={24} sm={24} md={12} lg={6}>

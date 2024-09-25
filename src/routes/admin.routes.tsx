@@ -1,4 +1,5 @@
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import EmployeeList from "../pages/admin/employeeManagement/employeeList";
 import CreateProject from "../pages/admin/project/CreateProject";
 import ProjectList from "../pages/admin/project/ProjectList";
 import CheckInOutList from "../pages/checkInOut/checkInOutList";
@@ -32,12 +33,12 @@ export const adminPaths = [
       {
         name: "Employee request",
         path: "employee-request",
-        element: <h1>Employee request</h1>,
+        element: <EmployeeList status="pending" />,
       },
       {
         name: "Employee list",
         path: "employee-list",
-        element: <h1>Employee list</h1>,
+        element: <EmployeeList />,
       },
     ],
   },

@@ -13,8 +13,8 @@ import {
 } from "react-icons/fa";
 import { MdScreenShare, MdCallEnd, MdCancel } from "react-icons/md";
 import { saveAs } from "file-saver";
-import { useStopwatch } from "react-timer-hook"; // Import the react-timer-hook package
-import dayjs from "dayjs"; // Import the dayjs package for formatting
+import { useStopwatch } from "react-timer-hook";
+import dayjs from "dayjs";
 
 type MediaType = "video" | "audio";
 
@@ -38,12 +38,10 @@ const RecordRTCApp: React.FC = () => {
   const liveVideoRef = useRef<HTMLVideoElement | null>(null);
   const cameraVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Timer-related hook from react-timer-hook
   const { seconds, minutes, hours, start, pause, reset } = useStopwatch({
     autoStart: false,
   });
 
-  // Use dayjs for advanced time formatting
   const formatTime = (): string => {
     return dayjs()
       .hour(hours)
@@ -52,7 +50,6 @@ const RecordRTCApp: React.FC = () => {
       .format("HH:mm:ss");
   };
 
-  // Fetch the list of available cameras and microphones
   const getAvailableDevices = async () => {
     const devices = await navigator.mediaDevices.enumerateDevices();
     const videoDevices = devices.filter(
@@ -81,7 +78,6 @@ const RecordRTCApp: React.FC = () => {
     }
   }, [mediaStream, cameraStream]);
 
-  // Camera recording with selected devices in PiP
   const startCameraStream = async () => {
     try {
       const constraints = {
@@ -101,7 +97,6 @@ const RecordRTCApp: React.FC = () => {
     }
   };
 
-  // Screen Recording with Camera in PiP
   const startScreenRecording = async (recordAudio: boolean) => {
     try {
       const screenStream = await navigator.mediaDevices.getDisplayMedia({
@@ -125,26 +120,24 @@ const RecordRTCApp: React.FC = () => {
       setMediaType("video");
       setIsRecording(true);
       setIsScreenSharing(true);
-      startCameraStream(); // Start the camera stream in PiP when screen recording starts
-      start(); // Start the stopwatch timer
+      startCameraStream();
+      start();
     } catch (error) {
       console.error("Error starting screen recording:", error);
     }
   };
 
-  // Stop Screen Share (but continue recording with camera and audio)
   const stopScreenShare = () => {
     if (mediaStream) {
       const videoTrack = mediaStream.getVideoTracks()[0];
       if (videoTrack) {
-        videoTrack.stop(); // Stop screen track
-        mediaStream.removeTrack(videoTrack); // Remove screen track from the stream
+        videoTrack.stop();
+        mediaStream.removeTrack(videoTrack);
         setIsScreenSharing(false);
       }
     }
   };
 
-  // Re-initiate Screen Sharing after it has been stopped
   const restartScreenSharing = async () => {
     try {
       const newScreenStream = await navigator.mediaDevices.getDisplayMedia({
@@ -152,9 +145,9 @@ const RecordRTCApp: React.FC = () => {
       });
       const newScreenTrack = newScreenStream.getVideoTracks()[0];
       if (mediaStream && recorderRef.current) {
-        mediaStream.addTrack(newScreenTrack); // Add new screen track
+        mediaStream.addTrack(newScreenTrack);
         //@ts-ignore
-        recorderRef.current.stream = mediaStream; // Update RecordRTC's stream to include new screen track
+        recorderRef.current.stream = mediaStream;
         setIsScreenSharing(true);
       }
     } catch (error) {
@@ -164,7 +157,7 @@ const RecordRTCApp: React.FC = () => {
 
   const stopRecording = async () => {
     setIsRecording(false);
-    pause(); // Pause the timer when recording stops
+    pause();
     await recorderRef.current?.stopRecording(() => {
       const blob = recorderRef.current?.getBlob();
       if (blob) {
@@ -172,10 +165,10 @@ const RecordRTCApp: React.FC = () => {
       }
     });
     mediaStream?.getTracks().forEach((track) => track.stop());
-    cameraStream?.getTracks().forEach((track) => track.stop()); // Stop the camera stream too
+    cameraStream?.getTracks().forEach((track) => track.stop());
     setMediaStream(null);
-    setCameraStream(null); // Clear the camera stream
-    reset(); // Reset the stopwatch timer
+    setCameraStream(null);
+    reset();
   };
 
   const downloadRecording = () => {
@@ -185,7 +178,6 @@ const RecordRTCApp: React.FC = () => {
     }
   };
 
-  // Toggle mute/unmute audio
   const toggleMuteAudio = () => {
     if (mediaStream) {
       mediaStream.getAudioTracks().forEach((track) => {
@@ -195,7 +187,6 @@ const RecordRTCApp: React.FC = () => {
     }
   };
 
-  // Toggle camera on/off
   const toggleCamera = () => {
     if (cameraStream) {
       cameraStream.getVideoTracks().forEach((track) => {
@@ -205,26 +196,23 @@ const RecordRTCApp: React.FC = () => {
     }
   };
 
-  // Pause/Resume recording and pause the timer
   const togglePauseResumeRecording = () => {
     if (recorderRef.current) {
       if (recorderRef.current.getState() === "paused") {
         recorderRef.current.resumeRecording();
         setIsPaused(false);
-        start(); // Resume the timer when recording is resumed
+        start();
       } else {
         recorderRef.current.pauseRecording();
         setIsPaused(true);
-        pause(); // Pause the timer when recording is paused
+        pause();
       }
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center text-white">
-      {/* Device Selection */}
       <div className="my-4 flex space-x-4 ">
-        {/* Camera Selection Dropdown */}
         <div className="flex flex-col">
           <label
             htmlFor="cameraSelect"
@@ -246,7 +234,6 @@ const RecordRTCApp: React.FC = () => {
           </select>
         </div>
 
-        {/* Microphone Selection Dropdown */}
         <div className="flex flex-col">
           <label
             htmlFor="microphoneSelect"
@@ -282,7 +269,7 @@ const RecordRTCApp: React.FC = () => {
               No video stream
             </div>
           )}
-          {/* Camera in Picture-in-Picture */}
+
           {isRecording && cameraStream && (
             <video
               ref={cameraVideoRef}
@@ -292,14 +279,12 @@ const RecordRTCApp: React.FC = () => {
             />
           )}
 
-          {/* Timer Display */}
           {isRecording && (
             <div className="absolute top-4 left-4 bg-gray-800 text-white p-2 rounded">
               Time Elapsed: {formatTime()}
             </div>
           )}
 
-          {/* Animated Recording Icon */}
           {isRecording && !isPaused && (
             <div className="absolute top-4 right-4">
               <div className=" animate-pulse">
@@ -311,9 +296,7 @@ const RecordRTCApp: React.FC = () => {
           )}
         </div>
 
-        {/* Control Bar */}
         <div className="control-bar mt-4 flex justify-center space-x-6 py-3 bg-gray-700 rounded-md">
-          {/* Mute/Unmute */}
           <button onClick={toggleMuteAudio} className="control-button">
             {isAudioMuted ? (
               <FaMicrophoneSlash size={24} />
@@ -322,12 +305,10 @@ const RecordRTCApp: React.FC = () => {
             )}
           </button>
 
-          {/* Toggle Camera */}
           <button onClick={toggleCamera} className="control-button">
             {isCameraOn ? <FaVideo size={24} /> : <FaVideoSlash size={24} />}
           </button>
 
-          {/* Pause/Resume */}
           <button
             onClick={togglePauseResumeRecording}
             className="control-button"
@@ -335,12 +316,10 @@ const RecordRTCApp: React.FC = () => {
             {isPaused ? <FaPlay size={24} /> : <FaPause size={24} />}
           </button>
 
-          {/* Stop Recording */}
           <button onClick={stopRecording} className="control-button">
             <FaStop size={24} />
           </button>
 
-          {/* Screen Recording */}
           {!isRecording && (
             <button
               onClick={() => startScreenRecording(true)}
@@ -350,7 +329,6 @@ const RecordRTCApp: React.FC = () => {
             </button>
           )}
 
-          {/* Stop Screen Sharing */}
           {isScreenSharing && (
             <button
               onClick={stopScreenShare}
@@ -360,7 +338,6 @@ const RecordRTCApp: React.FC = () => {
             </button>
           )}
 
-          {/* Restart Screen Sharing */}
           {!isScreenSharing && isRecording && (
             <button
               onClick={restartScreenSharing}
@@ -370,14 +347,12 @@ const RecordRTCApp: React.FC = () => {
             </button>
           )}
 
-          {/* Download Recording */}
           {!isRecording && mediaBlobUrl && (
             <button onClick={downloadRecording} className="control-button">
               <FaDownload size={24} />
             </button>
           )}
 
-          {/* End Call */}
           <button
             onClick={stopRecording}
             className="control-button bg-red-600 hover:bg-red-700 rounded-full p-2"
@@ -387,7 +362,6 @@ const RecordRTCApp: React.FC = () => {
         </div>
       </div>
 
-      {/* Media Preview Section */}
       {!isRecording && mediaBlobUrl && (
         <div className="mt-4 bg-gray-800 p-4 rounded-md w-full max-w-4xl">
           <ReactPlayer

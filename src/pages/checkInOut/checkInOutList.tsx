@@ -111,7 +111,9 @@ const CheckInOutList = () => {
             className="w-8 h-8 md:h-12 md:w-12  rounded-full"
             alt=""
           />
-          <p>{record.name.firstName + " " + record.name.lastName}</p>
+          <p className="truncate">
+            {record.name.firstName + " " + record.name.lastName}
+          </p>
         </div>
       ),
       width: 250,

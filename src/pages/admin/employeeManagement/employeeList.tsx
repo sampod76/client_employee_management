@@ -1,37 +1,29 @@
-import React from "react";
-import DivContainer from "../../../components/ui/DivContainer";
-import { Button, Dropdown, Input, Menu, Space, Tag, message } from "antd";
+import { Button, Dropdown, Input, Menu, Space, Tag } from "antd";
 
-import {
-  EditOutlined,
-  DeleteOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-import dayjs from "dayjs";
-import { useAppSelector, useDebounced } from "../../../redux/hooks";
-import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
-import {
-  useApprovedOrDeclinedMutation,
-  useDeleteLeavesMutation,
-  useGetAllLeavesQuery,
-} from "../../../redux/features/admin/leavesApi";
-import CustomImageTag from "../../../components/ui/CustomTag/CustomImage";
-import ActionBar from "../../../components/ui/ActionBar";
-import UMTable from "../../../components/ui/UMTable";
 import { Link } from "react-router-dom";
+import ActionBar from "../../../components/ui/ActionBar";
+import CustomImageTag from "../../../components/ui/CustomTag/CustomImage";
+import UMTable from "../../../components/ui/UMTable";
+import {
+  useDeleteEmployeeMutation,
+  useGetAllEmployeeQuery,
+  useUpdateEmployeeMutation,
+} from "../../../redux/features/admin/employeeApi";
+import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
+import { useAppSelector, useDebounced } from "../../../redux/hooks";
 import {
   ConfirmModal,
   ErrorModal,
   SuccessModal,
 } from "../../../utils/modalHook";
-import ModalComponent from "../../../components/Modal/ModalComponents";
-export default function LeaveList({ status }: { status?: string }) {
+export default function EmployeeList({ status }: { status?: string }) {
   const [deleteLeaves, { isLoading: deleteLoading }] =
-    useDeleteLeavesMutation();
-  const [addApprovedOrDeclined, { isLoading: ApprovedLoading }] =
-    useApprovedOrDeclinedMutation();
+    useDeleteEmployeeMutation();
+  const [updateEmployee, { isLoading: ApprovedLoading }] =
+    useUpdateEmployeeMutation();
 
   const user = useAppSelector(selectCurrentUser);
   const query: Record<string, any> = {};
@@ -46,12 +38,9 @@ export default function LeaveList({ status }: { status?: string }) {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
-  query["sortOrder"] = sortOrder;
-  if (user?.role !== "admin") {
-    query["employeeUserId"] = user?.userId;
-  }
+
   if (status) {
-    query["requestStatus"] = status;
+    query["verify"] = status;
   }
 
   const debouncedSearchTerm = useDebounced({
@@ -62,7 +51,7 @@ export default function LeaveList({ status }: { status?: string }) {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading, isFetching } = useGetAllLeavesQuery({ ...query });
+  const { data, isLoading, isFetching } = useGetAllEmployeeQuery({ ...query });
 
   //@ts-ignore
   const checkInOutData = data?.data;
@@ -75,6 +64,7 @@ export default function LeaveList({ status }: { status?: string }) {
         if (res.isConfirmed) {
           try {
             const res = await deleteLeaves(id).unwrap();
+            console.log("🚀 ~ res:", res);
             SuccessModal("Successfully Deleted");
           } catch (error: any) {
             ErrorModal(error);
@@ -85,15 +75,16 @@ export default function LeaveList({ status }: { status?: string }) {
   };
 
   const handleApproved = async (id: string) => {
-    ConfirmModal({ message: `Are you sure you want to Approved` }).then(
+    ConfirmModal({ message: `Are you sure you want to Accept` }).then(
       async (res) => {
         if (res.isConfirmed) {
           try {
-            const res = await addApprovedOrDeclined({
+            const res = await updateEmployee({
               id,
-              data: { requestStatus: "approved" },
+              data: { verify: "accept" },
             }).unwrap();
             SuccessModal("Successfully Approved");
+            console.log("🚀 ~ res:", res);
           } catch (error: any) {
             ErrorModal(error);
           }
@@ -107,9 +98,9 @@ export default function LeaveList({ status }: { status?: string }) {
       async (res) => {
         if (res.isConfirmed) {
           try {
-            const res = await deleteLeaves({
+            const res = await updateEmployee({
               id,
-              data: { requestStatus: "declined" },
+              data: { verify: "cancel" },
             }).unwrap();
             SuccessModal("Successfully Declined");
           } catch (error: any) {
@@ -121,8 +112,8 @@ export default function LeaveList({ status }: { status?: string }) {
   };
   const columns = [
     {
-      title: "Employee",
-      dataIndex: ["employee", "details"],
+      title: "",
+      //   dataIndex: ["employee", "details"],
       ellipsis: true,
       render: (record: any) => (
         <div className="flex justify-start items-center gap-1">
@@ -143,65 +134,32 @@ export default function LeaveList({ status }: { status?: string }) {
     },
     {
       title: "Email",
-      dataIndex: ["employee", "details", "email"],
-      width: 250,
-    },
-    {
-      title: "Leave Type",
-      dataIndex: "leaveType",
-      key: "leaveType",
-    },
-    {
-      title: "From Date",
-      dataIndex: "from",
-      key: "from",
+      dataIndex: ["email"],
       width: 150,
-      render: (record: string) => {
-        return new Date(record).toDateString();
-      },
+      ellipsis: true,
     },
     {
-      title: "To Date",
-      dataIndex: "to",
-      key: "to",
+      title: "ContactNumber",
+      dataIndex: ["contactNumber"],
       width: 150,
-      render: (record: string) => {
-        return new Date(record).toDateString();
-      },
+      ellipsis: true,
+    },
+    {
+      title: "nid",
+      dataIndex: "nid",
+      key: "nid",
+      ellipsis: true,
+    },
+    {
+      title: "gender",
+      dataIndex: "gender",
+      key: "gender",
     },
 
     {
-      title: "Day Type",
-      dataIndex: "dayType",
-      key: "dayType",
-    },
-    {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
-    },
-    {
-      title: "Reason",
-      dataIndex: "reason",
-      key: "reason",
-      width: 150,
-      render: (record: string) => {
-        return (
-          <ModalComponent buttonText="view reason">
-            <p>{record}</p>
-          </ModalComponent>
-        );
-      },
-    },
-    {
-      title: "Total",
-      dataIndex: "totalLeaveDays",
-      key: "totalLeaveDays",
-    },
-    {
       title: "Status",
-      dataIndex: "requestStatus",
-      key: "status",
+      dataIndex: "verify",
+      key: "verify",
       render: (status: string) => {
         let color = "";
         let text = "";
@@ -211,11 +169,11 @@ export default function LeaveList({ status }: { status?: string }) {
             color = "orange";
             text = "Pending";
             break;
-          case "approved":
+          case "accept":
             color = "green";
             text = "Approved";
             break;
-          case "declined":
+          case "cancel":
             color = "red";
             text = "Declined";
             break;
@@ -237,49 +195,34 @@ export default function LeaveList({ status }: { status?: string }) {
             <Dropdown
               overlay={
                 <Menu>
-                  {user?.role !== "admin" && (
-                    <Menu.Item key="edit">
-                      <Button
-                        type="link"
-                        icon={<EditOutlined />}
-                        //   onClick={() => handleEdit(record._id)}
+                  <Menu.Item key="View">
+                    <Button
+                      type="link"
+                      style={{ color: "red" }}
+                      loading={deleteLoading}
+                      //   icon={<DeleteOutlined style={{ color: "red" }} />}
+                    >
+                      <Link
+                        to={`/${user?.role}/employee-profile-and-editor?id=${record._id}`}
                       >
-                        <Link
-                          to={`/${user?.role}/leave-application-and-editor?id=${record._id}`}
-                        >
-                          Edit
-                        </Link>
-                      </Button>
-                    </Menu.Item>
-                  )}
-                  {user?.role !== "admin" && (
-                    <Menu.Item key="delete">
-                      <Button
-                        type="link"
-                        style={{ color: "red" }}
-                        loading={deleteLoading}
-                        icon={<DeleteOutlined style={{ color: "red" }} />}
-                        onClick={() => handleDelete(record._id)}
-                      >
-                        Delete
-                      </Button>
-                    </Menu.Item>
-                  )}
-
-                  {user?.role === "admin" && (
+                        View
+                      </Link>
+                    </Button>
+                  </Menu.Item>
+                  {user?.role === "admin" && record.verify === "pending" && (
                     <Menu.Item key="approved">
                       <Button
                         type="link"
                         style={{ color: "green" }}
                         loading={deleteLoading}
-                        icon={<DeleteOutlined style={{ color: "green" }} />}
+                        // icon={<DeleteOutlined style={{ color: "green" }} />}
                         onClick={() => handleApproved(record._id)}
                       >
                         Approved
                       </Button>
                     </Menu.Item>
                   )}
-                  {user?.role === "admin" && (
+                  {user?.role === "admin" && record.verify === "pending" && (
                     <Menu.Item key="Declined">
                       <Button
                         type="link"
@@ -292,6 +235,17 @@ export default function LeaveList({ status }: { status?: string }) {
                       </Button>
                     </Menu.Item>
                   )}
+                  <Menu.Item key="Delete">
+                    <Button
+                      type="link"
+                      style={{ color: "red" }}
+                      loading={deleteLoading}
+                      icon={<DeleteOutlined style={{ color: "red" }} />}
+                      onClick={() => handleDelete(record._id)}
+                    >
+                      Delete
+                    </Button>
+                  </Menu.Item>
                 </Menu>
               }
             >

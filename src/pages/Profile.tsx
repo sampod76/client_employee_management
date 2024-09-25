@@ -2,8 +2,8 @@ import React from "react";
 import { useGetProfileQuery } from "../redux/features/auth/authApi";
 import LoadingSkeleton from "../components/ui/Loading/LoadingSkeleton";
 
-const Profile = () => {
-  const { data, isLoading } = useGetProfileQuery({});
+const Profile = ({ id }: { id?: string }) => {
+  const { data, isLoading } = useGetProfileQuery({}, { skip: !Boolean(id) });
   console.log("🚀 ~ Profile ~ data:", data);
 
   const formatDate = (date: string | number | Date) =>

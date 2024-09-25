@@ -57,6 +57,17 @@ export const taskManagementApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.TaskManagement],
     }),
+    updateSubmitTaskManagement: build.mutation({
+      query: ({ data, id }) => {
+        return {
+          url: `${URL}/submit-task/${id}`,
+          method: "PATCH",
+          data: data,
+          contentType: "multipart/form-data",
+        };
+      },
+      invalidatesTags: [tagTypes.TaskManagement],
+    }),
 
     deleteTaskManagement: build.mutation({
       query: (id) => ({
@@ -74,4 +85,5 @@ export const {
   useGetAllTaskManagementQuery,
   useGetSingleTaskManagementQuery,
   useUpdateTaskManagementMutation,
+  useUpdateSubmitTaskManagementMutation,
 } = taskManagementApi;

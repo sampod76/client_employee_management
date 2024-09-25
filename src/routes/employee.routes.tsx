@@ -1,4 +1,8 @@
 import ProjectView from "@pages/admin/project/ViewProject";
+import CreateTask from "@pages/teskManagement/CreateTask";
+import SubmitTask from "@pages/teskManagement/SubmitTask";
+import TaskList from "@pages/teskManagement/TaskList";
+import ViewTask from "@pages/teskManagement/ViewTask";
 import CreateProject from "../pages/admin/project/CreateProject";
 import ProjectList from "../pages/admin/project/ProjectList";
 import CheckInOut from "../pages/checkInOut/checkInOut";
@@ -8,9 +12,6 @@ import LeaveApplication from "../pages/employee/LeaveManagement/LeaveApplication
 import LeaveList from "../pages/employee/LeaveManagement/LeaveList";
 import LoginHistory from "../pages/LoginHistory";
 import Profile from "../pages/Profile";
-import CreateTask from "@pages/teskManagement/CreateTask";
-import TaskList from "@pages/teskManagement/TaskList";
-import ViewTask from "@pages/teskManagement/ViewTask";
 
 export const employeePaths = [
   {
@@ -87,6 +88,11 @@ export const employeePaths = [
         // name: "Task List",
         path: "task-view/:id",
         element: <ViewTask />,
+      },
+      {
+        // name: "Task List",
+        path: "task-submit/:id",
+        element: <SubmitTask />,
       },
     ],
   },

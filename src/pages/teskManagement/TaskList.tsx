@@ -166,6 +166,17 @@ export default function TaskList() {
                         </Link>
                       </Button>
                     </Menu.Item>
+                    <Menu.Item key="submit task">
+                      <Button
+                        type="link"
+                        // icon={<EditOutlined />}
+                        //   onClick={() => handleEdit(record._id)}
+                      >
+                        <Link to={`/${user?.role}/task-submit/${record._id}`}>
+                          Progress/Submit task
+                        </Link>
+                      </Button>
+                    </Menu.Item>
                     {editAuthor && (
                       <Menu.Item key="edit">
                         <Button

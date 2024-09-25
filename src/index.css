@@ -5,3 +5,16 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/* .ant-transfer {
+  width: 100 !important;
+}
+
+.ant-transfer-list {
+  width: 100 !important;
+  flex: 1;
+}
+
+.ant-transfer-list-body {
+  white-space: normal;
+} */

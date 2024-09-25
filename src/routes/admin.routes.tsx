@@ -40,6 +40,11 @@ export const adminPaths = [
         path: "employee-list",
         element: <EmployeeList />,
       },
+      {
+        // name: "Employee list",
+        path: "employee-profile-and-editor",
+        element: <Profile />,
+      },
     ],
   },
   {

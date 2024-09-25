@@ -1,12 +1,11 @@
-import React from "react";
-import Profile from "../../Profile";
 import { useParams } from "react-router-dom";
+import Profile from "../../Profile";
 
 export default function EmployeeProfileViewEdit() {
   const { id } = useParams();
   return (
     <div>
-      <Profile id={id} />
+      <Profile />
     </div>
   );
 }

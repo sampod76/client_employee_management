@@ -98,6 +98,7 @@ const Register = () => {
       navigate("/login");
       setIsReset(true);
     } catch (error) {
+      ErrorModal(error);
       console.log("🚀 ~ submitFrom ~ error:", error);
     }
   };

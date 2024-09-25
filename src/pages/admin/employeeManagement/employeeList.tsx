@@ -67,6 +67,7 @@ export default function EmployeeList({ status }: { status?: string }) {
             console.log("🚀 ~ res:", res);
             SuccessModal("Successfully Deleted");
           } catch (error: any) {
+            console.log("🚀 ~ error:", error);
             ErrorModal(error);
           }
         }
@@ -86,6 +87,7 @@ export default function EmployeeList({ status }: { status?: string }) {
             SuccessModal("Successfully Approved");
             console.log("🚀 ~ res:", res);
           } catch (error: any) {
+            console.log("🚀 ~ error:", error);
             ErrorModal(error);
           }
         }

@@ -8,6 +8,9 @@ import LeaveApplication from "../pages/employee/LeaveManagement/LeaveApplication
 import LeaveList from "../pages/employee/LeaveManagement/LeaveList";
 import LoginHistory from "../pages/LoginHistory";
 import Profile from "../pages/Profile";
+import CreateTask from "@pages/teskManagement/CreateTask";
+import TaskList from "@pages/teskManagement/TaskList";
+import ViewTask from "@pages/teskManagement/ViewTask";
 
 export const employeePaths = [
   {
@@ -64,6 +67,26 @@ export const employeePaths = [
       {
         path: "project-view/:id",
         element: <ProjectView />,
+      },
+    ],
+  },
+  {
+    name: "Task management",
+    children: [
+      {
+        name: "Create Task",
+        path: "create-edit-task",
+        element: <CreateTask />,
+      },
+      {
+        name: "Task List",
+        path: "task-list",
+        element: <TaskList />,
+      },
+      {
+        // name: "Task List",
+        path: "task-view/:id",
+        element: <ViewTask />,
       },
     ],
   },

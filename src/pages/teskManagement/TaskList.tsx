@@ -155,6 +155,17 @@ export default function TaskList() {
               <Dropdown
                 overlay={
                   <Menu>
+                    <Menu.Item key="view">
+                      <Button
+                        type="link"
+                        // icon={<EditOutlined />}
+                        //   onClick={() => handleEdit(record._id)}
+                      >
+                        <Link to={`/${user?.role}/task-view/${record._id}`}>
+                          View
+                        </Link>
+                      </Button>
+                    </Menu.Item>
                     {editAuthor && (
                       <Menu.Item key="edit">
                         <Button

@@ -1,35 +1,27 @@
-import React from "react";
-import DivContainer from "../../../components/ui/DivContainer";
-import { Button, Dropdown, Input, Menu, Space, Tag, message } from "antd";
+import { Button, Dropdown, Input, Menu, Space } from "antd";
 
 import {
-  EditOutlined,
   DeleteOutlined,
+  EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 
-import dayjs from "dayjs";
-import { useAppSelector, useDebounced } from "../../../redux/hooks";
-import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
-import {
-  useDeleteLeavesMutation,
-  useGetAllLeavesQuery,
-} from "../../../redux/features/admin/leavesApi";
-import CustomImageTag from "../../../components/ui/CustomTag/CustomImage";
-import ActionBar from "../../../components/ui/ActionBar";
-import UMTable from "../../../components/ui/UMTable";
 import { Link } from "react-router-dom";
+import ActionBar from "../../../components/ui/ActionBar";
+import CustomImageTag from "../../../components/ui/CustomTag/CustomImage";
+import UMTable from "../../../components/ui/UMTable";
+import {
+  useDeleteProjectsMutation,
+  useGetAllProjectsQuery,
+} from "../../../redux/features/admin/projectApi";
+import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
+import { useAppSelector, useDebounced } from "../../../redux/hooks";
 import {
   ConfirmModal,
   ErrorModal,
   SuccessModal,
 } from "../../../utils/modalHook";
-import ModalComponent from "../../../components/Modal/ModalComponents";
-import {
-  useDeleteProjectsMutation,
-  useGetAllProjectsQuery,
-} from "../../../redux/features/admin/projectApi";
 export default function ProjectList() {
   const [deleteLeaves, { isLoading: deleteLoading }] =
     useDeleteProjectsMutation();
@@ -112,46 +104,67 @@ export default function ProjectList() {
     {
       title: "Action",
       width: 120,
-      render: (record: any) => (
-        <>
-          <Space size="middle">
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.Item key="edit">
-                    <Button
-                      type="link"
-                      icon={<EditOutlined />}
-                      //   onClick={() => handleEdit(record._id)}
-                    >
-                      <Link
-                        to={`/${user?.role}/create-edit-project?id=${record._id}`}
+      render: (record: any) => {
+        let editAuthor = false;
+        if (record.author.userId === user?.userId || user?.role === "admin") {
+          editAuthor = true;
+        }
+        return (
+          <>
+            <Space size="middle">
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key="viw">
+                      <Button
+                        type="link"
+                        // icon={<EditOutlined />}
+                        //   onClick={() => handleEdit(record._id)}
                       >
-                        Edit
-                      </Link>
-                    </Button>
-                  </Menu.Item>
-                  <Menu.Item key="delete">
-                    <Button
-                      type="link"
-                      style={{ color: "red" }}
-                      loading={deleteLoading}
-                      icon={<DeleteOutlined style={{ color: "red" }} />}
-                      onClick={() => handleDelete(record._id)}
-                    >
-                      Delete
-                    </Button>
-                  </Menu.Item>
-                </Menu>
-              }
-            >
-              <Button type="link" className="text-blue-700">
-                Action
-              </Button>
-            </Dropdown>
-          </Space>
-        </>
-      ),
+                        <Link to={`/${user?.role}/project-view/${record._id}`}>
+                          View
+                        </Link>
+                      </Button>
+                    </Menu.Item>
+                    {editAuthor && (
+                      <Menu.Item key="edit">
+                        <Button
+                          type="link"
+                          icon={<EditOutlined />}
+                          //   onClick={() => handleEdit(record._id)}
+                        >
+                          <Link
+                            to={`/${user?.role}/create-edit-project?id=${record._id}`}
+                          >
+                            Edit
+                          </Link>
+                        </Button>
+                      </Menu.Item>
+                    )}
+                    {editAuthor && (
+                      <Menu.Item key="delete">
+                        <Button
+                          type="link"
+                          style={{ color: "red" }}
+                          loading={deleteLoading}
+                          icon={<DeleteOutlined style={{ color: "red" }} />}
+                          onClick={() => handleDelete(record._id)}
+                        >
+                          Delete
+                        </Button>
+                      </Menu.Item>
+                    )}
+                  </Menu>
+                }
+              >
+                <Button type="link" className="text-blue-700">
+                  Action
+                </Button>
+              </Dropdown>
+            </Space>
+          </>
+        );
+      },
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {

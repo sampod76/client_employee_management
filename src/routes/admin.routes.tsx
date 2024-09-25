@@ -1,3 +1,4 @@
+import ProjectView from "@pages/admin/project/ViewProject";
 import CreateTask from "@pages/teskManagement/CreateTask";
 import TaskList from "@pages/teskManagement/TaskList";
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -77,6 +78,10 @@ export const adminPaths = [
         path: "project-list",
         element: <ProjectList />,
       },
+      {
+        path: "project-view/:id",
+        element: <ProjectView />,
+      },
     ],
   },
   {
@@ -90,6 +95,11 @@ export const adminPaths = [
       {
         name: "Task List",
         path: "task-list",
+        element: <TaskList />,
+      },
+      {
+        // name: "Task List",
+        path: "task-list/view/:id",
         element: <TaskList />,
       },
     ],

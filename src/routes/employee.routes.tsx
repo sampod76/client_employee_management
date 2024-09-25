@@ -1,3 +1,4 @@
+import ProjectView from "@pages/admin/project/ViewProject";
 import CreateProject from "../pages/admin/project/CreateProject";
 import ProjectList from "../pages/admin/project/ProjectList";
 import CheckInOut from "../pages/checkInOut/checkInOut";
@@ -59,6 +60,10 @@ export const employeePaths = [
         name: "Project List",
         path: "project-list",
         element: <ProjectList />,
+      },
+      {
+        path: "project-view/:id",
+        element: <ProjectView />,
       },
     ],
   },

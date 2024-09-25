@@ -67,7 +67,7 @@ function ProjectLandingPage() {
               <div className="mb-4">
                 <h3 className="text-gray-700 font-bold mb-2">Features:</h3>
                 <ul className="list-disc list-inside text-gray-600">
-                  {project.featureList.map((feature, index) => (
+                  {project.featureList.map((feature: any, index: number) => (
                     <li key={index}>{feature?.title}</li>
                   ))}
                 </ul>

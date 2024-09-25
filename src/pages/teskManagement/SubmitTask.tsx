@@ -118,6 +118,7 @@ function SubmitTask() {
                 style={{ width: 120 }}
                 onChange={handleProgressChange}
                 defaultValue={TaskDetails?.taskProgressStatus}
+                disabled={TaskDetails?.taskProgressStatus !== "toDo"}
                 options={[
                   { value: "toDo", label: "To Do", disabled: true },
                   { value: "inProgress", label: "In Progress" },

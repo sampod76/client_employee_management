@@ -211,6 +211,10 @@ const Register = () => {
               >
                 Submit
               </Button>
+              <p className="text-red-500 ">
+                note: When successfully submitted opt then wait for admin
+                approval
+              </p>
             </div>
           )}
 

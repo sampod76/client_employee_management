@@ -13,11 +13,12 @@ import ForgetPassword from "./ForgetPassword";
 import { ErrorModal } from "../utils/modalHook";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { setToLocalStorage } from "../utils/local-storage";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  const [error, setError] = useState("");
   const [login, { isLoading }] = useLoginMutation();
 
   const onSubmit = async (data: FieldValues) => {
@@ -37,8 +38,10 @@ const Login = () => {
       );
       setToLocalStorage("token", res.accessToken);
       navigate(`/${user.role}/dashboard`);
-    } catch (err) {
+      setError("");
+    } catch (err: any) {
       console.log("🚀 ~ onSubmit ~ err:", err);
+      setError(err?.message);
       ErrorModal(err);
     }
   };
@@ -126,6 +129,7 @@ const Login = () => {
                   </span>
                 </Link>
               </div>
+              <p className="text-red-500 text-center">{error}</p>
             </Form.Item>
           </Form>
         </div>

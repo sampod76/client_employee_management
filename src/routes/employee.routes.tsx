@@ -28,7 +28,7 @@ export const employeePaths = [
     element: <LoginHistory />,
   },
   {
-    name: "Check In/Out list",
+    name: "Check In/Out List",
     path: "check-in-out-list",
     element: <CheckInOutList />,
   },
@@ -41,7 +41,7 @@ export const employeePaths = [
         element: <LeaveApplication />,
       },
       {
-        name: "Leave list",
+        name: "Leave List",
         path: "leave-list",
         element: <LeaveList />,
       },
@@ -56,7 +56,7 @@ export const employeePaths = [
         element: <CreateProject />,
       },
       {
-        name: "Project list",
+        name: "Project List",
         path: "project-list",
         element: <ProjectList />,
       },

@@ -36,7 +36,7 @@ export const adminPaths = [
         element: <EmployeeList status="pending" />,
       },
       {
-        name: "Employee list",
+        name: "Employee List",
         path: "employee-list",
         element: <EmployeeList />,
       },
@@ -56,7 +56,7 @@ export const adminPaths = [
         element: <LeaveList status={"pending"} />,
       },
       {
-        name: "Leave list",
+        name: "Leave List",
         path: "leave-list",
         element: <LeaveList />,
       },
@@ -71,7 +71,7 @@ export const adminPaths = [
         element: <CreateProject />,
       },
       {
-        name: "Project list",
+        name: "Project List",
         path: "project-list",
         element: <ProjectList />,
       },

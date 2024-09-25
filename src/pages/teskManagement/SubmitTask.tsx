@@ -83,6 +83,9 @@ function SubmitTask() {
       if (taskProgressStatus) {
         value.taskProgressStatus = taskProgressStatus;
       }
+      if (TaskDetails?.taskList.length === transferredTitles.length) {
+        value.taskProgressStatus = "done";
+      }
       value.completedTaskList = transferredTitles;
       const res = await submitTaskManage({ id, data: value }).unwrap();
       console.log("🚀 ~ onSubmit ~ res:", res);
@@ -118,7 +121,7 @@ function SubmitTask() {
                 options={[
                   { value: "toDo", label: "To Do", disabled: true },
                   { value: "inProgress", label: "In Progress" },
-                  { value: "done", label: "Done" },
+                  //   { value: "done", label: "Done", disabled: true },
                 ]}
               />
               <Button

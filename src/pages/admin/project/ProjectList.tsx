@@ -103,6 +103,11 @@ export default function ProjectList() {
       dataIndex: ["title"],
       width: 250,
     },
+    {
+      title: "Title",
+      dataIndex: ["title"],
+      width: 250,
+    },
 
     {
       title: "Action",

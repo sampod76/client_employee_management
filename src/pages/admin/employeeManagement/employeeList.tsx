@@ -132,18 +132,18 @@ export default function EmployeeList({ status }: { status?: string }) {
           </p>
         </div>
       ),
-      width: 250,
+      // width: 250,
     },
     {
       title: "Email",
       dataIndex: ["email"],
-      width: 150,
+      width: 300,
       ellipsis: true,
     },
     {
       title: "ContactNumber",
       dataIndex: ["contactNumber"],
-      width: 150,
+      width: 200,
       ellipsis: true,
     },
     {
@@ -151,17 +151,20 @@ export default function EmployeeList({ status }: { status?: string }) {
       dataIndex: "nid",
       key: "nid",
       ellipsis: true,
+      width: 200,
     },
     {
       title: "gender",
       dataIndex: "gender",
       key: "gender",
+      width: 200,
     },
 
     {
       title: "Status",
       dataIndex: "verify",
       key: "verify",
+      width: 100,
       render: (status: string) => {
         let color = "";
         let text = "";

@@ -1,3 +1,5 @@
+import CreateTask from "@pages/teskManagement/CreateTask";
+import TaskList from "@pages/teskManagement/TaskList";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import EmployeeList from "../pages/admin/employeeManagement/employeeList";
 import CreateProject from "../pages/admin/project/CreateProject";
@@ -74,6 +76,21 @@ export const adminPaths = [
         name: "Project List",
         path: "project-list",
         element: <ProjectList />,
+      },
+    ],
+  },
+  {
+    name: "Task management",
+    children: [
+      {
+        name: "Create Task",
+        path: "create-edit-task",
+        element: <CreateTask />,
+      },
+      {
+        name: "Task List",
+        path: "task-list",
+        element: <TaskList />,
       },
     ],
   },

@@ -1,18 +1,29 @@
 import { Button, Layout } from "antd";
-import { Link, Outlet } from "react-router-dom";
-import { logout, selectCurrentUser } from "../../redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import UserAvatarUI from "../ui/NavUI/UserAvatarUI";
-import Sidebar from "./Sidebar";
-const { Header, Content } = Layout;
+import { Content, Header } from "antd/es/layout/layout";
+import { Link, Navigate } from "react-router-dom";
+import Sidebar from "./components/layout/Sidebar";
+import UserAvatarUI from "./components/ui/NavUI/UserAvatarUI";
+import {
+  logout,
+  selectCurrentUser,
+  useCurrentToken,
+} from "./redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 
-const MainLayout = () => {
+const Protect = ({ children }: { children: React.ReactNode }) => {
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
 
-  const handleLogout = () => {
+  const token = useAppSelector(useCurrentToken);
+  // console.log("🚀 ~ ProtectedRoute ~ token:", token);
+  if (!token) {
+    return <Navigate to="/login" replace={true} />;
+  }
+
+  if (!user?.role) {
     dispatch(logout());
-  };
+    return <Navigate to="/login" replace={true} />;
+  }
 
   return (
     <Layout className="max-w-[1990px] mx-auto" style={{ height: "100%" }}>
@@ -20,18 +31,13 @@ const MainLayout = () => {
       <Layout>
         <Header>
           <div className="flex justify-between  items-center h-full">
-            <div className="flex items-center gap-2">
-              <Button type="primary">
-                <Link
-                  to={`/${user?.role}/dashboard`}
-                  className="text-lg text-white"
-                >
-                  <p>Home</p>
-                </Link>
-              </Button>
-              <Button type="primary">
-                <Link to={`/screen-recorder`}>Screen-recorder</Link>
-              </Button>
+            <div>
+              <Link
+                to={`/${user?.role}/dashboard`}
+                className="text-lg text-white"
+              >
+                <p>Home</p>
+              </Link>
             </div>
             <div className="flex  justify-center items-center gap-4">
               {user?.role !== "admin" && (
@@ -50,7 +56,7 @@ const MainLayout = () => {
               minHeight: 360,
             }}
           >
-            <Outlet />
+            {children}
           </div>
         </Content>
       </Layout>
@@ -58,4 +64,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default Protect;

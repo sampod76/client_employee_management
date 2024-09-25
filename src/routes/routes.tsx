@@ -2,26 +2,35 @@ import { createBrowserRouter, Link } from "react-router-dom";
 import App from "../App";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import { adminPaths } from "./admin.routes";
 import { routeGenerator } from "../utils/routesGenerator";
+import { adminPaths } from "./admin.routes";
 
-import { employeePaths } from "./employee.routes";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import ChangePassword from "../pages/ChangePassword";
+import { employeePaths } from "./employee.routes";
 
-import RecordRTCApp from "../pages/screen-recorder/Screen-recorder";
-import FaceUnlock from "../pages/face-unlock/face-unlock";
 import { Button, Result } from "antd";
-import ForgotPassword from "../pages/ForgetPassword";
-import VerifyOtp from "../pages/VerifyOtp";
-import ResetPassword from "../pages/ResetPassword";
 import Dashboard from "../Dashboard";
+import FaceUnlock from "../pages/face-unlock/face-unlock";
+import ForgotPassword from "../pages/ForgetPassword";
 import Profile from "../pages/Profile";
+import ResetPassword from "../pages/ResetPassword";
+import RecordRTCApp from "../pages/screen-recorder/Screen-recorder";
+import VerifyOtp from "../pages/VerifyOtp";
+import Protect from "../Protect";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/screen-recorder",
+    element: (
+      <Protect>
+        <RecordRTCApp />
+      </Protect>
+    ),
   },
   {
     path: "/admin",

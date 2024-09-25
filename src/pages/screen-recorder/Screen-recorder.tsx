@@ -1,20 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
-import RecordRTC from "recordrtc";
-import ReactPlayer from "react-player";
+import dayjs from "dayjs";
+import { saveAs } from "file-saver";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  FaDownload,
   FaMicrophone,
   FaMicrophoneSlash,
-  FaVideo,
-  FaVideoSlash,
   FaPause,
   FaPlay,
   FaStop,
-  FaDownload,
+  FaVideo,
+  FaVideoSlash,
 } from "react-icons/fa";
-import { MdScreenShare, MdCallEnd, MdCancel } from "react-icons/md";
-import { saveAs } from "file-saver";
+import { MdCallEnd, MdCancel, MdScreenShare } from "react-icons/md";
+import ReactPlayer from "react-player";
 import { useStopwatch } from "react-timer-hook";
-import dayjs from "dayjs";
+import RecordRTC from "recordrtc";
 
 type MediaType = "video" | "audio";
 
@@ -326,6 +326,7 @@ const RecordRTCApp: React.FC = () => {
               className="control-button"
             >
               <MdScreenShare size={24} />
+              <p>Start</p>
             </button>
           )}
 

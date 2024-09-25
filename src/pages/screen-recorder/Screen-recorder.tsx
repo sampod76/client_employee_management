@@ -1,3 +1,4 @@
+import axios from "axios";
 import dayjs from "dayjs";
 import { saveAs } from "file-saver";
 import React, { useEffect, useRef, useState } from "react";
@@ -177,6 +178,37 @@ const RecordRTCApp: React.FC = () => {
       saveAs(blob, `recording.${mediaType === "audio" ? "webm" : "webm"}`);
     }
   };
+
+  //------------------------------------------------------------
+
+  const uploadToS3 = async (blob: Blob) => {
+    try {
+      const response = await axios.get("/generate-presigned-url");
+      const { url } = response.data;
+
+      await axios.put(url, blob, {
+        headers: {
+          "Content-Type": "video/webm",
+        },
+      });
+
+      console.log("Successfully uploaded to S3");
+    } catch (error) {
+      console.error("Error uploading to S3:", error);
+    }
+  };
+  const UploadRecording = () => {
+    if (recorderRef.current) {
+      const blob = recorderRef.current.getBlob();
+
+      if (blob) {
+        setMediaBlobUrl(URL.createObjectURL(blob));
+        // Upload the blob to S3
+        uploadToS3(blob);
+      }
+    }
+  };
+  //-------------------------------------------------------------
 
   const toggleMuteAudio = () => {
     if (mediaStream) {

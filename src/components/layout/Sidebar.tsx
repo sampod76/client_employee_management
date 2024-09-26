@@ -10,6 +10,7 @@ import {
   useCurrentToken,
 } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
+import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -20,6 +21,7 @@ const userRole = {
 
 const Sidebar = () => {
   const token = useAppSelector(useCurrentToken);
+  // console.log("🚀 ~ Sidebar ~ token:", token);
   const currentUser = useAppSelector(selectCurrentUser);
 
   let user;
@@ -57,7 +59,12 @@ const Sidebar = () => {
           alignItems: "center",
         }}
       >
-        <h1>PH Uni</h1>
+        <Link
+          to={`/${currentUser?.role}/dashboard`}
+          className="text-lg text-white font-bold text-center p-5"
+        >
+          EMS <br /> ({currentUser?.role!})
+        </Link>
       </div>
       <Menu
         theme="dark"

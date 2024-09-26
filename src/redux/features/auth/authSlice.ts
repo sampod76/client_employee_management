@@ -26,12 +26,16 @@ export type TuserData = {
     firstName: string;
     lastName: string;
   };
+
   email: string;
   contactNumber: string;
   gender: string;
   dateOfBirth?: string;
   address?: string;
   profileImage?: IFileAfterUpload;
+  userId: string;
+  roleBaseUserId: string;
+  role: string;
 };
 
 type TAuthState = {
@@ -69,4 +73,4 @@ export const { setUser, logout } = authSlice.actions;
 export default authSlice.reducer;
 
 export const useCurrentToken = (state: RootState) => state.auth.token;
-export const selectCurrentUser = (state: RootState) => state.auth.user;
+export const selectCurrentUser = (state: RootState) => state.auth.userData;

@@ -1,71 +1,140 @@
-import { Button, Row } from "antd";
+import { Button, Checkbox, Flex, Form, Input, Row, Typography } from "antd";
 import { FieldValues } from "react-hook-form";
-import { useLoginMutation } from "../redux/features/auth/authApi";
+
 import { useAppDispatch } from "../redux/hooks";
 import { TUser, setUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utils/verifyToken";
 import { Link, useNavigate } from "react-router-dom";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { toast } from "sonner";
 import PHForm from "../components/form/PHForm";
 import PHInput from "../components/form/PHInput";
+import ForgetPassword from "./ForgetPassword";
+import { ErrorModal } from "../utils/modalHook";
+import { useLoginMutation } from "../redux/features/auth/authApi";
+import { setToLocalStorage } from "../utils/local-storage";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const [login] = useLoginMutation();
+  const [error, setError] = useState("");
+  const [login, { isLoading }] = useLoginMutation();
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
-    const toastId = toast.loading("Logging in");
 
     try {
-      const res = await login(data).unwrap();
+      const res = await login({ ...data }).unwrap();
       console.log("🚀 ~ onSubmit ~ res:", res);
 
-      const user = verifyToken(res.data.accessToken) as TUser;
+      const user = verifyToken(res.accessToken) as TUser;
       dispatch(
         setUser({
           user: user,
-          userData: res.data.userData,
-          token: res.data.accessToken,
+          userData: res.userData,
+          token: res.accessToken,
         })
       );
-      toast.success("Logged in", { id: toastId, duration: 2000 });
-
-      if (res.data.needsPasswordChange) {
-        navigate(`/change-password`);
-      } else {
-        // navigate(`/${user.role}/dashboard`);
-        navigate(`/`);
-      }
-    } catch (err) {
+      setToLocalStorage("token", res.accessToken);
+      navigate(`/${user.role}/dashboard`);
+      setError("");
+    } catch (err: any) {
       console.log("🚀 ~ onSubmit ~ err:", err);
-      toast.error("Something went wrong", { id: toastId, duration: 2000 });
+      setError(err?.message);
+      ErrorModal(err);
     }
   };
 
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <div
+    <div className="flex h-screen justify-center items-center container mx-auto">
+      <Row
         style={{
-          padding: "0.5rem",
-          marginBottom: "1rem",
-          borderRadius: "0.25rem",
-          borderWidth: "1px",
-          borderColor: "black",
+          borderRadius: "30px",
+          background: "#e0e0e0",
+          boxShadow: "20px 20px 60px #bebebe, -20px -20px 60px #ffffff",
         }}
+        justify="center"
+        align="middle"
+        // style={{ height: "100vh" }}
+        className="w-fit h-fit p-16"
       >
-        <PHForm onSubmit={onSubmit}>
-          <PHInput type="email" name="email" label="Email" />
-          <PHInput type="text" name="password" label="Password" />
-          <Button htmlType="submit">Login</Button>
-          <Button style={{ marginLeft: "15px" }}>
-            <Link to={"/register"}>register</Link>
-          </Button>
-        </PHForm>
-      </div>
-    </Row>
+        <div className="py-5 px-8  ">
+          <div className="mb-6">
+            <h1 className="font-sans">{"Welcome"}</h1>
+            <p className="font-sans">
+              {"Please sign in for better experience"}
+            </p>
+          </div>
+          <Form
+            name="normal_login"
+            className="login-form"
+            initialValues={{ remember: true }}
+            onFinish={onSubmit}
+          >
+            <Typography.Title level={5}>
+              <span className="font-sans">{"Email"}</span>{" "}
+            </Typography.Title>
+            <Form.Item
+              name="email"
+              rules={[{ required: true, message: "Please input your Email!" }]}
+            >
+              <Input
+                size="large"
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder={"Enter your email"}
+              />
+            </Form.Item>
+            <Typography.Title level={5}>{"Password"}</Typography.Title>
+            <Form.Item
+              name="password"
+              rules={[
+                { required: true, message: "Please input your Password!" },
+              ]}
+            >
+              <Input.Password
+                size="large"
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                type="password"
+                placeholder={"Enter your password"}
+              />
+            </Form.Item>
+            <Form.Item>
+              <Flex justify="space-between">
+                <Form.Item name="remember" valuePropName="checked" noStyle>
+                  <Checkbox>
+                    <span className="font-sans">{"Remember me"}</span>
+                  </Checkbox>
+                </Form.Item>
+
+                <Link className="login-form-forgot" to={`/forgot-password`}>
+                  <span className="font-sans">{"Forgot password"}</span>
+                </Link>
+              </Flex>
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                loading={isLoading}
+                type="default"
+                htmlType="submit"
+                className="login-form-button w-full"
+              >
+                {"Login"}
+              </Button>
+              <div className="flex justify-end mt-2 text-lg">
+                <Link className="login-form-forgot" to={`/register`}>
+                  <span className="font-sans text-end">
+                    {"New Account Register"}
+                  </span>
+                </Link>
+              </div>
+              <p className="text-red-500 text-center">{error}</p>
+            </Form.Item>
+          </Form>
+        </div>
+      </Row>
+    </div>
   );
 };
 

@@ -1,13 +1,24 @@
 import { TResponseRedux } from "../../../types";
+import { IMeta } from "../../../types/common";
 import { baseApi } from "../../api/baseApi";
 import { tagTypes } from "../../tag-types";
 
 const URL = "/users";
 
 export const usersEndPoint = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (builder) => ({
+    tempSignUp: builder.mutation({
+      query: (data) => ({
+        url: "/users/temp-user",
+        method: "POST",
+        data: data,
+      }),
+
+      invalidatesTags: [tagTypes.auth],
+    }),
+
     // get all academic departments
-    getAllUsers: build.query({
+    getAllUsers: builder.query({
       query: (arg: Record<string, any>) => {
         return {
           url: URL,
@@ -15,18 +26,17 @@ export const usersEndPoint = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: TResponseRedux<any>) => {
-        // console.log(response);
+      transformResponse: (response: any, meta: IMeta) => {
         return {
-          data: response.data,
-          meta: response.meta,
+          data: response,
+          meta,
         };
       },
       providesTags: [tagTypes.user],
     }),
 
     // get single academic department
-    getSingleUsers: build.query({
+    getSingleUsers: builder.query({
       query: (id: string | string[] | undefined) => ({
         url: `${URL}/${id}`,
         method: "GET",
@@ -35,32 +45,56 @@ export const usersEndPoint = baseApi.injectEndpoints({
       providesTags: [tagTypes.user],
     }),
     // create a new academic department
-    addUsers: build.mutation({
+    addUsers: builder.mutation({
       query: (data) => ({
         url: URL,
         method: "POST",
-        body: data,
+        data: data,
+        contentType: "multipart/form-data",
+
+        // headers: {
+        //   "Content-Type": "multipart/form-data;",
+        // },
+        // formData: true,
       }),
       invalidatesTags: [tagTypes.user],
     }),
     // update ac department
-    updateUsers: build.mutation({
+    updateUsers: builder.mutation({
       query: ({ data, id }) => ({
         url: `${URL}/${id}`,
         method: "PATCH",
-        body: data,
+        data: data,
         // contentType: "multipart/form-data",
       }),
       invalidatesTags: [tagTypes.user],
     }),
 
     // delete ac department
-    deleteUsers: build.mutation({
+    deleteUsers: builder.mutation({
       query: (id) => ({
         url: `${URL}/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [tagTypes.user],
+    }),
+    // delete ac department
+    createTempUser: builder.mutation({
+      query: (data) => ({
+        url: `${URL}/temp-user`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+    createUser: builder.mutation({
+      query: (data) => {
+        return {
+          url: `${URL}`,
+          method: "POST",
+          data: data,
+        };
+      },
     }),
   }),
   overrideExisting: true,
@@ -72,4 +106,6 @@ export const {
   useDeleteUsersMutation,
   useGetAllUsersQuery,
   useGetSingleUsersQuery,
+  //
+  useCreateTempUserMutation,
 } = usersEndPoint;

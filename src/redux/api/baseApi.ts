@@ -12,6 +12,7 @@ import { logout, setUser } from "../features/auth/authSlice";
 import { toast } from "sonner";
 import { getBaseUrl } from "../../helpers/config/envConfig";
 import { tagTypesList } from "../tag-types";
+import { axiosBaseQuery } from "../../helpers/axios/axiosBaseQuery";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: getBaseUrl,
@@ -72,8 +73,12 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 };
 
 export const baseApi = createApi({
-  reducerPath: "baseApi",
-  baseQuery: baseQueryWithRefreshToken,
+  // reducerPath: "baseApi",
+  // baseQuery: baseQueryWithRefreshToken,
+  //---------when axios user then reducerPath= api--------------
+  reducerPath: "api",
+  baseQuery: axiosBaseQuery({ baseUrl: getBaseUrl }),
+  //-----------------------------------------------------------
   tagTypes: tagTypesList,
   endpoints: () => ({}),
 });

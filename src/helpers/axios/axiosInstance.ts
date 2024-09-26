@@ -1,26 +1,24 @@
-import { authKey } from '@/constants/storageKey';
-import { removeUserInfo } from '@/services/auth.service';
-
-import { IGenericErrorResponse, ResponseSuccessType } from '@/types';
+import axios from "axios";
+import { getBaseUrl } from "../config/envConfig";
 import {
   getFromLocalStorage,
-  getRefreshToken,
   setToLocalStorage,
-} from '@/utils/local-storage';
-import axios from 'axios';
-import { getBaseUrl } from '../config/envConfig';
+} from "../../utils/local-storage";
+import { useAppSelector } from "../../redux/hooks";
+import { useCurrentToken } from "../../redux/features/auth/authSlice";
 // import { message } from 'antd';
-
+// const token = useAppSelector(useCurrentToken);
 const instance = axios.create();
-instance.defaults.headers.post['Content-Type'] = 'application/json';
-instance.defaults.headers['Accept'] = 'application/json';
+instance.defaults.headers.post["Content-Type"] = "application/json";
+instance.defaults.headers["Accept"] = "application/json";
 instance.defaults.timeout = 60000;
 
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    const accessToken = getFromLocalStorage(authKey);
+    const accessToken = getFromLocalStorage("token");
+
     if (accessToken) {
       config.headers.Authorization = accessToken;
     }
@@ -28,10 +26,10 @@ instance.interceptors.request.use(
     return config;
   },
   function (error) {
-    console.log('🚀 ~ error:', error);
+    console.log("🚀 ~ error:", error);
     // Do something with request error
     return Promise.reject(error);
-  },
+  }
 );
 
 // Add a response interceptor
@@ -39,7 +37,7 @@ instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
     //// console.log("🚀 ~ response:", response)
-    const responseObject: ResponseSuccessType = {
+    const responseObject: any = {
       data: response?.data?.data,
       meta: response?.data?.meta,
       // success:response?.data?.success,
@@ -50,7 +48,7 @@ instance.interceptors.response.use(
   async function (error) {
     const config = error?.config;
 
-    if (error?.response?.status === 403 && !config?._retry) {
+    if (error?.response?.status === 401 && !config?._retry) {
       config._retry = true;
       try {
         // const response = await getRefreshToken();
@@ -58,17 +56,18 @@ instance.interceptors.response.use(
         const response = await axios.post(
           `${getBaseUrl()}/auth/refresh-token`,
           {},
-          { withCredentials: true },
+          { withCredentials: true }
         );
         const accessToken = response?.data?.data?.accessToken;
         // axios.defaults.headers.common['Authorization'] = accessToken;
-        config.headers['Authorization'] = accessToken;
-        setToLocalStorage(authKey, accessToken);
+        config.headers["Authorization"] = accessToken;
+        setToLocalStorage("token", accessToken);
+        // console.log(JSON.parse(localStorage.getItem("persist:auth")));
         return instance(config);
       } catch (error: any) {
         // removeUserInfo(authKey);
         localStorage.clear();
-        window.location.href = '/login';
+        window.location.href = "/login";
         return Promise.reject(error?.response?.data);
       }
     } else {
@@ -84,7 +83,7 @@ instance.interceptors.response.use(
     */
       let responseObject: any = {
         statusCode: error?.response?.status || 500,
-        message: 'Something went wrong',
+        message: "Something went wrong",
         success: false,
         errorMessages: [],
       };
@@ -97,7 +96,7 @@ instance.interceptors.response.use(
 
         if (error?.response?.data?.errorMessage) {
           responseObject.errorMessages.push(
-            error?.response?.data?.errorMessage,
+            error?.response?.data?.errorMessage
           );
         }
       }
@@ -106,7 +105,7 @@ instance.interceptors.response.use(
     }
 
     // return Promise.reject(error);
-  },
+  }
 );
 
 export { instance };

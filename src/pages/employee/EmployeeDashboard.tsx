@@ -237,7 +237,7 @@ export default function EmployeeDashboard() {
           </p>
           <div className="space-y-2">
             <p className="text-end font-normal text-base lggg:text-lg">
-              Total Work day
+              Total Working day
             </p>
             <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
               <span>{dashboard?.totalCheckInOffice || 0}</span>

@@ -1,9 +1,11 @@
 import ProjectView from "@pages/admin/project/ViewProject";
+import ChangePassword from "@pages/ChangePassword";
 import AdminToCheckInOut from "@pages/checkInOut/AdminToCheckInOut";
 import CreateTask from "@pages/teskManagement/CreateTask";
 import SubmitTask from "@pages/teskManagement/SubmitTask";
 import TaskList from "@pages/teskManagement/TaskList";
 import ViewTask from "@pages/teskManagement/ViewTask";
+import ProfileUpdate from "@pages/UpdataProfile";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import EmployeeList from "../pages/admin/employeeManagement/employeeList";
 import CreateProject from "../pages/admin/project/CreateProject";
@@ -12,7 +14,6 @@ import CheckInOutList from "../pages/checkInOut/checkInOutList";
 import LeaveList from "../pages/employee/LeaveManagement/LeaveList";
 import LoginHistory from "../pages/LoginHistory";
 import Profile from "../pages/Profile";
-import ChangePassword from "@pages/ChangePassword";
 
 export const adminPaths = [
   {
@@ -32,6 +33,10 @@ export const adminPaths = [
   {
     path: "change-password",
     element: <ChangePassword />,
+  },
+  {
+    path: "profile-update",
+    element: <ProfileUpdate />,
   },
   {
     name: "Attendance management",

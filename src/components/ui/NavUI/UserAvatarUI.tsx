@@ -20,6 +20,10 @@ const UserAvatarUI = () => {
       label: <Link to={`/${user?.role}/profile`}> Profile</Link>,
     },
     {
+      key: "1",
+      label: <Link to={`/${user?.role}/profile-update`}> Edit Profile</Link>,
+    },
+    {
       key: "2",
       label: <Link to={`/${user?.role}/dashboard`}>Dashboard</Link>,
     },

@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Button, Dropdown, Input, Menu, Space, Tag } from "antd";
 
-import { DeleteOutlined, ReloadOutlined } from "@ant-design/icons";
+import {
+  CloseSquareOutlined,
+  DeleteOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
 
 import { Link } from "react-router-dom";
@@ -48,7 +53,7 @@ export default function EmployeeList({ status }: { status?: string }) {
     delay: 600,
   });
 
-  if (!!debouncedSearchTerm) {
+  if (debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading, isFetching } = useGetAllEmployeeQuery({ ...query });
@@ -231,9 +236,9 @@ export default function EmployeeList({ status }: { status?: string }) {
                     <Menu.Item key="Declined">
                       <Button
                         type="link"
-                        style={{ color: "red" }}
+                        style={{ color: "blue" }}
                         loading={deleteLoading}
-                        icon={<DeleteOutlined style={{ color: "red" }} />}
+                        icon={<CloseSquareOutlined style={{ color: "blue" }} />}
                         onClick={() => handleDeclined(record._id)}
                       >
                         Declined

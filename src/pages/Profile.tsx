@@ -24,7 +24,7 @@ const Profile = () => {
   const user = employee?.data || data?.roleInfo || {};
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-green-500">
-      <div className="max-w-[750px] bg-white shadow-2xl rounded-2xl overflow-hidden">
+      <div className="min-w-[750px] bg-white shadow-2xl rounded-2xl overflow-hidden">
         {/* Profile Image Section */}
         <div className="relative bg-gray-100 h-40">
           <img

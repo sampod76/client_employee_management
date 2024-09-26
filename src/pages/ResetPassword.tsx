@@ -2,42 +2,38 @@
 import { LockOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
 
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   useLoginMutation,
   useTokenToSetPasswordMutation,
 } from "../redux/features/auth/authApi";
-import {
-  getFromLocalStorage,
-  removeFromLocalStorage,
-} from "../utils/local-storage";
+import { removeFromLocalStorage } from "../utils/local-storage";
 import { ErrorModal, SuccessModal } from "../utils/modalHook";
 import { verifyToken } from "../utils/verifyToken";
+import { useEffect } from "react";
 
 export default function ResetPassword() {
+  //
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const token = query.get("token");
+  //
   const [setPassword, { isLoading }] = useTokenToSetPasswordMutation();
   const [login, { isLoading: loginLoading }] = useLoginMutation();
   const navigate = useNavigate();
-
   useEffect(() => {
-    const resetToken = getFromLocalStorage("resetToken");
-
-    if (!resetToken) {
+    if (!token) {
       ErrorModal("Unable to reset password");
-      navigate(`/login`);
-      return;
+      navigate(`/`);
     }
-  }, []);
+  }, [token]);
 
   const onFinish = async (values: any) => {
-    // console.log("Received values of form: ", values);
-    const resetToken = getFromLocalStorage("resetToken");
-    const value = verifyToken(resetToken as string) as any;
+    const value = verifyToken(token as string) as any;
     console.log("🚀 ~ onFinish ~ value:", value);
     try {
       const res = await setPassword({
-        resetPasswordToken: resetToken,
+        resetPasswordToken: token,
         newPassword: values?.password,
       }).unwrap();
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios from "axios";
 import dayjs from "dayjs";
 import { saveAs } from "file-saver";

@@ -13,6 +13,7 @@ import LeaveApplication from "../pages/employee/LeaveManagement/LeaveApplication
 import LeaveList from "../pages/employee/LeaveManagement/LeaveList";
 import LoginHistory from "../pages/LoginHistory";
 import Profile from "../pages/Profile";
+import ProfileUpdate from "@pages/UpdataProfile";
 
 export const employeePaths = [
   {
@@ -100,6 +101,10 @@ export const employeePaths = [
   {
     path: "change-password",
     element: <ChangePassword />,
+  },
+  {
+    path: "profile-update",
+    element: <ProfileUpdate />,
   },
   // {
   //   name: "My Schedule",

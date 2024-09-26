@@ -8,8 +8,8 @@ import { useUpdateEmployeeMutation } from "@redux/features/admin/employeeApi";
 import { useGetProfileQuery } from "@redux/features/auth/authApi";
 import { selectCurrentUser } from "@redux/features/auth/authSlice";
 import { useAppSelector } from "@redux/hooks";
-import { ErrorModal } from "@utils/modalHook";
-import { Button, Form, Input, Row, Skeleton } from "antd";
+import { ErrorModal, SuccessModal } from "@utils/modalHook";
+import { Button, DatePicker, Form, Input, Row, Skeleton } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 
@@ -19,14 +19,16 @@ const ProfileUpdate = () => {
   const [fileList, setFileList] = useState([]);
 
   const [image, setImageState] = useState([]);
+  console.log("🚀 ~ ProfileUpdate ~ image:", image);
   const [imageLoading, setImageLoading] = useState(false);
   const [updateEmployee, { isLoading: tempLoading }] =
     useUpdateEmployeeMutation();
   const [updateAdmin, { isLoading: adminLoading }] = useUpdateadminMutation();
 
   const onFinish = async (data: any) => {
+    console.log("🚀 ~ onFinish ~ data:", data);
     try {
-      if (image) {
+      if (image.length) {
         data.profileImage = {
           url: image,
           mimetype: "image/jpg",
@@ -47,6 +49,7 @@ const ProfileUpdate = () => {
           data: data,
         }).unwrap();
       }
+      SuccessModal("Profile updated successfully");
     } catch (err) {
       ErrorModal(err);
     } finally {
@@ -67,10 +70,11 @@ const ProfileUpdate = () => {
   if (isLoading) {
     return <LoadingSkeleton />;
   }
+  console.log(getProfile);
   const initial = getProfile?.roleInfo
     ? {
-        firstName: getProfile?.roleInfo?.name?.firstName,
-        lastName: getProfile?.roleInfo?.name?.lastName,
+        "name.firstName": getProfile?.roleInfo?.name?.firstName,
+        "name.lastName": getProfile?.roleInfo?.name?.lastName,
         email: getProfile?.roleInfo?.email,
         contactNumber: getProfile?.roleInfo?.contactNumber,
         dateOfBirth: dayjs(getProfile?.roleInfo.dateOfBirth, "YYYY-MM-DD"),
@@ -78,7 +82,7 @@ const ProfileUpdate = () => {
         passport: getProfile?.roleInfo?.passport,
       }
     : {};
-  console.log(initial);
+  console.log(initial, "dd");
   return (
     <Row justify="center" align="middle" style={{ height: "100vh" }}>
       <div className="border p-5 min-w-96">
@@ -106,11 +110,11 @@ const ProfileUpdate = () => {
               <Skeleton.Input active={true} size={"small"} block={true} />
             )}
 
-            <Form.Item name="firstName" label="First Name">
+            <Form.Item name="name.firstName" label="First Name">
               <Input />
             </Form.Item>
 
-            <Form.Item name="lastName" label="Last Name">
+            <Form.Item name="name.lastName" label="Last Name">
               <Input />
             </Form.Item>
 
@@ -123,7 +127,7 @@ const ProfileUpdate = () => {
             </Form.Item>
 
             <Form.Item name="dateOfBirth" label="Date of Birth">
-              <Input type="date" />
+              <DatePicker />
             </Form.Item>
 
             <Form.Item name="nid" label="NID">

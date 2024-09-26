@@ -22,6 +22,22 @@ export const employeeApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.Employee],
     }),
+    getEmployeeDashboard: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: URL + "/dashboard",
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.Employee],
+    }),
 
     getSingleEmployee: build.query({
       query: (id: string | string[] | undefined) => {
@@ -72,4 +88,6 @@ export const {
   useGetAllEmployeeQuery,
   useGetSingleEmployeeQuery,
   useUpdateEmployeeMutation,
+  //
+  useGetEmployeeDashboardQuery,
 } = employeeApi;

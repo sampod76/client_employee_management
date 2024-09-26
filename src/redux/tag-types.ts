@@ -13,6 +13,7 @@ export enum tagTypes {
   LoginHistory = "LoginHistory",
   Friendship = "Friendship",
   ChatMessages = "ChatMessages",
+  admin = "admin",
 }
 
 export const tagTypesList = [
@@ -29,4 +30,5 @@ export const tagTypesList = [
   tagTypes.auth,
   tagTypes.Friendship,
   tagTypes.ChatMessages,
+  tagTypes.admin,
 ];

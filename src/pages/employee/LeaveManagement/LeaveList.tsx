@@ -1,32 +1,29 @@
-import React from "react";
-import DivContainer from "../../../components/ui/DivContainer";
-import { Button, Dropdown, Input, Menu, Space, Tag, message } from "antd";
+import { Button, Dropdown, Input, Menu, Space, Tag } from "antd";
 
 import {
-  EditOutlined,
   DeleteOutlined,
+  EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 
-import dayjs from "dayjs";
-import { useAppSelector, useDebounced } from "../../../redux/hooks";
-import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
+import { Link } from "react-router-dom";
+import ModalComponent from "../../../components/Modal/ModalComponents";
+import ActionBar from "../../../components/ui/ActionBar";
+import CustomImageTag from "../../../components/ui/CustomTag/CustomImage";
+import UMTable from "../../../components/ui/UMTable";
 import {
   useApprovedOrDeclinedMutation,
   useDeleteLeavesMutation,
   useGetAllLeavesQuery,
 } from "../../../redux/features/admin/leavesApi";
-import CustomImageTag from "../../../components/ui/CustomTag/CustomImage";
-import ActionBar from "../../../components/ui/ActionBar";
-import UMTable from "../../../components/ui/UMTable";
-import { Link } from "react-router-dom";
+import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
+import { useAppSelector, useDebounced } from "../../../redux/hooks";
 import {
   ConfirmModal,
   ErrorModal,
   SuccessModal,
 } from "../../../utils/modalHook";
-import ModalComponent from "../../../components/Modal/ModalComponents";
 export default function LeaveList({ status }: { status?: string }) {
   const [deleteLeaves, { isLoading: deleteLoading }] =
     useDeleteLeavesMutation();
@@ -237,34 +234,36 @@ export default function LeaveList({ status }: { status?: string }) {
             <Dropdown
               overlay={
                 <Menu>
-                  {user?.role !== "admin" && (
-                    <Menu.Item key="edit">
-                      <Button
-                        type="link"
-                        icon={<EditOutlined />}
-                        //   onClick={() => handleEdit(record._id)}
-                      >
-                        <Link
-                          to={`/${user?.role}/leave-application-and-editor?id=${record._id}`}
+                  {user?.role !== "admin" &&
+                    record.requestStatus === "pending" && (
+                      <Menu.Item key="edit">
+                        <Button
+                          type="link"
+                          icon={<EditOutlined />}
+                          //   onClick={() => handleEdit(record._id)}
                         >
-                          Edit
-                        </Link>
-                      </Button>
-                    </Menu.Item>
-                  )}
-                  {user?.role !== "admin" && (
-                    <Menu.Item key="delete">
-                      <Button
-                        type="link"
-                        style={{ color: "red" }}
-                        loading={deleteLoading}
-                        icon={<DeleteOutlined style={{ color: "red" }} />}
-                        onClick={() => handleDelete(record._id)}
-                      >
-                        Delete
-                      </Button>
-                    </Menu.Item>
-                  )}
+                          <Link
+                            to={`/${user?.role}/leave-application-and-editor?id=${record._id}`}
+                          >
+                            Edit
+                          </Link>
+                        </Button>
+                      </Menu.Item>
+                    )}
+                  {user?.role !== "admin" &&
+                    record.requestStatus === "pending" && (
+                      <Menu.Item key="delete">
+                        <Button
+                          type="link"
+                          style={{ color: "red" }}
+                          loading={deleteLoading}
+                          icon={<DeleteOutlined style={{ color: "red" }} />}
+                          onClick={() => handleDelete(record._id)}
+                        >
+                          Delete
+                        </Button>
+                      </Menu.Item>
+                    )}
 
                   {user?.role === "admin" && (
                     <Menu.Item key="approved">

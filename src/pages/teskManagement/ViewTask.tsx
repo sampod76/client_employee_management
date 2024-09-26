@@ -54,7 +54,7 @@ function ViewTask() {
 
               {/* TaskDetails Title */}
               <h2 className="text-xl font-semibold text-gray-800 text-center">
-                {TaskDetails.title}
+                Title: {TaskDetails.title}
               </h2>
 
               {/* TaskDetails Author */}
@@ -88,11 +88,23 @@ function ViewTask() {
 
               {/* Feature List */}
               <div className="mb-4">
-                <h3 className="text-gray-700 font-bold mb-2">Features:</h3>
+                <h3 className="text-gray-700 font-bold mb-2">Task list:</h3>
                 <ul className="list-disc list-inside text-gray-600">
                   {TaskDetails.taskList.map((feature: any, index: number) => (
                     <li key={index}>{feature?.title}</li>
                   ))}
+                </ul>
+              </div>
+              <div className="mb-4">
+                <h3 className="text-gray-700 font-bold mb-2">
+                  Completed list:
+                </h3>
+                <ul className="list-disc list-inside text-gray-600">
+                  {TaskDetails.completedTaskList.map(
+                    (feature: any, index: number) => (
+                      <li key={index}>{feature?.title}</li>
+                    )
+                  )}
                 </ul>
               </div>
 

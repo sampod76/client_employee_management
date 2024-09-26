@@ -26,18 +26,6 @@ const ProfileUpdate = () => {
 
   const onFinish = async (data: any) => {
     try {
-      const formData = new FormData();
-      if (fileList?.length) {
-        // setImageLoading(true);
-        // const res = await multipleFilesUploader(
-        //   //@ts-ignore
-        //   fileList.map((file) => file?.originFileObj)
-        // );
-        // console.log("🚀 ~ onSubmit ~ res:", res);
-        // data.profileImage = res[0];
-        // @ts-ignore
-        formData.append("profileImage", fileList[0].originFileObj);
-      }
       if (image) {
         data.profileImage = {
           url: image,
@@ -47,16 +35,16 @@ const ProfileUpdate = () => {
           platform: "imgbb",
         };
       }
-      formData.append("data", JSON.stringify(data));
+
       if (user?.role === "admin") {
         await updateAdmin({
           id: getProfile?.roleInfo._id,
-          data: formData,
+          data: data,
         }).unwrap();
       } else {
         await updateEmployee({
           id: getProfile?.roleInfo._id,
-          data: formData,
+          data: data,
         }).unwrap();
       }
     } catch (err) {

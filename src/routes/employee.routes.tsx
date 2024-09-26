@@ -1,4 +1,5 @@
 import ProjectView from "@pages/admin/project/ViewProject";
+import ChangePassword from "@pages/ChangePassword";
 import CreateTask from "@pages/teskManagement/CreateTask";
 import SubmitTask from "@pages/teskManagement/SubmitTask";
 import TaskList from "@pages/teskManagement/TaskList";
@@ -95,6 +96,10 @@ export const employeePaths = [
         element: <SubmitTask />,
       },
     ],
+  },
+  {
+    path: "change-password",
+    element: <ChangePassword />,
   },
   // {
   //   name: "My Schedule",

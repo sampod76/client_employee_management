@@ -12,6 +12,7 @@ import CheckInOutList from "../pages/checkInOut/checkInOutList";
 import LeaveList from "../pages/employee/LeaveManagement/LeaveList";
 import LoginHistory from "../pages/LoginHistory";
 import Profile from "../pages/Profile";
+import ChangePassword from "@pages/ChangePassword";
 
 export const adminPaths = [
   {
@@ -28,11 +29,10 @@ export const adminPaths = [
     path: "login-history",
     element: <LoginHistory />,
   },
-  // {
-  //   name: "Employee Check In/Out",
-  //   path: "check-in-out-list",
-  //   element: <CheckInOutList />,
-  // },
+  {
+    path: "change-password",
+    element: <ChangePassword />,
+  },
   {
     name: "Attendance management",
     children: [

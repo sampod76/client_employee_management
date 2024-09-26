@@ -1,13 +1,12 @@
-import { Avatar, Badge, Button, Dropdown, MenuProps, message } from "antd";
+import { Button, Dropdown, MenuProps } from "antd";
 
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import CustomImageTag from "../CustomTag/CustomImage";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   logout,
   selectCurrentUser,
 } from "../../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import CustomImageTag from "../CustomTag/CustomImage";
 
 const UserAvatarUI = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -23,6 +22,10 @@ const UserAvatarUI = () => {
     {
       key: "2",
       label: <Link to={`/${user?.role}/dashboard`}>Dashboard</Link>,
+    },
+    {
+      key: "2d",
+      label: <Link to={`/${user?.role}/change-password`}>Change password</Link>,
     },
 
     {

@@ -46,6 +46,17 @@ export const checkInOutApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.CheckInOut],
     }),
+    addAdminCheckInOut: build.mutation({
+      query: (data) => {
+        return {
+          url: URL + "/check-in-ou-admin",
+          method: "POST",
+          data: data,
+          contentType: "multipart/form-data",
+        };
+      },
+      invalidatesTags: [tagTypes.CheckInOut],
+    }),
     addCheckOut: build.mutation({
       query: (data) => {
         return {
@@ -86,4 +97,6 @@ export const {
   useGetAllCheckInOutQuery,
   useGetSingleCheckInOutQuery,
   useUpdateCheckInOutMutation,
+  //
+  useAddAdminCheckInOutMutation,
 } = checkInOutApi;

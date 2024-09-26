@@ -1,4 +1,5 @@
 import ProjectView from "@pages/admin/project/ViewProject";
+import AdminToCheckInOut from "@pages/checkInOut/AdminToCheckInOut";
 import CreateTask from "@pages/teskManagement/CreateTask";
 import SubmitTask from "@pages/teskManagement/SubmitTask";
 import TaskList from "@pages/teskManagement/TaskList";
@@ -27,10 +28,25 @@ export const adminPaths = [
     path: "login-history",
     element: <LoginHistory />,
   },
+  // {
+  //   name: "Employee Check In/Out",
+  //   path: "check-in-out-list",
+  //   element: <CheckInOutList />,
+  // },
   {
-    name: "Employee Check In/Out",
-    path: "check-in-out-list",
-    element: <CheckInOutList />,
+    name: "Attendance management",
+    children: [
+      {
+        name: "Attendance list",
+        path: "check-in-out-list",
+        element: <CheckInOutList />,
+      },
+      {
+        name: "Add attendance",
+        path: "add-attendance",
+        element: <AdminToCheckInOut />,
+      },
+    ],
   },
   {
     name: "Employee Management",

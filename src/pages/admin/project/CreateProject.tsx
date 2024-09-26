@@ -1,27 +1,22 @@
-import React, { useState } from "react";
-import { Form, Input, Button, DatePicker, Row, Col, Upload } from "antd";
 import {
-  PictureOutlined,
-  UserOutlined,
-  MailOutlined,
-  CalendarOutlined,
   FileOutlined,
+  MailOutlined,
   MinusCircleOutlined,
   PlusOutlined,
-  LoadingOutlined,
 } from "@ant-design/icons";
+import { Button, Col, DatePicker, Form, Input, Row } from "antd";
+import dayjs from "dayjs";
 import moment from "moment";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import LoadingSkeleton from "../../../components/ui/Loading/LoadingSkeleton";
+import UploadImage from "../../../components/ui/UploadImage";
 import {
   useAddProjectsMutation,
   useGetSingleProjectsQuery,
   useUpdateProjectsMutation,
 } from "../../../redux/features/admin/projectApi";
 import { ErrorModal, SuccessModal } from "../../../utils/modalHook";
-import { multipleFilesUploader } from "../../../utils/handelFileUploderS3";
-import UploadImage from "../../../components/ui/UploadImage";
-import { useLocation } from "react-router-dom";
-import LoadingSkeleton from "../../../components/ui/Loading/LoadingSkeleton";
-import dayjs from "dayjs";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;

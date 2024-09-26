@@ -1,29 +1,26 @@
-import { Button, Input, message } from "antd";
+import { Button, message } from "antd";
 
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 //@ts-ignore
 import { useScreenshot } from "use-react-screenshot";
-import { instance as axiosInstance } from "../../helpers/axios/axiosInstance";
-import { getBaseUrl } from "../../helpers/config/envConfig";
-import WebcamCapture from "../../components/CheckInOut/WebCamra";
-import CustomImageTag from "../../components/ui/CustomTag/CustomImage";
 import ClockComponents from "../../components/CheckInOut/clock";
 import LocalIPComponent from "../../components/CheckInOut/IpGet";
-import { useAppSelector } from "../../redux/hooks";
+import WebcamCapture from "../../components/CheckInOut/WebCamra";
+import CustomImageTag from "../../components/ui/CustomTag/CustomImage";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
-import { ErrorModal, SuccessModal } from "../../utils/modalHook";
-import { adminPaths } from "../../routes/admin.routes";
 import {
   useAddCheckInMutation,
   useAddCheckOutMutation,
   useGetAllCheckInOutQuery,
 } from "../../redux/features/employee/checkInOutApi";
+import { useAppSelector } from "../../redux/hooks";
+import { ErrorModal } from "../../utils/modalHook";
 
 export default function CheckInOut() {
   const user = useAppSelector(selectCurrentUser);
   const { data, isLoading: getDateloading } = useGetAllCheckInOutQuery(
     { employeeUserId: user?.userId, toDay: "yes" },
-    { skip: !Boolean(user?.userId) }
+    { skip: !user?.userId }
   );
   const getData = data?.data || [];
   // console.log("🚀 ~ CheckInOut ~ getData:", getData);

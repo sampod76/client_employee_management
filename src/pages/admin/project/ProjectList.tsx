@@ -47,7 +47,7 @@ export default function ProjectList() {
     delay: 600,
   });
 
-  if (!!debouncedSearchTerm) {
+  if (debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading, isFetching } = useGetAllProjectsQuery({ ...query });

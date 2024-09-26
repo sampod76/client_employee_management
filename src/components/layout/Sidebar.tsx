@@ -1,16 +1,16 @@
 import { Layout, Menu } from "antd";
-import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { adminPaths } from "../../routes/admin.routes";
+import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 
-import { employeePaths } from "../../routes/employee.routes";
-import { useAppSelector } from "../../redux/hooks";
+import { Link } from "react-router-dom";
 import {
   TUser,
   selectCurrentUser,
   useCurrentToken,
 } from "../../redux/features/auth/authSlice";
+import { useAppSelector } from "../../redux/hooks";
+import { employeePaths } from "../../routes/employee.routes";
 import { verifyToken } from "../../utils/verifyToken";
-import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 

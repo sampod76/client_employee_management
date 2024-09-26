@@ -1,25 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import {
-  LockOutlined,
-  UserOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
-import {
-  Button,
-  Checkbox,
-  Flex,
-  Form,
-  Input,
-  InputNumber,
-  Typography,
-} from "antd";
+import { Button, Flex, Form, InputNumber } from "antd";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   useForgetPasswordMutation,
   useSetOtpMutation,
 } from "../redux/features/auth/authApi";
 import { ErrorModal, SuccessModal } from "../utils/modalHook";
-import { useLocation, useNavigate } from "react-router-dom";
 
 export default function VerifyOtp() {
   const navigate = useNavigate();

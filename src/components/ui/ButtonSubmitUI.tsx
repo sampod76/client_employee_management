@@ -13,7 +13,7 @@ const ButtonSubmitUI = ({ children }: { children: React.ReactNode }) => {
         backgroundColor: "#5371FF",
         border: "none",
         marginBlock: "2rem",
-        height:"3rem"
+        height: "3rem",
       }}
       type="default"
     >

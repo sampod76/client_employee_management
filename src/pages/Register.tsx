@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, InputNumber, Row, Skeleton, Upload } from "antd";
 import { useState } from "react";

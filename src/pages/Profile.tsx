@@ -13,7 +13,7 @@ const Profile = () => {
   console.log("🚀 ~ Profile ~ data:", data);
   const { data: employee, isLoading: emLoading } = useGetSingleEmployeeQuery(
     id as string,
-    { skip: !Boolean(id) }
+    { skip: !id }
   );
   console.log("🚀 ~ Profile ~ employee:", employee);
   const formatDate = (date: string | number | Date) =>

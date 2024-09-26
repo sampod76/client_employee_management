@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-extra-boolean-cast */
 import {
   FileOutlined,
   MinusCircleOutlined,
@@ -23,7 +25,7 @@ import {
 import { selectCurrentUser } from "@redux/features/auth/authSlice";
 import { useAppSelector } from "@redux/hooks";
 import { ErrorModal, SuccessModal } from "@utils/modalHook";
-
+import { v4 as uuidv4 } from "uuid";
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
@@ -72,12 +74,22 @@ const CreateTask = () => {
       if (project) {
         values["projectId"] = project;
       }
+      const taskList = values?.taskList?.map((t: any) => {
+        return {
+          ...t,
+          uuid: t?.uuid || uuidv4().toString(),
+        };
+      });
+      console.log("🚀 ~ taskList ~ taskList:", taskList);
 
       if (id) {
-        const res = await updateProject({ id, data: values }).unwrap();
+        const res = await updateProject({
+          id,
+          data: { ...getTaskDate?.data, ...values, taskList },
+        }).unwrap();
         SuccessModal("Project Update Successfully");
       } else {
-        const res = await addTask(values).unwrap();
+        const res = await addTask({ ...values, taskList }).unwrap();
         form.resetFields();
         SuccessModal("Project Created Successfully");
       }

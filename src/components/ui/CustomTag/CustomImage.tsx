@@ -23,7 +23,7 @@ export default function CustomImageTag({
 }: ImageTagProps) {
   const [openModal, setOpenModal] = useState(false);
 
-  let imageSrc = fileObjectToLink(src);
+  const imageSrc = fileObjectToLink(src);
 
   return (
     <div className="">

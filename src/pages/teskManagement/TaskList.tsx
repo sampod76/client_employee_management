@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-extra-boolean-cast */
 import { Button, Dropdown, Input, Menu, Space, TableProps, Tag } from "antd";
 
 import {
@@ -103,13 +105,29 @@ export default function TaskList() {
       title: "Start Date",
       dataIndex: ["startDate"],
       render: (date: string) => new Date(date).toLocaleDateString(),
-      width: 150,
     },
     {
       title: "End Date",
       dataIndex: "endDate",
       render: (date: string) => new Date(date).toLocaleDateString(),
-      width: 150,
+    },
+    {
+      title: "Total task",
+      dataIndex: "taskList",
+      render: (taskList: any[]) => {
+        console.log("🚀 ~ TaskList ~ taskList:", taskList);
+        // Ensure taskList is an array and return its length, or '0' if undefined or empty
+        return Array.isArray(taskList) ? taskList.length.toString() : "0";
+      },
+    },
+    {
+      title: "Complete task",
+      dataIndex: "completedTaskList",
+      render: (taskList: any[]) => {
+        console.log("🚀 ~ TaskList ~ taskList:", taskList);
+        // Ensure taskList is an array and return its length, or '0' if undefined or empty
+        return Array.isArray(taskList) ? taskList.length.toString() : "0";
+      },
     },
 
     {
@@ -139,7 +157,7 @@ export default function TaskList() {
 
         return <Tag color={color}>{text}</Tag>;
       },
-      width: 120,
+      // width: 120,
     },
     {
       title: "Action",

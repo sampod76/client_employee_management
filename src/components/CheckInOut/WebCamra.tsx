@@ -1,6 +1,4 @@
-import { Button } from "antd";
-
-import React, { useState, useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import CustomImageTag from "../ui/CustomTag/CustomImage";
 

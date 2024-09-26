@@ -1,12 +1,9 @@
 "use client";
-import {
-  LockOutlined,
-  UserOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
-import { Alert, Button, Checkbox, Form, Input, Typography } from "antd";
+import { LockOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Typography } from "antd";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   useLoginMutation,
   useTokenToSetPasswordMutation,
@@ -16,7 +13,6 @@ import {
   removeFromLocalStorage,
 } from "../utils/local-storage";
 import { ErrorModal, SuccessModal } from "../utils/modalHook";
-import { useNavigate } from "react-router-dom";
 import { verifyToken } from "../utils/verifyToken";
 
 export default function ResetPassword() {

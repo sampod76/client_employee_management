@@ -1,12 +1,8 @@
 "use client";
-import {
-  LockOutlined,
-  UserOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 import { useForgetPasswordMutation } from "../redux/features/auth/authApi";
-import { Link, useNavigate } from "react-router-dom";
 import { ErrorModal, SuccessModal } from "../utils/modalHook";
 
 export default function ForgotPassword() {

@@ -1,19 +1,15 @@
 import { Button, Checkbox, Flex, Form, Input, Row, Typography } from "antd";
 import { FieldValues } from "react-hook-form";
 
-import { useAppDispatch } from "../redux/hooks";
-import { TUser, setUser } from "../redux/features/auth/authSlice";
-import { verifyToken } from "../utils/verifyToken";
-import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { toast } from "sonner";
-import PHForm from "../components/form/PHForm";
-import PHInput from "../components/form/PHInput";
-import ForgetPassword from "./ForgetPassword";
-import { ErrorModal } from "../utils/modalHook";
-import { useLoginMutation } from "../redux/features/auth/authApi";
-import { setToLocalStorage } from "../utils/local-storage";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../redux/features/auth/authApi";
+import { TUser, setUser } from "../redux/features/auth/authSlice";
+import { useAppDispatch } from "../redux/hooks";
+import { setToLocalStorage } from "../utils/local-storage";
+import { ErrorModal } from "../utils/modalHook";
+import { verifyToken } from "../utils/verifyToken";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -132,6 +128,19 @@ const Login = () => {
               <p className="text-red-500 text-center">{error}</p>
             </Form.Item>
           </Form>
+          <div className="border-2 p-2 border-blue-200 rounded-lg ">
+            <h1>
+              {" "}
+              Admin email : <span>admin@gamil.com</span> <br />
+              Password: 112233
+            </h1>
+            <br />
+            <h1>
+              {" "}
+              Employee email : <span>employee@gamil.com</span> <br />
+              Password: 112233
+            </h1>
+          </div>
         </div>
       </Row>
     </div>

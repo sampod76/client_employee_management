@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
+import { useEffect, useState } from "react";
 
 // import { sidebarItems } from "@/constants/dashBoardItems";
-import { USER_ROLE } from "@/constants/role";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const { Sider } = Layout;
@@ -13,7 +12,7 @@ const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   // const role = USER_ROLE.ADMIN;
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
   // console.log(role);
 
   // Function to handle sidebar collapsing based on screen width

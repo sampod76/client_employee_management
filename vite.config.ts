@@ -1,15 +1,15 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 import tsconfigPaths from "vite-tsconfig-paths";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   server: {
-    port: 3000, // Set the dev server port to 3000
+    port: 3001, // Set the dev server port to 3001
   },
   preview: {
-    port: 3000,
+    port: 3001,
   },
   optimizeDeps: {
     include: ["@tensorflow-models/face-landmarks-detection", "react-webcam"],

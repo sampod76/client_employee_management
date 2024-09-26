@@ -19,7 +19,7 @@ const getLocalIP = (callback: { (ip: any): void; (arg0: string): void }) => {
 
 import axios from "axios";
 // Example usage in your React component
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const LocalIPComponent = () => {
   const [localIP, setLocalIP] = useState("");

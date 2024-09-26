@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { Button, Dropdown, Menu, Space, message } from "antd";
+import { Button } from "antd";
 
 import dayjs from "dayjs";
 
 import { FaWindows } from "react-icons/fa6";
 import { MdDevicesOther } from "react-icons/md";
 import { selectCurrentUser } from "../redux/features/auth/authSlice";
-import { useAppSelector, useDebounced } from "../redux/hooks";
 import { useGetAllLoginHistoryQuery } from "../redux/features/users/loginHistoryApi";
+import { useAppSelector, useDebounced } from "../redux/hooks";
 
-import { ConfirmModal, ErrorModal, SuccessModal } from "../utils/modalHook";
 import UMTable from "../components/ui/UMTable";
+import { ConfirmModal, ErrorModal, SuccessModal } from "../utils/modalHook";
 
 export default function LoginHistory() {
   const userInfo = useAppSelector(selectCurrentUser);
@@ -47,7 +48,7 @@ export default function LoginHistory() {
     delay: 600,
   });
 
-  if (!!debouncedSearchTerm) {
+  if (debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
 

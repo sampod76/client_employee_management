@@ -1,19 +1,12 @@
 "use client";
 
 import { message } from "antd";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import { IGenericErrorResponse } from "../../types/common";
 
-import { useAppSelector } from "../../redux/hooks";
 import { getSocketBaseUrl } from "../../helpers/config/envConfig";
+import { useAppSelector } from "../../redux/hooks";
 
 export const SocketContext = createContext({});
 

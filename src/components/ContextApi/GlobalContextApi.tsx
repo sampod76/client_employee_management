@@ -1,6 +1,4 @@
-"use client";
-
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext } from 'react';
 export const GlobalContext = createContext({});
 export const useGlobalContext = () => {
   return useContext(GlobalContext) as IContextType;

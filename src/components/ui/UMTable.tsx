@@ -1,6 +1,4 @@
-"use client";
-
-import { Table } from "antd";
+import { Table } from 'antd';
 
 type UMTableProps = {
   loading?: boolean;
@@ -38,7 +36,7 @@ const UMTable = ({
   return (
     <Table
       style={{
-        overflowX: "auto",
+        overflowX: 'auto',
       }}
       loading={loading}
       scroll={{ x: 1000 }}

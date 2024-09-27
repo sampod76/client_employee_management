@@ -1,11 +1,9 @@
 import axios from "axios";
-import { getBaseUrl } from "../config/envConfig";
 import {
   getFromLocalStorage,
   setToLocalStorage,
 } from "../../utils/local-storage";
-import { useAppSelector } from "../../redux/hooks";
-import { useCurrentToken } from "../../redux/features/auth/authSlice";
+import { getBaseUrl } from "../config/envConfig";
 // import { message } from 'antd';
 // const token = useAppSelector(useCurrentToken);
 const instance = axios.create();
@@ -81,7 +79,7 @@ instance.interceptors.response.use(
         window.location.href = "/login";
       } 
     */
-      let responseObject: any = {
+      const responseObject: any = {
         statusCode: error?.response?.status || 500,
         message: "Something went wrong",
         success: false,

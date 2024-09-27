@@ -1,20 +1,38 @@
 module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    browser: true,
+    es2021: true,
+  },
   extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended",
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended', // if using TypeScript
+    'plugin:prettier/recommended',
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
-  parser: "@typescript-eslint/parser",
-  plugins: ["react-refresh"],
+  parser: '@typescript-eslint/parser', // if using TypeScript
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
-    "react-refresh/only-export-components": [
-      "warn",
-      { allowConstantExport: true },
+    'prettier/prettier': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'warn', // Change this to "warn" to style it as a warning instead of an error.
+      {
+        vars: 'all',
+        args: 'none',
+        ignoreRestSiblings: true,
+        varsIgnorePattern: '^_', // Ignore variables that start with an underscore.
+      },
     ],
-    "@typescript-eslint/no-explicit-any": "warn",
-    "@typescript-eslint/no-unused-vars": 0,
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
 };

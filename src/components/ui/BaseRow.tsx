@@ -1,4 +1,3 @@
-"use client";
 type BaseRowProps = {
   title: string;
   children: React.ReactNode;
@@ -10,15 +9,15 @@ const BaseRow = ({ title, children }: BaseRowProps) => {
         <td
           style={{
             fontWeight: 700,
-            marginRight: "10px",
-            textTransform: "capitalize",
-            textAlign: "left",
+            marginRight: '10px',
+            textTransform: 'capitalize',
+            textAlign: 'left',
           }}
         >
           {title}
         </td>
-        <td style={{ textAlign: "left", padding: "5px 15px" }}>
-          <span style={{ marginLeft: "10px", textAlign: "right" }}>
+        <td style={{ textAlign: 'left', padding: '5px 15px' }}>
+          <span style={{ marginLeft: '10px', textAlign: 'right' }}>
             {children}
           </span>
         </td>

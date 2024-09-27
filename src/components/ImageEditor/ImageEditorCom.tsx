@@ -1,9 +1,11 @@
 import { ConfigProvider, Slider, Tooltip } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
-import { BiRedo, BiUndo } from 'react-icons/bi';
+import { BiFilterAlt, BiRedo, BiUndo } from 'react-icons/bi';
 import { LiaRedoAltSolid, LiaUndoAltSolid } from 'react-icons/lia';
 import { LuFlipHorizontal2, LuFlipVertical2 } from 'react-icons/lu';
 
+import { FaAdjust, FaPalette } from 'react-icons/fa';
+import { MdBrightnessHigh, MdContrast, MdRotateRight } from 'react-icons/md';
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { getLinkedListForImage } from './LinkedList';
@@ -274,58 +276,58 @@ const ImageEditorCom: React.FC = () => {
       }
     }
   };
-  const saveAllImages = () => {
-    images.forEach((image, index) => {
-      const linkedList = getLinkedListForImage(index);
-      const imageStateToSave = linkedList.current?.data || {
-        image: image,
-        brightness: 100,
-        grayscale: 0,
-        sepia: 0,
-        saturate: 100,
-        contrast: 100,
-        hueRotate: 0,
-        rotate: 0,
-        vertical: 1,
-        horizontal: 1,
-        scale: 1,
-      };
+  // const saveAllImages = () => {
+  //   images.forEach((image, index) => {
+  //     const linkedList = getLinkedListForImage(index);
+  //     const imageStateToSave = linkedList.current?.data || {
+  //       image: image,
+  //       brightness: 100,
+  //       grayscale: 0,
+  //       sepia: 0,
+  //       saturate: 100,
+  //       contrast: 100,
+  //       hueRotate: 0,
+  //       rotate: 0,
+  //       vertical: 1,
+  //       horizontal: 1,
+  //       scale: 1,
+  //     };
 
-      if (details) {
-        const canvas = document.createElement('canvas');
-        canvas.width = details.naturalWidth;
-        canvas.height = details.naturalHeight;
-        const ctx = canvas.getContext('2d');
+  //     if (details) {
+  //       const canvas = document.createElement('canvas');
+  //       canvas.width = details.naturalWidth;
+  //       canvas.height = details.naturalHeight;
+  //       const ctx = canvas.getContext('2d');
 
-        if (ctx) {
-          ctx.filter = `
-            brightness(${imageStateToSave.brightness}%) 
-            grayscale(${imageStateToSave.grayscale}%) 
-            sepia(${imageStateToSave.sepia}%) 
-            saturate(${imageStateToSave.saturate}%) 
-            contrast(${imageStateToSave.contrast}%) 
-            hue-rotate(${imageStateToSave.hueRotate}deg)
-          `;
-          ctx.translate(canvas.width / 2, canvas.height / 2);
-          ctx.rotate((imageStateToSave.rotate * Math.PI) / 180);
-          ctx.scale(imageStateToSave.vertical, imageStateToSave.horizontal);
+  //       if (ctx) {
+  //         ctx.filter = `
+  //           brightness(${imageStateToSave.brightness}%)
+  //           grayscale(${imageStateToSave.grayscale}%)
+  //           sepia(${imageStateToSave.sepia}%)
+  //           saturate(${imageStateToSave.saturate}%)
+  //           contrast(${imageStateToSave.contrast}%)
+  //           hue-rotate(${imageStateToSave.hueRotate}deg)
+  //         `;
+  //         ctx.translate(canvas.width / 2, canvas.height / 2);
+  //         ctx.rotate((imageStateToSave.rotate * Math.PI) / 180);
+  //         ctx.scale(imageStateToSave.vertical, imageStateToSave.horizontal);
 
-          ctx.drawImage(
-            details,
-            -canvas.width / 2,
-            -canvas.height / 2,
-            canvas.width,
-            canvas.height
-          );
+  //         ctx.drawImage(
+  //           details,
+  //           -canvas.width / 2,
+  //           -canvas.height / 2,
+  //           canvas.width,
+  //           canvas.height
+  //         );
 
-          const link = document.createElement('a');
-          link.download = Date.now() + `-image_edit-${index}.jpg`; // Append index to differentiate images
-          link.href = canvas.toDataURL();
-          link.click();
-        }
-      }
-    });
-  };
+  //         const link = document.createElement('a');
+  //         link.download = Date.now() + `-image_edit-${index}.jpg`; // Append index to differentiate images
+  //         link.href = canvas.toDataURL();
+  //         link.click();
+  //       }
+  //     }
+  //   });
+  // };
 
   const showNextImage = () => {
     if (currentIndex < images.length - 1) {
@@ -371,13 +373,31 @@ const ImageEditorCom: React.FC = () => {
     }
   };
 
+  const getIcon = (name: string) => {
+    switch (name.toLowerCase()) {
+      case 'brightness':
+        return <MdBrightnessHigh />;
+      case 'grayscale':
+        return <FaAdjust />;
+      case 'sepia':
+        return <BiFilterAlt />;
+      case 'saturate':
+        return <FaPalette />;
+      case 'contrast':
+        return <MdContrast />;
+      case 'huerotate':
+        return <MdRotateRight />;
+      default:
+        return null;
+    }
+  };
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center h-[10vh]">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 lg:gap-4">
           <Tooltip title="Undo" placement="leftTop">
             <button
-              className="text-white bg-[#1E201E] py-2 px-4 rounded-sm shadow-md"
+              className="text-white bg-[#1E201E] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
               onClick={undo}
             >
               <BiUndo className="w-6 h-6" />
@@ -385,7 +405,7 @@ const ImageEditorCom: React.FC = () => {
           </Tooltip>
           <Tooltip title="Redo" placement="bottomRight">
             <button
-              className="text-white bg-[#1E201E] py-2 px-4 rounded-sm shadow-md"
+              className="text-white bg-[#1E201E] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
               onClick={redo}
             >
               <BiRedo className="w-6 h-6" />
@@ -394,7 +414,7 @@ const ImageEditorCom: React.FC = () => {
           {crop && (
             <button
               onClick={imageCrop}
-              className="text-white bg-[#3C3D37] py-2 px-4 rounded-sm shadow-md"
+              className="text-white bg-[#3C3D37] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
             >
               Crop Image
             </button>
@@ -402,7 +422,7 @@ const ImageEditorCom: React.FC = () => {
 
           <label
             htmlFor="choose"
-            className="text-black bg-[#ECDFCC] py-2 px-4 rounded-sm shadow-md cursor-pointer"
+            className="text-black bg-[#ECDFCC] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md cursor-pointer"
           >
             Choose Image
           </label>
@@ -418,30 +438,30 @@ const ImageEditorCom: React.FC = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={resetImage}
-            className="text-white bg-[#1E201E] py-2 px-4 rounded-sm shadow-md"
+            className="text-white bg-[#1E201E] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
           >
             Reset
           </button>
           <button
             onClick={saveImage}
-            className="text-black bg-[#ECDFCC] py-2 px-4 rounded-sm shadow-md"
+            className="text-black bg-[#ECDFCC] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
           >
             Save Image
           </button>
-          {images.length > 1 && (
+          {/* {images.length > 1 && (
             <button
               onClick={saveAllImages}
               className="text-black bg-[#ECDFCC] py-2 px-4 rounded-sm shadow-md"
             >
               Save All Images
             </button>
-          )}
+          )} */}
         </div>
       </div>
 
-      <div className="h-[80vh] flex">
-        <div className="w-[10%] h-full">
-          <div className="flex gap-4">
+      <div className="h-[70vh] flex ">
+        <div className="w-fit h-full ">
+          <div className="flex flex-wrap gap-4">
             <Tooltip title="Horizontal Flip" placement="leftTop">
               <button
                 onClick={horizontalFlip}
@@ -459,7 +479,7 @@ const ImageEditorCom: React.FC = () => {
               </button>
             </Tooltip>
           </div>
-          <div className="flex gap-4 mt-3">
+          <div className="flex flex-wrap gap-4 mt-3">
             <Tooltip title="Left Rotate" placement="leftTop">
               <button
                 onClick={leftRotate}
@@ -483,13 +503,15 @@ const ImageEditorCom: React.FC = () => {
               <button
                 key={index}
                 onClick={() => setProperty(item)}
-                className={`w-[128px] ${
+                className={`w-fit lg:w-[128px] ${
                   property.name === item.name
                     ? `bg-[#697565] text-white`
                     : `text-black bg-[#ECDFCC]`
-                } py-2 px-4 rounded-sm capitalize shadow-md`}
+                } py-2 px-4 rounded-sm capitalize shadow-md flex items-center justify-start`}
               >
-                {item?.name}
+                <span className="text-2xl">{getIcon(item.name)}</span>
+                {/* Hidden text for small/medium screens */}
+                <span className="ml-2 hidden md:inline">{item?.name}</span>
               </button>
             ))}
           </div>
@@ -536,7 +558,7 @@ const ImageEditorCom: React.FC = () => {
         </div>
       </div>
       <div className="w-full h-[10vh] flex items-center justify-center">
-        <div className="w-[600px]">
+        <div className="w-[220px] lg:w-[600px]">
           <ConfigProvider
             theme={{
               components: {

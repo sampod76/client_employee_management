@@ -1,48 +1,43 @@
-"use client";
-import { LockOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Typography } from "antd";
+import { LockOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Typography } from 'antd';
 
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useLoginMutation,
   useTokenToSetPasswordMutation,
-} from "../redux/features/auth/authApi";
-import {
-  getFromLocalStorage,
-  removeFromLocalStorage,
-} from "../utils/local-storage";
-import { ErrorModal, SuccessModal } from "../utils/modalHook";
-import { verifyToken } from "../utils/verifyToken";
+} from '../redux/features/auth/authApi';
+import { removeFromLocalStorage } from '../utils/local-storage';
+import { ErrorModal, SuccessModal } from '../utils/modalHook';
+import { verifyToken } from '../utils/verifyToken';
 
 export default function ResetPassword() {
+  //
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const token = query.get('token');
+  //
   const [setPassword, { isLoading }] = useTokenToSetPasswordMutation();
   const [login, { isLoading: loginLoading }] = useLoginMutation();
   const navigate = useNavigate();
-
   useEffect(() => {
-    const resetToken = getFromLocalStorage("resetToken");
-
-    if (!resetToken) {
-      ErrorModal("Unable to reset password");
-      navigate(`/login`);
-      return;
+    if (!token) {
+      ErrorModal('Unable to reset password');
+      navigate(`/`);
     }
-  }, []);
+  }, [token]);
 
   const onFinish = async (values: any) => {
-    // console.log("Received values of form: ", values);
-    const resetToken = getFromLocalStorage("resetToken");
-    const value = verifyToken(resetToken as string) as any;
-    console.log("🚀 ~ onFinish ~ value:", value);
+    const value = verifyToken(token as string) as any;
+    console.log('🚀 ~ onFinish ~ value:', value);
     try {
       const res = await setPassword({
-        resetPasswordToken: resetToken,
+        resetPasswordToken: token,
         newPassword: values?.password,
       }).unwrap();
 
-      SuccessModal("Successfully change your password");
-      removeFromLocalStorage("resetToken");
+      SuccessModal('Successfully change your password');
+      removeFromLocalStorage('resetToken');
       // navigate(`/login`);
       await login({ email: value?.email, password: values?.password });
       navigate(`/`);
@@ -58,10 +53,10 @@ export default function ResetPassword() {
         {/* <Link href={`/${lang}/verify-otp`}>
           <ArrowLeftOutlined />
         </Link> */}
-        <h1 className="font-sans">{"Set New Password"}</h1>
+        <h1 className="font-sans">{'Set New Password'}</h1>
         <p className="font-sans">
           {
-            "A password should be more than 8 characters,including digits,letters,and symbols"
+            'A password should be more than 8 characters,including digits,letters,and symbols'
           }
         </p>
       </div>
@@ -76,29 +71,29 @@ export default function ResetPassword() {
         </Typography.Title>
         <Form.Item
           name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}
+          rules={[{ required: true, message: 'Please input your Password!' }]}
           hasFeedback={true}
         >
           <Input.Password
             size="large"
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder={"Enter your password"}
+            placeholder={'Enter your password'}
           />
         </Form.Item>
-        <Typography.Title level={5}>{"Password"}</Typography.Title>
+        <Typography.Title level={5}>{'Password'}</Typography.Title>
         <Form.Item
           name="confirmPassword"
-          dependencies={["password"]}
+          dependencies={['password']}
           rules={[
-            { required: true, message: "Please input your Password!" },
+            { required: true, message: 'Please input your Password!' },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
+                if (!value || getFieldValue('password') === value) {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  "Password and confirm password does not match"
+                  'Password and confirm password does not match'
                 );
               },
             }),
@@ -108,7 +103,7 @@ export default function ResetPassword() {
             size="large"
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder={"Re-enter your password"}
+            placeholder={'Re-enter your password'}
           />
         </Form.Item>
 
@@ -119,7 +114,7 @@ export default function ResetPassword() {
             htmlType="submit"
             className="login-form-button w-full"
           >
-            <span className="font-sans">{"Confirm"}</span>
+            <span className="font-sans">{'Confirm'}</span>
           </Button>
         </Form.Item>
       </Form>

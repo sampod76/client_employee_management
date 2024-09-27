@@ -1,11 +1,10 @@
-"use client";
-import React from "react";
+import React from 'react';
 
-import LabelUi from "@components/ui/LabelUi";
-import { Select } from "antd";
+import LabelUi from '@components/ui/LabelUi';
+import { Select } from 'antd';
 
 export default function SelectDynamicItem({
-  defaultData,
+  // defaultData,
   disable = false,
   setValue,
   dataList,
@@ -25,8 +24,8 @@ export default function SelectDynamicItem({
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-  const onSearch = (value: string) => {};
+  ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+  const onSearch = (_value: string) => {};
 
   //! console.log(dataList)
   const CategoryOptions = dataList?.map((item: any) => {
@@ -47,14 +46,14 @@ export default function SelectDynamicItem({
             setValue(val);
           }
           if (form) {
-            form.setFieldValue("employee", val);
+            form.setFieldValue('employee', val);
           }
         }}
         disabled={disable}
         // defaultActiveFirstOption
-        defaultValue={{ label: `Select ${label}`, value: "" }}
+        defaultValue={{ label: `Select ${label}`, value: '' }}
         options={CategoryOptions}
-        style={{ width: "100%" }}
+        style={{ width: '100%' }}
         showSearch
         onSearch={onSearch}
         filterOption={filterOption}

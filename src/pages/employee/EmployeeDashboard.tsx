@@ -181,7 +181,7 @@ export default function EmployeeDashboard() {
           <Link
             to={`/${user?.role}/check-in-out`}
             title=""
-            className="relative  z-10 inline-flex items-center justify-center w-full px-8 py-3 text-lg font-bold text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-3xl font-pj hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+            className="relative  z-10 inline-flex items-center justify-center w-full px-8 py-3 text-lg font-bold text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-3xl font-pj hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 animate-pulse "
             role="button"
           >
             Please check in/out
@@ -237,7 +237,7 @@ export default function EmployeeDashboard() {
           </p>
           <div className="space-y-2">
             <p className="text-end font-normal text-base lggg:text-lg">
-              Total Work day
+              Total Working day
             </p>
             <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
               <span>{dashboard?.totalCheckInOffice || 0}</span>

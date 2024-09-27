@@ -1,13 +1,10 @@
-import { Layout } from "antd";
-import { useAppDispatch, useAppSelector } from "./redux/hooks";
+import { Navigate } from "react-router-dom";
 import {
   logout,
   selectCurrentUser,
   useCurrentToken,
 } from "./redux/features/auth/authSlice";
-import Sidebar from "./components/layout/Sidebar";
-import { Link, Navigate } from "react-router-dom";
-import UserAvatarUI from "./components/ui/NavUI/UserAvatarUI";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 
 const App = () => {
   const user = useAppSelector(selectCurrentUser);

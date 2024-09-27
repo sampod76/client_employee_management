@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Button, message } from "antd";
 
+import LoadingSkeleton from "@components/ui/Loading/LoadingSkeleton";
 import { useRef, useState } from "react";
 //@ts-ignore
 import { useScreenshot } from "use-react-screenshot";
@@ -18,6 +20,7 @@ import { ErrorModal } from "../../utils/modalHook";
 
 export default function CheckInOut() {
   const user = useAppSelector(selectCurrentUser);
+  console.log("🚀 ~ CheckInOut ~ user:", user);
   const { data, isLoading: getDateloading } = useGetAllCheckInOutQuery(
     { employeeUserId: user?.userId, toDay: "yes" },
     { skip: !user?.userId }
@@ -78,7 +81,9 @@ export default function CheckInOut() {
       </p>
     );
   };
-
+  if (getDateloading) {
+    return <LoadingSkeleton />;
+  }
   return (
     <div ref={ref}>
       <div className="flex justify-center items-center gap-4 border-8 p-5 rounded-lg">
@@ -87,6 +92,7 @@ export default function CheckInOut() {
             src={user?.profileImage}
             width={750}
             height={500}
+            preview={true}
             alt={"Screenshot"}
             className="w-[200px] h-52 rounded-2xl border p-2 ring-2"
           />
@@ -156,6 +162,7 @@ export default function CheckInOut() {
                 width={750}
                 height={500}
                 src={image}
+                preview={true}
                 alt={"Screenshot"}
                 className="w-[500px] h-52 rounded-2xl border p-2 ring-2"
               />

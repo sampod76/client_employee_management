@@ -1,9 +1,8 @@
-"use client";
-import { UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useForgetPasswordMutation } from "../redux/features/auth/authApi";
-import { ErrorModal, SuccessModal } from "../utils/modalHook";
+import { UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { useForgetPasswordMutation } from '../redux/features/auth/authApi';
+import { ErrorModal, SuccessModal } from '../utils/modalHook';
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
@@ -13,9 +12,9 @@ export default function ForgotPassword() {
     // console.log("Received values of form: ", values);
     try {
       const res = await forgetPassword(values).unwrap();
-      console.log("🚀 ~ onFinish ~ res:", res);
+      console.log('🚀 ~ onFinish ~ res:', res);
       navigate(`/verify-otp?email=${values.email}`);
-      SuccessModal("Otp send successful please check your email");
+      SuccessModal('Otp send successful please check your email');
     } catch (error) {
       console.log(error);
       ErrorModal(error);
@@ -28,10 +27,10 @@ export default function ForgotPassword() {
         {/* <Link href={`/${lang}/sign-in`}>
           <ArrowLeftOutlined />
         </Link> */}
-        <h1 className="font-sans">{"Email"}</h1>
+        <h1 className="font-sans">{'Email'}</h1>
         <p className="font-sans">
           {
-            "Enter your email address to ger a verification code for resetting your password"
+            'Enter your email address to ger a verification code for resetting your password'
           }
           .
         </p>
@@ -44,16 +43,16 @@ export default function ForgotPassword() {
         layout="vertical"
       >
         <Typography.Title level={5} className="font-sans">
-          {"Email"}
+          {'Email'}
         </Typography.Title>
         <Form.Item
           name="email"
-          rules={[{ required: true, message: "Please input your Email!" }]}
+          rules={[{ required: true, message: 'Please input your Email!' }]}
         >
           <Input
             size="large"
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder={"Enter your email"}
+            placeholder={'Enter your email'}
           />
         </Form.Item>
 
@@ -64,7 +63,7 @@ export default function ForgotPassword() {
             htmlType="submit"
             className="login-form-button w-full"
           >
-            <span className="font-sans">{"Get OTP"}</span>
+            <span className="font-sans">{'Get OTP'}</span>
           </Button>
         </Form.Item>
       </Form>

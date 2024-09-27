@@ -67,6 +67,7 @@ export const employeeApi = baseApi.injectEndpoints({
           url: `${URL}/${id}`,
           method: "PATCH",
           data: data,
+          contentType: "multipart/form-data",
         };
       },
       invalidatesTags: [tagTypes.Employee],

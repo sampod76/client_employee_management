@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-
 import { Button, Flex, Form, InputNumber } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -18,9 +16,6 @@ export default function VerifyOtp() {
   const [sendOtp, { isLoading }] = useSetOtpMutation();
 
   const onFinish = async (values: any) => {
-    console.log("🚀 ~ onFinish ~ values:", values);
-
-    console.log("🚀 ~ onFinish ~ values.otp:", values.otp);
     if (!values.otp) {
       ErrorModal("Otp must have at least 6 values");
       return;
@@ -31,11 +26,13 @@ export default function VerifyOtp() {
         otp: String(values.otp),
       }).unwrap();
 
-      if (res?.data?.token) {
-        localStorage.setItem("resetToken", res?.data?.token);
+      if (res?.token) {
+        localStorage.setItem("resetToken", res?.token);
         SuccessModal("Successful");
-        navigate(`/reset-password`);
+        navigate(`/reset-password?token=${res?.token}`);
       }
+      SuccessModal("Successful match otp");
+      console.log("🚀 ~ onFinish ~ res:", res);
     } catch (error) {
       console.log(error);
       ErrorModal(error);

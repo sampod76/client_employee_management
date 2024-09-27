@@ -1,5 +1,7 @@
-import React, { useRef, useEffect } from "react";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
 import * as faceapi from "face-api.js";
+import { useEffect, useRef } from "react";
 
 const FaceRecognition = () => {
   const videoRef = useRef();

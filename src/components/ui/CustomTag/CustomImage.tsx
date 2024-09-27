@@ -1,10 +1,8 @@
-"use client";
-
-import { useState } from "react";
-import { saveAs } from "file-saver";
-import { Image, message } from "antd";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import fileObjectToLink from "../../../utils/fileObjectToLink";
+import { Image, message } from 'antd';
+import { saveAs } from 'file-saver';
+import { useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import fileObjectToLink from '../../../utils/fileObjectToLink';
 type ImageTagProps = {
   src: any;
   width?: number;
@@ -17,13 +15,13 @@ export default function CustomImageTag({
   src,
   width,
   height,
-  alt = "Image",
+  alt = 'Image',
   preview,
   ...props
 }: ImageTagProps) {
   const [openModal, setOpenModal] = useState(false);
 
-  let imageSrc = fileObjectToLink(src);
+  const imageSrc = fileObjectToLink(src);
 
   return (
     <div className="">
@@ -31,7 +29,7 @@ export default function CustomImageTag({
         src={imageSrc}
         width={width || 750}
         height={height || 750}
-        alt={alt || "Images"}
+        alt={alt || 'Images'}
         onClick={() => {
           preview && setOpenModal(true);
         }}
@@ -41,15 +39,15 @@ export default function CustomImageTag({
       <div
         onClick={() => setOpenModal(false)}
         className={`fixed z-[100] flex items-center justify-center ${
-          openModal ? "opacity-1 visible" : "invisible opacity-0"
+          openModal ? 'opacity-1 visible' : 'invisible opacity-0'
         } inset-0 h-full w-full bg-black/70 duration-100`}
       >
         <div
           onClick={(e_) => e_.stopPropagation()}
           className={`absolute rounded-lg drop-shadow-2xl ${
             openModal
-              ? "opacity-1 translate-y-0 duration-300"
-              : "-translate-y-20 opacity-0 duration-150"
+              ? 'opacity-1 translate-y-0 duration-300'
+              : '-translate-y-20 opacity-0 duration-150'
           } group overflow-hidden`}
         >
           {/* Favorite button */}
@@ -111,7 +109,7 @@ export default function CustomImageTag({
             <button
               onClick={() => {
                 navigator.clipboard.writeText(imageSrc);
-                message.success("Link Copy Success");
+                message.success('Link Copy Success');
               }}
               className="p-3 text-xl text-[#fff] duration-200 hover:opacity-60"
             >
@@ -140,7 +138,7 @@ export default function CustomImageTag({
             </button>
             <button
               onClick={() =>
-                typeof imageSrc === "string" && saveAs(imageSrc, "image.jpg")
+                typeof imageSrc === 'string' && saveAs(imageSrc, 'image.jpg')
               }
               className="p-3 text-xl text-[#fff] duration-200 hover:opacity-60"
             >

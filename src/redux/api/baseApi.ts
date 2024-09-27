@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { axiosBaseQuery } from "../../helpers/axios/axiosBaseQuery";
-import { getBaseUrl } from "../../helpers/config/envConfig";
-import { tagTypesList } from "../tag-types";
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { axiosBaseQuery } from '../../helpers/axios/axiosBaseQuery';
+import { getBaseUrl } from '../../helpers/config/envConfig';
+import { tagTypesList } from '../tag-types';
 
 // const baseQuery = fetchBaseQuery({
 //   baseUrl: getBaseUrl,
@@ -66,7 +66,7 @@ export const baseApi = createApi({
   // reducerPath: "baseApi",
   // baseQuery: baseQueryWithRefreshToken,
   //---------when axios user then reducerPath= api--------------
-  reducerPath: "api",
+  reducerPath: 'api',
   baseQuery: axiosBaseQuery({ baseUrl: getBaseUrl }),
   //-----------------------------------------------------------
   tagTypes: tagTypesList,

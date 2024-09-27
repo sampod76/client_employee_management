@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function CardLoading() {
   return (
     <div className="container px-6 py-2 mx-auto animate-pulse">

@@ -137,7 +137,7 @@ const Login = () => {
             <br />
             <h1>
               {' '}
-              Employee email : <span>employee@gmail.com</span> <br />
+              Employee email : <span>lenis95247@exweme.com</span> <br />
               Password: 112233
             </h1>
           </div>

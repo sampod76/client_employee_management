@@ -40,6 +40,7 @@ const LeaveForm = () => {
   const [updateLeaves, { isLoading: updateLoading }] =
     useUpdateLeavesMutation();
   //
+
   const [applyLeaves, { isLoading }] = useAddLeavesMutation();
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);

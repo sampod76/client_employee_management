@@ -40,7 +40,7 @@ const LeaveForm = () => {
   const [updateLeaves, { isLoading: updateLoading }] =
     useUpdateLeavesMutation();
   //
-
+  console.log(leaveDate);
   const [applyLeaves, { isLoading }] = useAddLeavesMutation();
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);
@@ -98,7 +98,7 @@ const LeaveForm = () => {
   const uploadButton = (
     <div className="">
       {imageLoading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload Profile </div>
+      <div style={{ marginTop: 8 }}>Upload provide </div>
     </div>
   );
   return (
@@ -175,7 +175,7 @@ const LeaveForm = () => {
               </Form.Item>
             </Col>
           </Row>
-          <div className="flex justify-center col-span-full  my-1">
+          <div className="flex justify-start col-span-full  my-1">
             <Upload
               name="attachFiles"
               fileList={fileList}
@@ -195,7 +195,11 @@ const LeaveForm = () => {
           <Row>
             <Col span={24}>
               <Form.Item>
-                <Button loading={isLoading} type="primary" htmlType="submit">
+                <Button
+                  loading={isLoading || updateLoading}
+                  type="primary"
+                  htmlType="submit"
+                >
                   Apply Leave
                 </Button>
                 <Button

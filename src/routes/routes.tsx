@@ -95,7 +95,7 @@ const router = createBrowserRouter([
     element: <ImageEditor />,
   },
   {
-    path: "/admin/test",
+    path: '/admin/test',
     element: (
       <ProtectedRoute role="admin">
         <Dashboard />
@@ -104,11 +104,11 @@ const router = createBrowserRouter([
 
     children: [
       {
-        path: "",
+        path: '', //auto dictator-> "/admin/test"
         element: <div className="text-7xl text-center">Test</div>,
       },
       {
-        path: "children1",
+        path: 'children1',
         element: <OutLetLayout />,
         // or
         /* 
@@ -118,29 +118,29 @@ const router = createBrowserRouter([
     */
         children: [
           {
-            path: "",
+            path: '', //auto dictator->"/admin/test"/"children1"
             element: <div className="text-7xl text-center">children1</div>,
           },
           {
-            path: "children2",
+            path: 'children2',
             element: <OutLetLayout option={{ shoping: false }} />,
             children: [
               {
-                path: "",
+                path: '',
                 element: <div className="text-7xl text-center">children2</div>,
               },
               {
-                path: "children3",
+                path: 'children3',
                 element: <OutLetLayout />,
                 children: [
                   {
-                    path: "",
+                    path: '',
                     element: (
                       <div className="text-7xl text-center">children3</div>
                     ),
                   },
                   {
-                    path: "children4",
+                    path: 'children4',
                     element: (
                       <div className="text-7xl text-center">children4</div>
                     ),

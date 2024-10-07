@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   FileOutlined,
   MailOutlined,
@@ -30,7 +31,7 @@ const CreateProject = () => {
   const { data: getDate, isLoading: getLoading } = useGetSingleProjectsQuery(
     id as string,
     {
-      skip: !Boolean(id),
+      skip: !id,
     }
   );
   console.log(getDate);

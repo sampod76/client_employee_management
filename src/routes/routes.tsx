@@ -9,6 +9,7 @@ import ProtectedRoute from "../components/layout/ProtectedRoute";
 import ChangePassword from "../pages/ChangePassword";
 import { employeePaths } from "./employee.routes";
 
+import OutLetLayout from "@components/layout/OutLetLayout";
 import { Button, Result } from "antd";
 import Dashboard from "../Dashboard";
 import FaceUnlock from "../pages/face-unlock/face-unlock";
@@ -87,6 +88,65 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "/admin/test",
+    element: (
+      <ProtectedRoute role="admin">
+        <Dashboard />
+      </ProtectedRoute>
+    ),
+
+    children: [
+      {
+        path: "",
+        element: <div className="text-7xl text-center">Test</div>,
+      },
+      {
+        path: "children1",
+        element: <OutLetLayout />,
+        // or
+        /* 
+    <> 
+      <Outlet/>
+    </>
+    */
+        children: [
+          {
+            path: "",
+            element: <div className="text-7xl text-center">children1</div>,
+          },
+          {
+            path: "children2",
+            element: <OutLetLayout option={{ shoping: false }} />,
+            children: [
+              {
+                path: "",
+                element: <div className="text-7xl text-center">children2</div>,
+              },
+              {
+                path: "children3",
+                element: <OutLetLayout />,
+                children: [
+                  {
+                    path: "",
+                    element: (
+                      <div className="text-7xl text-center">children3</div>
+                    ),
+                  },
+                  {
+                    path: "children4",
+                    element: (
+                      <div className="text-7xl text-center">children4</div>
+                    ),
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     path: "*",

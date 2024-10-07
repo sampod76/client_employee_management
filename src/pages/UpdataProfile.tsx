@@ -67,6 +67,7 @@ const ProfileUpdate = () => {
       <div style={{ marginTop: 8 }}>Upload Profile</div>
     </div>
   );
+  
   if (isLoading) {
     return <LoadingSkeleton />;
   }

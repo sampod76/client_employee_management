@@ -19,6 +19,7 @@ import RecordRTCApp from '../pages/screen-recorder/Screen-recorder';
 import VerifyOtp from '../pages/VerifyOtp';
 import Protect from '../Protect';
 import ImageEditor from '@pages/ImageEditor';
+import OutLetLayout from '@components/layout/OutLetLayout';
 
 const router = createBrowserRouter([
   {
@@ -92,6 +93,65 @@ const router = createBrowserRouter([
   {
     path: '/edit',
     element: <ImageEditor />,
+  },
+  {
+    path: "/admin/test",
+    element: (
+      <ProtectedRoute role="admin">
+        <Dashboard />
+      </ProtectedRoute>
+    ),
+
+    children: [
+      {
+        path: "",
+        element: <div className="text-7xl text-center">Test</div>,
+      },
+      {
+        path: "children1",
+        element: <OutLetLayout />,
+        // or
+        /* 
+    <> 
+      <Outlet/>
+    </>
+    */
+        children: [
+          {
+            path: "",
+            element: <div className="text-7xl text-center">children1</div>,
+          },
+          {
+            path: "children2",
+            element: <OutLetLayout option={{ shoping: false }} />,
+            children: [
+              {
+                path: "",
+                element: <div className="text-7xl text-center">children2</div>,
+              },
+              {
+                path: "children3",
+                element: <OutLetLayout />,
+                children: [
+                  {
+                    path: "",
+                    element: (
+                      <div className="text-7xl text-center">children3</div>
+                    ),
+                  },
+                  {
+                    path: "children4",
+                    element: (
+                      <div className="text-7xl text-center">children4</div>
+                    ),
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     path: '*',

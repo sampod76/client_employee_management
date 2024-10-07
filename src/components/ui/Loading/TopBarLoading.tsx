@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function TopBarLoading() {
   return (
     <div className="container px-6  mx-auto animate-pulse">

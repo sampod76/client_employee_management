@@ -224,7 +224,7 @@ export default function EmployeeList({ status }: { status?: string }) {
                       <Button
                         type="link"
                         style={{ color: "green" }}
-                        loading={deleteLoading}
+                        loading={ApprovedLoading}
                         // icon={<DeleteOutlined style={{ color: "green" }} />}
                         onClick={() => handleApproved(record._id)}
                       >

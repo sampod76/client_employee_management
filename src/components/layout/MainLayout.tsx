@@ -10,9 +10,9 @@ const MainLayout = () => {
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  // };
 
   return (
     <Layout className="max-w-[1990px] mx-auto" style={{ height: "100%" }}>

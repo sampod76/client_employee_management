@@ -1,18 +1,17 @@
-"use client";
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./features/auth/authSlice";
-import { baseApi } from "./api/baseApi";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import { configureStore } from '@reduxjs/toolkit';
 import {
-  persistReducer,
-  persistStore,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
-} from "redux-persist";
+  REHYDRATE,
+} from 'redux-persist';
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+import { baseApi } from './api/baseApi';
+import authReducer from './features/auth/authSlice';
 
 const createNoopStorage = () => {
   return {
@@ -29,12 +28,12 @@ const createNoopStorage = () => {
 };
 
 const storage =
-  typeof window === "undefined"
+  typeof window === 'undefined'
     ? createNoopStorage()
-    : createWebStorage("local");
+    : createWebStorage('local');
 
 const persistConfig = {
-  key: "auth",
+  key: 'auth',
   storage,
 };
 

@@ -6,19 +6,18 @@ import { useGetDashboardQuery } from "@redux/features/admin/adminApi";
 import { useGetAllCheckInOutQuery } from "@redux/features/employee/checkInOutApi";
 import { Dropdown, Menu, Space } from "antd";
 import dayjs from "dayjs";
-import { useState } from "react";
 const AdminDashboard = () => {
   const { data, isLoading } = useGetDashboardQuery({});
-  const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("createdAt");
-  const [sortOrder, setSortOrder] = useState<string>("decs");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  // const [page, setPage] = useState<number>(1);
+  // const [size, setSize] = useState<number>(10);
+  // const [sortBy, setSortBy] = useState<string>("createdAt");
+  // const [sortOrder, setSortOrder] = useState<string>("decs");
+  // const [searchTerm, setSearchTerm] = useState<string>("");
   const query: Record<string, any> = {};
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  query["limit"] = 10;
+  query["page"] = 1;
+  query["sortBy"] = "createdAt";
+  query["sortOrder"] = "decs";
 
   const { data: checkInOutData, isLoading: cl } =
     useGetAllCheckInOutQuery(query);

@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const VideoPlayer = ({ videoSrc }) => {
+const VideoPlayer = ({ videoSrc }: any) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 

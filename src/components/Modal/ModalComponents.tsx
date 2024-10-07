@@ -42,13 +42,14 @@ const ModalComponent = ({
         confirmLoading={loading}
         onCancel={handleCancel}
         //! when i went hidden ok and cancel button then it use
-        footer={(_, { OkBtn, CancelBtn }) => (
-          <>
-            {/* <Button>Custom Button</Button>
-            <CancelBtn />
-            <OkBtn /> */}
-          </>
-        )}
+        // footer={(_, { OkBtn, CancelBtn }) => (
+        //   <>
+        //     {/* <Button>Custom Button</Button>
+        //     <CancelBtn />
+        //     <OkBtn /> */}
+        //   </>
+        // )}
+        footer={false}
         width={width}
       >
         {/* {React.cloneElement(children, { open, setOpen })} */}

@@ -1,32 +1,32 @@
-import { createBrowserRouter, Link } from "react-router-dom";
-import App from "../App";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import { routeGenerator } from "../utils/routesGenerator";
-import { adminPaths } from "./admin.routes";
+import { createBrowserRouter, Link } from 'react-router-dom';
+import App from '../App';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import { routeGenerator } from '../utils/routesGenerator';
+import { adminPaths } from './admin.routes';
 
-import ProtectedRoute from "../components/layout/ProtectedRoute";
-import ChangePassword from "../pages/ChangePassword";
-import { employeePaths } from "./employee.routes";
+import ProtectedRoute from '../components/layout/ProtectedRoute';
+import ChangePassword from '../pages/ChangePassword';
+import { employeePaths } from './employee.routes';
 
-import OutLetLayout from "@components/layout/OutLetLayout";
-import { Button, Result } from "antd";
-import Dashboard from "../Dashboard";
-import FaceUnlock from "../pages/face-unlock/face-unlock";
-import ForgotPassword from "../pages/ForgetPassword";
-import Profile from "../pages/Profile";
-import ResetPassword from "../pages/ResetPassword";
-import RecordRTCApp from "../pages/screen-recorder/Screen-recorder";
-import VerifyOtp from "../pages/VerifyOtp";
-import Protect from "../Protect";
+import { Button, Result } from 'antd';
+import Dashboard from '../Dashboard';
+import FaceUnlock from '../pages/face-unlock/face-unlock';
+import ForgotPassword from '../pages/ForgetPassword';
+import Profile from '../pages/Profile';
+import ResetPassword from '../pages/ResetPassword';
+import RecordRTCApp from '../pages/screen-recorder/Screen-recorder';
+import VerifyOtp from '../pages/VerifyOtp';
+import Protect from '../Protect';
+import ImageEditor from '@pages/ImageEditor';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
   },
   {
-    path: "/screen-recorder",
+    path: '/screen-recorder',
     element: (
       <Protect>
         <RecordRTCApp />
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/admin",
+    path: '/admin',
     element: (
       <ProtectedRoute role="admin">
         <Dashboard />
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     children: routeGenerator(adminPaths),
   },
   {
-    path: "/employee",
+    path: '/employee',
     element: (
       <ProtectedRoute role="employee">
         <Dashboard />
@@ -52,107 +52,52 @@ const router = createBrowserRouter([
     children: routeGenerator(employeePaths),
   },
   {
-    path: "/profile",
+    path: '/profile',
     element: <Profile />,
     children: routeGenerator(adminPaths),
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
 
   {
-    path: "/screen-recorder",
+    path: '/screen-recorder',
     element: <RecordRTCApp />,
   },
   {
-    path: "/face-unlock",
+    path: '/face-unlock',
     element: <FaceUnlock />,
   },
   {
-    path: "/change-password",
+    path: '/change-password',
     element: <ChangePassword />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <Register />,
   },
   {
-    path: "/forgot-password",
+    path: '/forgot-password',
     element: <ForgotPassword />,
   },
   {
-    path: "/verify-otp",
+    path: '/verify-otp',
     element: <VerifyOtp />,
   },
   {
-    path: "/reset-password",
+    path: '/reset-password',
     element: <ResetPassword />,
   },
   {
-    path: "/admin/test",
-    element: (
-      <ProtectedRoute role="admin">
-        <Dashboard />
-      </ProtectedRoute>
-    ),
-
-    children: [
-      {
-        path: "",
-        element: <div className="text-7xl text-center">Test</div>,
-      },
-      {
-        path: "children1",
-        element: <OutLetLayout />,
-        // or
-        /* 
-    <> 
-      <Outlet/>
-    </>
-    */
-        children: [
-          {
-            path: "",
-            element: <div className="text-7xl text-center">children1</div>,
-          },
-          {
-            path: "children2",
-            element: <OutLetLayout option={{ shoping: false }} />,
-            children: [
-              {
-                path: "",
-                element: <div className="text-7xl text-center">children2</div>,
-              },
-              {
-                path: "children3",
-                element: <OutLetLayout />,
-                children: [
-                  {
-                    path: "",
-                    element: (
-                      <div className="text-7xl text-center">children3</div>
-                    ),
-                  },
-                  {
-                    path: "children4",
-                    element: (
-                      <div className="text-7xl text-center">children4</div>
-                    ),
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    path: '/edit',
+    element: <ImageEditor />,
   },
   {
-    path: "*",
+    path: '*',
     element: (
       <div className="text-center text-5xl">
-        {" "}
+        {' '}
         <Result
           status="404"
           title="404"

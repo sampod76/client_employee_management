@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function CategoryButtonSKeletton() {
   return (
     <div className=" w-full flex  justify-between items-center gap-5  font-[550] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap">

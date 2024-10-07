@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import CustomImageTag from "../ui/CustomTag/CustomImage";
@@ -8,7 +9,7 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-const WebcamCapture = ({ setImage, image }: any) => {
+const WebcamCapture = ({ setImage }: any) => {
   const webcamRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
 
@@ -30,7 +31,9 @@ const WebcamCapture = ({ setImage, image }: any) => {
         videoConstraints={videoConstraints}
         className="mx-auto rounded-2xl"
       />
-
+      <button className="hidden" onClick={() => capture()}>
+        Capture
+      </button>
       {capturedImage && (
         <div>
           <h3>Captured Image:</h3>

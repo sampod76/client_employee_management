@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-"use client";
-import { useState } from "react";
 
-import { Button } from "antd";
+import { useState } from 'react';
 
-import dayjs from "dayjs";
+import { Button } from 'antd';
 
-import { FaWindows } from "react-icons/fa6";
-import { MdDevicesOther } from "react-icons/md";
-import { selectCurrentUser } from "../redux/features/auth/authSlice";
-import { useGetAllLoginHistoryQuery } from "../redux/features/users/loginHistoryApi";
-import { useAppSelector, useDebounced } from "../redux/hooks";
+import dayjs from 'dayjs';
 
-import UMTable from "../components/ui/UMTable";
-import { ConfirmModal, ErrorModal, SuccessModal } from "../utils/modalHook";
+import { FaWindows } from 'react-icons/fa6';
+import { MdDevicesOther } from 'react-icons/md';
+import { selectCurrentUser } from '../redux/features/auth/authSlice';
+import { useGetAllLoginHistoryQuery } from '../redux/features/users/loginHistoryApi';
+import { useAppSelector, useDebounced } from '../redux/hooks';
+
+import UMTable from '../components/ui/UMTable';
+import { ConfirmModal, ErrorModal, SuccessModal } from '../utils/modalHook';
 
 export default function LoginHistory() {
   const userInfo = useAppSelector(selectCurrentUser);
@@ -21,18 +21,18 @@ export default function LoginHistory() {
   const [refreshToken, setRefreshToken] = useState<{
     loading: boolean;
     value: string;
-  }>({ loading: true, value: "" });
+  }>({ loading: true, value: '' });
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("createdAt");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  const [sortBy, setSortBy] = useState<string>('createdAt');
+  const [sortOrder, setSortOrder] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
 
-  query["userId"] = userInfo?.userId;
+  query['userId'] = userInfo?.userId;
 
   const { data = [], isLoading } = useGetAllLoginHistoryQuery({ ...query });
   // const [logOutHistory, { isLoading: LogoutLoading }] = useUserLogOutMutation();
@@ -49,17 +49,17 @@ export default function LoginHistory() {
   });
 
   if (debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
 
   const columns = [
     {
-      title: "Device Name",
+      title: 'Device Name',
       //   dataIndex: "device_info.os.name",
       render: function (data: any) {
         return (
           <p className="flex justify-start items-center gap-2">
-            {data?.device_info?.os?.name === "Windows" ? (
+            {data?.device_info?.os?.name === 'Windows' ? (
               <FaWindows className="text-lg" />
             ) : (
               <MdDevicesOther className="text-lg" />
@@ -70,7 +70,7 @@ export default function LoginHistory() {
       },
     },
     {
-      title: "Engine version",
+      title: 'Engine version',
       //   dataIndex: "device_info.os.name",
       render: function (data: any) {
         return (
@@ -82,38 +82,38 @@ export default function LoginHistory() {
       },
     },
     {
-      title: "Device type",
+      title: 'Device type',
       //   dataIndex: "device_info.os.name",
       render: function (data: any) {
         return <p>{data?.device_info?.device?.type}</p>;
       },
     },
     {
-      title: "Ip",
-      dataIndex: "ip",
+      title: 'Ip',
+      dataIndex: 'ip',
       width: 100,
     },
 
     {
-      title: "Login time",
-      dataIndex: "createdAt",
+      title: 'Login time',
+      dataIndex: 'createdAt',
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format('MMM D, YYYY hh:mm A');
       },
       sorter: true,
     },
     {
-      title: "Action",
+      title: 'Action',
       // fixed: "right",
       width: 110,
       render: (record: any) => (
         // console.log(object);
-        <div className={`${refreshToken.value === record?.token && "hidden"}`}>
+        <div className={`${refreshToken.value === record?.token && 'hidden'}`}>
           <Button
             // loading={refreshToken.loading}
             // hidden={refreshToken.value === record?.token}
             onClick={() => handleLogout(record?._id)}
-            style={{ marginRight: "5px", background: "red", color: "white" }}
+            style={{ marginRight: '5px', background: 'red', color: 'white' }}
           >
             Log out
           </Button>
@@ -131,22 +131,22 @@ export default function LoginHistory() {
     const { order, field } = sorter;
     // console.log(order, field);
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
   const handleLogout = (id: string) => {
-    ConfirmModal({ message: "Are you sure you want to Logout" }).then(
+    ConfirmModal({ message: 'Are you sure you want to Logout' }).then(
       async (res) => {
         if (res.isConfirmed) {
           try {
             // const res = await logOutHistory({ id, data: {} });
 
-            SuccessModal("Successfully logged out");
+            SuccessModal('Successfully logged out');
           } catch (error: any) {
             ErrorModal(error.message);
           }
@@ -156,7 +156,7 @@ export default function LoginHistory() {
   };
   return (
     <div>
-      {" "}
+      {' '}
       <UMTable
         loading={isLoading}
         columns={columns}

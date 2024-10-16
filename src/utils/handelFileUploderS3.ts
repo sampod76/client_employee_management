@@ -1,41 +1,41 @@
 //@ts-nocheck
-import { instance as axiosInstance } from "../helpers/axios/axiosInstance";
-import { getBaseUrl } from "../helpers/config/envConfig";
-const url = `${getBaseUrl}/aws/create-aws-upload-files-token`;
-
+import { getBaseUrl } from '@/config/envConfig';
+import { instance as axiosInstance } from '@/helpers/axios/axiosInstance';
+const url = `${getBaseUrl()}/aws/create-aws-upload-files-token`;
 const singleFileUploaderInS3 = async (fileData, uploadFile) => {
-  console.log("🚀 ~ singleFileUploaderInS3 ~ uploadFile:", uploadFile.type);
   try {
     const response = await axiosInstance({
       url: fileData.pre_url,
-      method: "PUT",
+      method: 'PUT',
       data: uploadFile,
       withCredentials: true,
-      headers: {
-        "Content-Type": uploadFile.type, // Ensure the correct content type is set
-        "x-amz-acl": "public-read", // Optional, depending on your access needs
-      },
     });
     // console.log("🚀 ~ singleFileUploaderInS3 ~ response:", response);
     return fileData;
   } catch (error) {
-    throw new Error(error?.message || "Error");
+    throw new Error(error?.message || 'Error');
   }
 };
 
 export const multipleFilesUploader = async (files) => {
   try {
-    const filesModifyServerFormate = files.map((file) => {
+    const filesModifyServerFormate = files.map((file, index) => {
+      let uid = file?.uid;
+      if (!uid) {
+        uid = crypto.randomUUID();
+        files[index].uid = uid;
+      }
       return {
         filename: file.name,
         mimetype: file.type,
-        uid: file.uid, //!when use ant-d uploader then file.originFileObj in have --> default (uid) . when use custom uploader then add uid custom
+        uid: uid, //!when use ant-d uploader then file.originFileObj in have --> default (uid) . when use custom uploader then add uid custom
       };
     });
+
     const promises = [];
     const getFilesToken = await axiosInstance({
       url: url,
-      method: "POST",
+      method: 'POST',
       data: { images: filesModifyServerFormate },
       withCredentials: true,
     });
@@ -51,7 +51,6 @@ export const multipleFilesUploader = async (files) => {
     const result = await Promise.all(promises);
     return result;
   } catch (error) {
-    console.log("🚀 ~ multipleFilesUploader ~ error:", error);
-    throw new Error(error?.message || "Error");
+    throw new Error(error?.message || 'Error');
   }
 };

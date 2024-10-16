@@ -42,6 +42,7 @@ const UserAvatarUI = () => {
           }}
           type="default"
           style={{ color: 'black' }}
+          className="w-full"
         >
           Log out
         </Button>

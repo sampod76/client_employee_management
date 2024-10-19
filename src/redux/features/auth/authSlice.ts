@@ -2,14 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 export type IImagePlatform = 'imgbb' | 'cloudinary' | 'server' | 'aws' | string;
 export type IFileAfterUpload = {
-  mimetype: string;
   server_url?: string;
-  filename?: string;
-  path?: string;
   url?: string;
-  durl?: string;
-  platform: IImagePlatform;
-  cdn?: string; //https://www.youtube.com/watch?v=kbI7kRWAU-w
+  path: string;
+  mimetype: string;
+  filename?: string;
+  cdn?: string;
+  platform: string;
+  createdAt?: string;
+  updatedAt?: string;
   // fileId: Types.ObjectId | string | IFileUploade;
 };
 export type TUser = {

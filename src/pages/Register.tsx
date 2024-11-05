@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, InputNumber, Row, Skeleton, Upload } from "antd";
-import { useState } from "react";
-import { FieldValues } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import PHForm from "../components/form/PHForm";
-import PHInput from "../components/form/PHInput";
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, InputNumber, Row, Skeleton, Upload } from 'antd';
+import { useState } from 'react';
+import { FieldValues } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import PHForm from '../components/form/PHForm';
+import PHInput from '../components/form/PHInput';
 import {
   useAddUsersMutation,
   useCreateTempUserMutation,
-} from "../redux/features/users/userApi";
-import { useAppDispatch } from "../redux/hooks";
-import { ErrorModal, SuccessModal } from "../utils/modalHook";
+} from '../redux/features/users/userApi';
+import { useAppDispatch } from '../redux/hooks';
+import { ErrorModal, SuccessModal } from '../utils/modalHook';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -31,21 +31,21 @@ const Register = () => {
     try {
       const tempData = {
         email: data?.email,
-        role: "employee",
+        role: 'employee',
       };
       const res1 = await tempSignUp(tempData).unwrap();
-      console.log("🚀 ~ onSubmit ~ res1:", res1);
+      console.log('🚀 ~ onSubmit ~ res1:', res1);
 
       SuccessModal(
-        "Sign up successful",
-        "Please check your email for an OTP code"
+        'Sign up successful',
+        'Please check your email for an OTP code'
       );
 
       const submitDate = {
         authData: {
           email: data.email,
           password: data.password,
-          role: "employee",
+          role: 'employee',
           tempUser: {
             tempUserId: res1._id,
             otp: null,
@@ -58,7 +58,7 @@ const Register = () => {
         },
       };
 
-      console.log("🚀 ~ onSubmit ~ submitDate:", submitDate);
+      console.log('🚀 ~ onSubmit ~ submitDate:', submitDate);
       setFromData(submitDate);
       setHavOtp(true);
     } catch (err) {
@@ -70,13 +70,13 @@ const Register = () => {
   const submitFrom = async () => {
     try {
       if (!haveOtp) {
-        toast.error("Please enter OTP");
+        toast.error('Please enter OTP');
         return;
       }
       const all = { ...fromData } as any;
       all.authData.tempUser.otp = otp;
       const formData = new FormData();
-      console.log(fileList, "fileList");
+      console.log(fileList, 'fileList');
       if (fileList?.length) {
         // setImageLoading(true);
         // const res = await multipleFilesUploader(
@@ -86,21 +86,21 @@ const Register = () => {
         // console.log("🚀 ~ onSubmit ~ res:", res);
         // data.profileImage = res[0];
         // @ts-ignore
-        formData.append("profileImage", fileList[0].originFileObj);
+        formData.append('profileImage', fileList[0].originFileObj);
       }
-      formData.append("data", JSON.stringify(all));
+      formData.append('data', JSON.stringify(all));
       const res = await registration(formData).unwrap();
 
       // const user = verifyToken(res.data.accessToken) as TUser;
       // dispatch(setUser({ user: user, token: res.data.accessToken }));
       // toast.success("Logged in", { id: toastId, duration: 2000 });
-      SuccessModal("Register successfully please ");
+      SuccessModal('Register successfully please ');
 
-      navigate("/login");
+      navigate('/login');
       setIsReset(true);
     } catch (error) {
       ErrorModal(error);
-      console.log("🚀 ~ submitFrom ~ error:", error);
+      console.log('🚀 ~ submitFrom ~ error:', error);
     }
   };
   const handleUploadChange = ({ fileList }: any) => {
@@ -113,14 +113,14 @@ const Register = () => {
     </div>
   );
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <div className="border p-5 min-w-96">
+    <Row justify="center" align="middle" style={{ height: '100vh' }}>
+      <div className="min-w-96 border p-5">
         <PHForm isReset={isReset} onSubmit={onSubmit}>
-          <h1 className="text-center text-2xl my-1">Employee Registration</h1>
+          <h1 className="my-1 text-center text-2xl">Employee Registration</h1>
           <hr />
 
           <div className="grid grid-cols-2 gap-2">
-            <div className="flex justify-center col-span-full  my-1">
+            <div className="col-span-full my-1 flex justify-center">
               <Upload
                 name="attachFiles"
                 fileList={fileList}
@@ -134,7 +134,7 @@ const Register = () => {
               </Upload>
             </div>
             {imageLoading && (
-              <Skeleton.Input active={true} size={"small"} block={true} />
+              <Skeleton.Input active={true} size={'small'} block={true} />
             )}
             <PHInput
               disabled={haveOtp}
@@ -193,7 +193,7 @@ const Register = () => {
           </Button>
 
           {haveOtp && (
-            <div className="my-2 flex flex-col space-y-3 rounded-lg border p-5 justify-center items-center">
+            <div className="my-2 flex flex-col items-center justify-center space-y-3 rounded-lg border p-5">
               <p>Enter otp from email</p>
               <InputNumber
                 type="number"
@@ -212,17 +212,17 @@ const Register = () => {
               >
                 Submit
               </Button>
-              <p className="text-red-500 ">
+              <p className="text-red-500">
                 note: When successfully submitted opt then wait for admin
                 approval
               </p>
             </div>
           )}
 
-          <div className="flex justify-end items-center">
+          <div className="flex items-center justify-end">
             <Link
-              className="my-2 text-lg underline-offset-1 underline w-fit p-1"
-              to={"/login"}
+              className="my-2 w-fit p-1 text-lg underline underline-offset-1"
+              to={'/login'}
             >
               login
             </Link>

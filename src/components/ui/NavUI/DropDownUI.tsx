@@ -1,7 +1,7 @@
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Menu } from "antd";
-import React from "react";
-import { Link } from "react-router-dom";
+import { DownOutlined } from '@ant-design/icons';
+import { Dropdown, Menu } from 'antd';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const DropDownUI = ({
   children,
@@ -16,8 +16,8 @@ const DropDownUI = ({
         style={{
           // background:"red",
           // padding: "1rem",
-          minWidth: "10rem",
-          padding: "1rem",
+          minWidth: '10rem',
+          padding: '1rem',
         }}
         key={item.label}
       >
@@ -25,14 +25,14 @@ const DropDownUI = ({
           <Menu.SubMenu
             style={{
               // background: "blue",
-              fontSize: "24px",
-              fontWeight: "bold",
-              color: "#023047",
+              fontSize: '24px',
+              fontWeight: 'bold',
+              color: '#023047',
             }}
             key={item.label}
             title={
               <Link
-                className="text-[15px] text-[#023047] font-[600] ml-0"
+                className="ml-0 text-[15px] font-[600] text-[#023047]"
                 to={item.link}
               >
                 {item.label}1
@@ -43,7 +43,7 @@ const DropDownUI = ({
           </Menu.SubMenu>
         ) : (
           <Link
-            className="text-[15px] text-[#023047] font-[600]"
+            className="text-[15px] font-[600] text-[#023047]"
             to={item.link}
           >
             {item.label}2

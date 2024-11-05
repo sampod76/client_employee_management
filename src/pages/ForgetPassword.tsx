@@ -22,8 +22,8 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="py-5 px-8 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] max-w-md mx-auto mt-10">
-      <div className="mb-6 ">
+    <div className="mx-auto mt-10 max-w-md px-8 py-5 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
+      <div className="mb-6">
         {/* <Link href={`/${lang}/sign-in`}>
           <ArrowLeftOutlined />
         </Link> */}

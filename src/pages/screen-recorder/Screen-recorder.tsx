@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import axios from "axios";
-import dayjs from "dayjs";
-import { saveAs } from "file-saver";
-import React, { useEffect, useRef, useState } from "react";
+import axios from 'axios';
+import dayjs from 'dayjs';
+import { saveAs } from 'file-saver';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FaDownload,
   FaMicrophone,
@@ -12,13 +12,13 @@ import {
   FaStop,
   FaVideo,
   FaVideoSlash,
-} from "react-icons/fa";
-import { MdCallEnd, MdCancel, MdScreenShare } from "react-icons/md";
-import ReactPlayer from "react-player";
-import { useStopwatch } from "react-timer-hook";
-import RecordRTC from "recordrtc";
+} from 'react-icons/fa';
+import { MdCallEnd, MdCancel, MdScreenShare } from 'react-icons/md';
+import ReactPlayer from 'react-player';
+import { useStopwatch } from 'react-timer-hook';
+import RecordRTC from 'recordrtc';
 
-type MediaType = "video" | "audio";
+type MediaType = 'video' | 'audio';
 
 const RecordRTCApp: React.FC = () => {
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -49,16 +49,16 @@ const RecordRTCApp: React.FC = () => {
       .hour(hours)
       .minute(minutes)
       .second(seconds)
-      .format("HH:mm:ss");
+      .format('HH:mm:ss');
   };
 
   const getAvailableDevices = async () => {
     const devices = await navigator.mediaDevices.enumerateDevices();
     const videoDevices = devices.filter(
-      (device) => device.kind === "videoinput"
+      (device) => device.kind === 'videoinput'
     );
     const audioDevices = devices.filter(
-      (device) => device.kind === "audioinput"
+      (device) => device.kind === 'audioinput'
     );
     setCameras(videoDevices);
     setMicrophones(audioDevices);
@@ -95,7 +95,7 @@ const RecordRTCApp: React.FC = () => {
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       setCameraStream(stream);
     } catch (error) {
-      console.error("Error starting camera stream:", error);
+      console.error('Error starting camera stream:', error);
     }
   };
 
@@ -113,19 +113,19 @@ const RecordRTCApp: React.FC = () => {
           ...audioStream.getTracks(),
         ]);
         setMediaStream(combinedStream);
-        recorderRef.current = new RecordRTC(combinedStream, { type: "video" });
+        recorderRef.current = new RecordRTC(combinedStream, { type: 'video' });
       } else {
         setMediaStream(screenStream);
-        recorderRef.current = new RecordRTC(screenStream, { type: "video" });
+        recorderRef.current = new RecordRTC(screenStream, { type: 'video' });
       }
       recorderRef.current.startRecording();
-      setMediaType("video");
+      setMediaType('video');
       setIsRecording(true);
       setIsScreenSharing(true);
       startCameraStream();
       start();
     } catch (error) {
-      console.error("Error starting screen recording:", error);
+      console.error('Error starting screen recording:', error);
     }
   };
 
@@ -153,7 +153,7 @@ const RecordRTCApp: React.FC = () => {
         setIsScreenSharing(true);
       }
     } catch (error) {
-      console.error("Error restarting screen sharing:", error);
+      console.error('Error restarting screen sharing:', error);
     }
   };
 
@@ -176,7 +176,7 @@ const RecordRTCApp: React.FC = () => {
   const downloadRecording = () => {
     if (recorderRef.current) {
       const blob = recorderRef.current.getBlob();
-      saveAs(blob, `recording.${mediaType === "audio" ? "webm" : "webm"}`);
+      saveAs(blob, `recording.${mediaType === 'audio' ? 'webm' : 'webm'}`);
     }
   };
 
@@ -184,18 +184,18 @@ const RecordRTCApp: React.FC = () => {
 
   const uploadToS3 = async (blob: Blob) => {
     try {
-      const response = await axios.get("/generate-presigned-url");
+      const response = await axios.get('/generate-presigned-url');
       const { url } = response.data;
 
       await axios.put(url, blob, {
         headers: {
-          "Content-Type": "video/webm",
+          'Content-Type': 'video/webm',
         },
       });
 
-      console.log("Successfully uploaded to S3");
+      console.log('Successfully uploaded to S3');
     } catch (error) {
-      console.error("Error uploading to S3:", error);
+      console.error('Error uploading to S3:', error);
     }
   };
   const UploadRecording = () => {
@@ -231,7 +231,7 @@ const RecordRTCApp: React.FC = () => {
 
   const togglePauseResumeRecording = () => {
     if (recorderRef.current) {
-      if (recorderRef.current.getState() === "paused") {
+      if (recorderRef.current.getState() === 'paused') {
         recorderRef.current.resumeRecording();
         setIsPaused(false);
         start();
@@ -244,20 +244,20 @@ const RecordRTCApp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center text-white">
-      <div className="my-4 flex space-x-4 ">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white">
+      <div className="my-4 flex space-x-4">
         <div className="flex flex-col">
           <label
             htmlFor="cameraSelect"
-            className="text-sm font-medium text-gray-400 mb-1"
+            className="mb-1 text-sm font-medium text-gray-400"
           >
             Camera
           </label>
           <select
             id="cameraSelect"
-            value={selectedCamera || ""}
+            value={selectedCamera || ''}
             onChange={(e) => setSelectedCamera(e.target.value)}
-            className="px-2 py-1 bg-gray-700 text-white rounded-md"
+            className="rounded-md bg-gray-700 px-2 py-1 text-white"
           >
             {cameras.map((camera) => (
               <option key={camera.deviceId} value={camera.deviceId}>
@@ -270,15 +270,15 @@ const RecordRTCApp: React.FC = () => {
         <div className="flex flex-col">
           <label
             htmlFor="microphoneSelect"
-            className="text-sm font-medium text-gray-400 mb-1"
+            className="mb-1 text-sm font-medium text-gray-400"
           >
             Microphone
           </label>
           <select
             id="microphoneSelect"
-            value={selectedMicrophone || ""}
+            value={selectedMicrophone || ''}
             onChange={(e) => setSelectedMicrophone(e.target.value)}
-            className="px-2 py-1 bg-gray-700 text-white rounded-md"
+            className="rounded-md bg-gray-700 px-2 py-1 text-white"
           >
             {microphones.map((microphone) => (
               <option key={microphone.deviceId} value={microphone.deviceId}>
@@ -288,17 +288,17 @@ const RecordRTCApp: React.FC = () => {
           </select>
         </div>
       </div>
-      <div className="bg-gray-800 p-6 shadow-lg rounded-lg w-full max-w-4xl relative">
+      <div className="relative w-full max-w-4xl rounded-lg bg-gray-800 p-6 shadow-lg">
         <div className="video-container flex justify-center">
-          {isRecording && mediaType === "video" ? (
+          {isRecording && mediaType === 'video' ? (
             <video
               ref={liveVideoRef}
               autoPlay
               muted
-              className="w-full h-96 bg-black rounded-md"
+              className="h-96 w-full rounded-md bg-black"
             />
           ) : (
-            <div className="w-full h-96 bg-black flex items-center justify-center text-lg text-gray-500 rounded-md">
+            <div className="flex h-96 w-full items-center justify-center rounded-md bg-black text-lg text-gray-500">
               No video stream
             </div>
           )}
@@ -308,20 +308,20 @@ const RecordRTCApp: React.FC = () => {
               ref={cameraVideoRef}
               autoPlay
               muted
-              className="w-40 h-30 bg-black rounded-md absolute bottom-4 right-4 border-2 border-gray-500"
+              className="h-30 absolute bottom-4 right-4 w-40 rounded-md border-2 border-gray-500 bg-black"
             />
           )}
 
           {isRecording && (
-            <div className="absolute top-4 left-4 bg-gray-800 text-white p-2 rounded">
+            <div className="absolute left-4 top-4 rounded bg-gray-800 p-2 text-white">
               Time Elapsed: {formatTime()}
             </div>
           )}
 
           {isRecording && !isPaused && (
-            <div className="absolute top-4 right-4">
-              <div className=" animate-pulse">
-                <p className="text-3xl rounded-full text-red-700 font-extrabold mr-2">
+            <div className="absolute right-4 top-4">
+              <div className="animate-pulse">
+                <p className="mr-2 rounded-full text-3xl font-extrabold text-red-700">
                   O
                 </p>
               </div>
@@ -329,7 +329,7 @@ const RecordRTCApp: React.FC = () => {
           )}
         </div>
 
-        <div className="control-bar mt-4 flex justify-center space-x-6 py-3 bg-gray-700 rounded-md">
+        <div className="control-bar mt-4 flex justify-center space-x-6 rounded-md bg-gray-700 py-3">
           <button onClick={toggleMuteAudio} className="control-button">
             {isAudioMuted ? (
               <FaMicrophoneSlash size={24} />
@@ -389,7 +389,7 @@ const RecordRTCApp: React.FC = () => {
 
           <button
             onClick={stopRecording}
-            className="control-button bg-red-600 hover:bg-red-700 rounded-full p-2"
+            className="control-button rounded-full bg-red-600 p-2 hover:bg-red-700"
           >
             <MdCallEnd size={24} />
           </button>
@@ -397,11 +397,11 @@ const RecordRTCApp: React.FC = () => {
       </div>
 
       {!isRecording && mediaBlobUrl && (
-        <div className="mt-4 bg-gray-800 p-4 rounded-md w-full max-w-4xl">
+        <div className="mt-4 w-full max-w-4xl rounded-md bg-gray-800 p-4">
           <ReactPlayer
             url={mediaBlobUrl}
             controls
-            className="w-full h-64 bg-black rounded-md"
+            className="h-64 w-full rounded-md bg-black"
           />
         </div>
       )}

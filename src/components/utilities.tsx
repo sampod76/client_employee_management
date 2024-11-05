@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //@ts-nocheck
-import * as faceapi from "face-api.js";
-import { useEffect, useRef } from "react";
+import * as faceapi from 'face-api.js';
+import { useEffect, useRef } from 'react';
 
 const FaceRecognition = () => {
   const videoRef = useRef();
   const canvasRef = useRef();
 
   const loadModels = async () => {
-    const MODEL_URL = "/models"; // Ensure models are served from public/models
+    const MODEL_URL = '/models'; // Ensure models are served from public/models
     await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
     await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
     await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
@@ -43,7 +43,7 @@ const FaceRecognition = () => {
           displaySize
         );
         canvasRef.current
-          .getContext("2d")
+          .getContext('2d')
           .clearRect(0, 0, displaySize.width, displaySize.height);
         faceapi.draw.drawDetections(canvasRef.current, resizedDetections);
         faceapi.draw.drawFaceLandmarks(canvasRef.current, resizedDetections);

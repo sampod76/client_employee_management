@@ -58,7 +58,7 @@ export default function LoginHistory() {
       //   dataIndex: "device_info.os.name",
       render: function (data: any) {
         return (
-          <p className="flex justify-start items-center gap-2">
+          <p className="flex items-center justify-start gap-2">
             {data?.device_info?.os?.name === 'Windows' ? (
               <FaWindows className="text-lg" />
             ) : (

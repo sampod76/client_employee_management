@@ -393,28 +393,28 @@ const ImageEditorCom: React.FC = () => {
   };
   return (
     <div className="container mx-auto">
-      <div className="flex justify-between items-center h-[10vh]">
+      <div className="flex h-[10vh] items-center justify-between">
         <div className="flex items-center gap-1 lg:gap-4">
           <Tooltip title="Undo" placement="leftTop">
             <button
-              className="text-white bg-[#1E201E] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
+              className="rounded-sm bg-[#1E201E] px-1 py-1 text-white shadow-md lg:px-4 lg:py-2"
               onClick={undo}
             >
-              <BiUndo className="w-6 h-6" />
+              <BiUndo className="h-6 w-6" />
             </button>
           </Tooltip>
           <Tooltip title="Redo" placement="bottomRight">
             <button
-              className="text-white bg-[#1E201E] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
+              className="rounded-sm bg-[#1E201E] px-1 py-1 text-white shadow-md lg:px-4 lg:py-2"
               onClick={redo}
             >
-              <BiRedo className="w-6 h-6" />
+              <BiRedo className="h-6 w-6" />
             </button>
           </Tooltip>
           {crop && (
             <button
               onClick={imageCrop}
-              className="text-white bg-[#3C3D37] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
+              className="rounded-sm bg-[#3C3D37] px-1 py-1 text-white shadow-md lg:px-4 lg:py-2"
             >
               Crop Image
             </button>
@@ -422,7 +422,7 @@ const ImageEditorCom: React.FC = () => {
 
           <label
             htmlFor="choose"
-            className="text-black bg-[#ECDFCC] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md cursor-pointer"
+            className="cursor-pointer rounded-sm bg-[#ECDFCC] px-1 py-1 text-black shadow-md lg:px-4 lg:py-2"
           >
             Choose Image
           </label>
@@ -438,13 +438,13 @@ const ImageEditorCom: React.FC = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={resetImage}
-            className="text-white bg-[#1E201E] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
+            className="rounded-sm bg-[#1E201E] px-1 py-1 text-white shadow-md lg:px-4 lg:py-2"
           >
             Reset
           </button>
           <button
             onClick={saveImage}
-            className="text-black bg-[#ECDFCC] py-1 px-1 lg:py-2 lg:px-4 rounded-sm shadow-md"
+            className="rounded-sm bg-[#ECDFCC] px-1 py-1 text-black shadow-md lg:px-4 lg:py-2"
           >
             Save Image
           </button>
@@ -459,46 +459,46 @@ const ImageEditorCom: React.FC = () => {
         </div>
       </div>
 
-      <div className="h-[70vh] flex ">
-        <div className="w-fit h-full ">
+      <div className="flex h-[70vh]">
+        <div className="h-full w-fit">
           <div className="flex flex-wrap gap-4">
             <Tooltip title="Horizontal Flip" placement="leftTop">
               <button
                 onClick={horizontalFlip}
-                className="text-black bg-[#ECDFCC] py-2 px-4 rounded-sm shadow-md"
+                className="rounded-sm bg-[#ECDFCC] px-4 py-2 text-black shadow-md"
               >
-                <LuFlipHorizontal2 className="w-6 h-6" />
+                <LuFlipHorizontal2 className="h-6 w-6" />
               </button>
             </Tooltip>
             <Tooltip title="Vertical Flip" placement="rightTop">
               <button
                 onClick={verticalFlip}
-                className="text-black bg-[#ECDFCC] py-2 px-4 rounded-sm shadow-md"
+                className="rounded-sm bg-[#ECDFCC] px-4 py-2 text-black shadow-md"
               >
-                <LuFlipVertical2 className="w-6 h-6" />
+                <LuFlipVertical2 className="h-6 w-6" />
               </button>
             </Tooltip>
           </div>
-          <div className="flex flex-wrap gap-4 mt-3">
+          <div className="mt-3 flex flex-wrap gap-4">
             <Tooltip title="Left Rotate" placement="leftTop">
               <button
                 onClick={leftRotate}
-                className="text-black bg-[#ECDFCC] py-2 px-4 rounded-sm shadow-md"
+                className="rounded-sm bg-[#ECDFCC] px-4 py-2 text-black shadow-md"
               >
-                <LiaUndoAltSolid className="w-6 h-6" />
+                <LiaUndoAltSolid className="h-6 w-6" />
               </button>
             </Tooltip>
             <Tooltip title="Right Rotate" placement="rightTop">
               <button
                 onClick={rightRotate}
-                className="text-black bg-[#ECDFCC] py-2 px-4 rounded-sm shadow-md"
+                className="rounded-sm bg-[#ECDFCC] px-4 py-2 text-black shadow-md"
               >
-                <LiaRedoAltSolid className="w-6 h-6" />
+                <LiaRedoAltSolid className="h-6 w-6" />
               </button>
             </Tooltip>
           </div>
 
-          <div className="flex flex-col gap-4 mt-3">
+          <div className="mt-3 flex flex-col gap-4">
             {filtersItem.map((item, index) => (
               <button
                 key={index}
@@ -506,8 +506,8 @@ const ImageEditorCom: React.FC = () => {
                 className={`w-fit lg:w-[128px] ${
                   property.name === item.name
                     ? `bg-[#697565] text-white`
-                    : `text-black bg-[#ECDFCC]`
-                } py-2 px-4 rounded-sm capitalize shadow-md flex items-center justify-start`}
+                    : `bg-[#ECDFCC] text-black`
+                } flex items-center justify-start rounded-sm px-4 py-2 capitalize shadow-md`}
               >
                 <span className="text-2xl">{getIcon(item.name)}</span>
                 {/* Hidden text for small/medium screens */}
@@ -518,11 +518,11 @@ const ImageEditorCom: React.FC = () => {
         </div>
 
         <div
-          className="h-[80vh] w-full bg-slate-100 flex justify-center overflow-auto" // Enabled scrolling
+          className="flex h-[80vh] w-full justify-center overflow-auto bg-slate-100" // Enabled scrolling
           style={{ cursor: 'grab' }}
         >
           <div
-            className="flex justify-center items-center"
+            className="flex items-center justify-center"
             style={{
               transform: `scale(${imageState.scale})`, // Applied scaling
               transformOrigin: 'center', // Scale from the center
@@ -557,7 +557,7 @@ const ImageEditorCom: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="w-full h-[10vh] flex items-center justify-center">
+      <div className="flex h-[10vh] w-full items-center justify-center">
         <div className="w-[220px] lg:w-[600px]">
           <ConfigProvider
             theme={{
@@ -587,11 +587,11 @@ const ImageEditorCom: React.FC = () => {
         </div>
       </div>
 
-      <div className="w-full h-[10vh] flex items-center justify-center gap-4">
+      <div className="flex h-[10vh] w-full items-center justify-center gap-4">
         {currentIndex > 0 && (
           <button
             onClick={showPreviousImage}
-            className="text-white bg-[#1E201E] py-2 px-4 rounded-sm shadow-md"
+            className="rounded-sm bg-[#1E201E] px-4 py-2 text-white shadow-md"
           >
             Previous
           </button>
@@ -599,7 +599,7 @@ const ImageEditorCom: React.FC = () => {
         {currentIndex < images.length - 1 && (
           <button
             onClick={showNextImage}
-            className="text-white bg-[#1E201E] py-2 px-4 rounded-sm shadow-md"
+            className="rounded-sm bg-[#1E201E] px-4 py-2 text-white shadow-md"
           >
             Next
           </button>

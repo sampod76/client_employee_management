@@ -1,13 +1,13 @@
-import LoadingSkeleton from "@components/ui/Loading/LoadingSkeleton";
+import LoadingSkeleton from '@components/ui/Loading/LoadingSkeleton';
 import {
   useGetSingleTaskManagementQuery,
   useUpdateSubmitTaskManagementMutation,
-} from "@redux/features/admin/taskManagementApi";
-import { ErrorModal, SuccessModal } from "@utils/modalHook";
-import type { TransferProps } from "antd";
-import { Button, Select, Transfer } from "antd";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+} from '@redux/features/admin/taskManagementApi';
+import { ErrorModal, SuccessModal } from '@utils/modalHook';
+import type { TransferProps } from 'antd';
+import { Button, Select, Transfer } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 function SubmitTask() {
   const [submitTaskManage, { isLoading: sloading }] =
@@ -25,7 +25,7 @@ function SubmitTask() {
   const { data, isLoading } = useGetSingleTaskManagementQuery(id);
 
   const TaskDetails = data?.data || {};
-  console.log("🚀 ~ SubmitTask ~ TaskDetails:", TaskDetails);
+  console.log('🚀 ~ SubmitTask ~ TaskDetails:', TaskDetails);
 
   const [oneWay, setOneWay] = useState(false);
   const [mockData, setMockData] = useState<RecordType[]>([]);
@@ -56,7 +56,7 @@ function SubmitTask() {
   const handleProgressChange = (value: React.SetStateAction<string>) => {
     setTaskProgressStatus(value);
   };
-  const onChange: TransferProps["onChange"] = (
+  const onChange: TransferProps['onChange'] = (
     newTargetKeys,
     direction,
     moveKeys
@@ -84,30 +84,30 @@ function SubmitTask() {
         value.taskProgressStatus = taskProgressStatus;
       }
       if (TaskDetails?.taskList.length === transferredTitles.length) {
-        value.taskProgressStatus = "done";
+        value.taskProgressStatus = 'done';
       }
       value.completedTaskList = transferredTitles;
       const res = await submitTaskManage({ id, data: value }).unwrap();
-      console.log("🚀 ~ onSubmit ~ res:", res);
-      SuccessModal("Successfully submitted");
+      console.log('🚀 ~ onSubmit ~ res:', res);
+      SuccessModal('Successfully submitted');
     } catch (error) {
       ErrorModal(error);
     }
   };
   return (
     <>
-      <div className="w-full bg-gray-50  shadow-2xl p-5 shadow-purple-300 rounded-2xl">
+      <div className="w-full rounded-2xl bg-gray-50 p-5 shadow-2xl shadow-purple-300">
         <h2 className="text-lg font-bold">Title: {TaskDetails?.title}</h2>
         <p>description: {TaskDetails?.description}</p>
-        <div className="flex justify-center items-center">
-          <div className="p-8 space-y-4">
+        <div className="flex items-center justify-center">
+          <div className="space-y-4 p-8">
             <Transfer
               className="!w-full"
               dataSource={mockData}
               targetKeys={targetKeys}
               onChange={onChange}
               render={(item) => (
-                <div style={{ whiteSpace: "normal" }}>{item.title}</div>
+                <div style={{ whiteSpace: 'normal' }}>{item.title}</div>
               )}
               oneWay={oneWay}
               pagination
@@ -118,16 +118,16 @@ function SubmitTask() {
                 style={{ width: 120 }}
                 onChange={handleProgressChange}
                 defaultValue={TaskDetails?.taskProgressStatus}
-                disabled={TaskDetails?.taskProgressStatus !== "toDo"}
+                disabled={TaskDetails?.taskProgressStatus !== 'toDo'}
                 options={[
-                  { value: "toDo", label: "To Do", disabled: true },
-                  { value: "inProgress", label: "In Progress" },
+                  { value: 'toDo', label: 'To Do', disabled: true },
+                  { value: 'inProgress', label: 'In Progress' },
                   //   { value: "done", label: "Done", disabled: true },
                 ]}
               />
               <Button
                 onClick={() => onSubmit()}
-                className="bg-blue-500 mx-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="mx-3 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
               >
                 Submit
               </Button>

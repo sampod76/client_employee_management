@@ -4,28 +4,28 @@ import {
   FileOutlined,
   MinusCircleOutlined,
   PlusOutlined,
-} from "@ant-design/icons";
-import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
-import moment from "moment";
-import { useState } from "react";
+} from '@ant-design/icons';
+import { Button, Col, DatePicker, Form, Input, Row, Select } from 'antd';
+import moment from 'moment';
+import { useState } from 'react';
 
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
-import SelectDynamicItem from "@components/form/SelectDynamicItem";
-import SelectEmployee from "@components/form/SelectEmployee";
-import LoadingSkeleton from "@components/ui/Loading/LoadingSkeleton";
-import { useGetAllProjectsQuery } from "@redux/features/admin/projectApi";
+import SelectDynamicItem from '@components/form/SelectDynamicItem';
+import SelectEmployee from '@components/form/SelectEmployee';
+import LoadingSkeleton from '@components/ui/Loading/LoadingSkeleton';
+import { useGetAllProjectsQuery } from '@redux/features/admin/projectApi';
 import {
   useAddTaskManagementMutation,
   useGetSingleTaskManagementQuery,
   useUpdateTaskManagementMutation,
-} from "@redux/features/admin/taskManagementApi";
-import { selectCurrentUser } from "@redux/features/auth/authSlice";
-import { useAppSelector } from "@redux/hooks";
-import { ErrorModal, SuccessModal } from "@utils/modalHook";
-import { v4 as uuidv4 } from "uuid";
+} from '@redux/features/admin/taskManagementApi';
+import { selectCurrentUser } from '@redux/features/auth/authSlice';
+import { useAppSelector } from '@redux/hooks';
+import { ErrorModal, SuccessModal } from '@utils/modalHook';
+import { v4 as uuidv4 } from 'uuid';
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
@@ -34,7 +34,7 @@ const CreateTask = () => {
   //
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const id = query.get("id");
+  const id = query.get('id');
   //
   const { data: allProject, isLoading: projectLoading } =
     useGetAllProjectsQuery({});
@@ -53,26 +53,26 @@ const CreateTask = () => {
     useUpdateTaskManagementMutation();
   const [image, setImageState] = useState([]);
   const [imageLoading, setImageLoading] = useState(false);
-  const [project, setProject] = useState("");
+  const [project, setProject] = useState('');
 
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
-    console.log("🚀 ~ onFinish ~ values:", values);
+    console.log('🚀 ~ onFinish ~ values:', values);
     try {
       if (image) {
         values.logo = {
           url: image,
-          mimetype: "image/jpg",
-          filename: "logo.jpg",
-          path: "upload/images/logo.jpg",
-          platform: "imgbb",
+          mimetype: 'image/jpg',
+          filename: 'logo.jpg',
+          path: 'upload/images/logo.jpg',
+          platform: 'imgbb',
         };
       }
       values.startDate = values.dateRange[0];
       values.endDate = values.dateRange[1];
       if (project) {
-        values["projectId"] = project;
+        values['projectId'] = project;
       }
       const taskList = values?.taskList?.map((t: any) => {
         return {
@@ -80,18 +80,18 @@ const CreateTask = () => {
           uuid: t?.uuid || uuidv4().toString(),
         };
       });
-      console.log("🚀 ~ taskList ~ taskList:", taskList);
+      console.log('🚀 ~ taskList ~ taskList:', taskList);
 
       if (id) {
         const res = await updateProject({
           id,
           data: { ...getTaskDate?.data, ...values, taskList },
         }).unwrap();
-        SuccessModal("Project Update Successfully");
+        SuccessModal('Project Update Successfully');
       } else {
         const res = await addTask({ ...values, taskList }).unwrap();
         form.resetFields();
-        SuccessModal("Project Created Successfully");
+        SuccessModal('Project Created Successfully');
       }
     } catch (error) {
       ErrorModal(error);
@@ -106,13 +106,13 @@ const CreateTask = () => {
         ...getTaskDate?.data,
         employee: getTaskDate?.data?.employee?.roleBaseUserId,
         dateRange: [
-          dayjs(getTaskDate?.data?.startDate, "YYYY-MM-DD"),
-          dayjs(getTaskDate?.data?.endDate, "YYYY-MM-DD"),
+          dayjs(getTaskDate?.data?.startDate, 'YYYY-MM-DD'),
+          dayjs(getTaskDate?.data?.endDate, 'YYYY-MM-DD'),
         ],
       }
     : {};
   return (
-    <div className="shadow-2xl rounded-2xl p-5 shadow-indigo-400">
+    <div className="rounded-2xl p-5 shadow-2xl shadow-indigo-400">
       <Form
         form={form}
         layout="vertical"
@@ -125,7 +125,7 @@ const CreateTask = () => {
               label="Task Title"
               name="title"
               rules={[
-                { required: true, message: "Please enter the task title!" },
+                { required: true, message: 'Please enter the task title!' },
               ]}
             >
               <Input prefix={<FileOutlined />} placeholder="Enter task title" />
@@ -142,7 +142,7 @@ const CreateTask = () => {
               <RangePicker
                 format="DD/MM/YYYY"
                 disabledDate={(current) =>
-                  current && current < moment().startOf("day")
+                  current && current < moment().startOf('day')
                 }
               />
             </Form.Item>
@@ -155,13 +155,13 @@ const CreateTask = () => {
               setValue={setProject}
             />
           </Col>
-          {user?.role === "admin" && (
+          {user?.role === 'admin' && (
             <Col xs={24} sm={24} md={12} lg={6}>
               <Form.Item
                 name="employee" // Make sure the name matches the form field
                 // label="Select Employee"
                 rules={[
-                  { required: true, message: "Please select an employee!" },
+                  { required: true, message: 'Please select an employee!' },
                 ]}
               >
                 <SelectEmployee
@@ -180,11 +180,11 @@ const CreateTask = () => {
             >
               <Select
                 style={{ width: 120 }}
-                defaultValue={"toDo"}
+                defaultValue={'toDo'}
                 options={[
-                  { value: "toDo", label: "To Do" },
-                  { value: "inProgress", label: "In Progress" },
-                  { value: "done", label: "Done" },
+                  { value: 'toDo', label: 'To Do' },
+                  { value: 'inProgress', label: 'In Progress' },
+                  { value: 'done', label: 'Done' },
                 ]}
               />
             </Form.Item>
@@ -200,13 +200,13 @@ const CreateTask = () => {
                         <Col xs={24} sm={12} md={18}>
                           <Form.Item
                             {...restField}
-                            name={[name, "title"]}
+                            name={[name, 'title']}
                             //@ts-ignore
-                            fieldKey={[fieldKey, "title"]}
+                            fieldKey={[fieldKey, 'title']}
                             rules={[
                               {
                                 required: true,
-                                message: "Please enter a task",
+                                message: 'Please enter a task',
                               },
                             ]}
                           >

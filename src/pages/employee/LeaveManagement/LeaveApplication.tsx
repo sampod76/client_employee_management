@@ -175,7 +175,7 @@ const LeaveForm = () => {
               </Form.Item>
             </Col>
           </Row>
-          <div className="flex justify-start col-span-full  my-1">
+          <div className="col-span-full my-1 flex justify-start">
             <Upload
               name="attachFiles"
               fileList={fileList}

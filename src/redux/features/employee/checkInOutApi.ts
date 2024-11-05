@@ -1,8 +1,8 @@
-import { IMeta } from "../../../types/common";
-import { baseApi } from "../../api/baseApi";
-import { tagTypes } from "../../tag-types";
+import { IMeta } from '../../../types/common';
+import { baseApi } from '../../api/baseApi';
+import { tagTypes } from '../../tag-types';
 
-const URL = "/checkin-checkout";
+const URL = '/checkin-checkout';
 
 export const checkInOutApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -10,9 +10,9 @@ export const checkInOutApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
-          contentType: "multipart/form-data",
+          contentType: 'multipart/form-data',
         };
       },
       transformResponse: (response: any, meta: IMeta) => {
@@ -28,7 +28,7 @@ export const checkInOutApi = baseApi.injectEndpoints({
       query: (id: string | string[] | undefined) => {
         return {
           url: `${URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       transformResponse: (response: any) => ({ data: response }),
@@ -38,10 +38,10 @@ export const checkInOutApi = baseApi.injectEndpoints({
     addCheckIn: build.mutation({
       query: (data) => {
         return {
-          url: URL + "/check-in",
-          method: "POST",
+          url: URL + '/check-in',
+          method: 'POST',
           data: data,
-          contentType: "multipart/form-data",
+          contentType: 'multipart/form-data',
         };
       },
       invalidatesTags: [tagTypes.CheckInOut],
@@ -49,10 +49,10 @@ export const checkInOutApi = baseApi.injectEndpoints({
     addAdminCheckInOut: build.mutation({
       query: (data) => {
         return {
-          url: URL + "/check-in-ou-admin",
-          method: "POST",
+          url: URL + '/check-in-ou-admin',
+          method: 'POST',
           data: data,
-          contentType: "multipart/form-data",
+          contentType: 'multipart/form-data',
         };
       },
       invalidatesTags: [tagTypes.CheckInOut],
@@ -60,10 +60,10 @@ export const checkInOutApi = baseApi.injectEndpoints({
     addCheckOut: build.mutation({
       query: (data) => {
         return {
-          url: URL + "/check-out",
-          method: "POST",
+          url: URL + '/check-out',
+          method: 'POST',
           data: data,
-          contentType: "multipart/form-data",
+          contentType: 'multipart/form-data',
         };
       },
       invalidatesTags: [tagTypes.CheckInOut],
@@ -73,7 +73,7 @@ export const checkInOutApi = baseApi.injectEndpoints({
       query: ({ data, id }) => {
         return {
           url: `${URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
         };
       },
@@ -83,7 +83,7 @@ export const checkInOutApi = baseApi.injectEndpoints({
     deleteCheckInOut: build.mutation({
       query: (id) => ({
         url: `${URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.CheckInOut],
     }),

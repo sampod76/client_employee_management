@@ -4,20 +4,20 @@ import {
   MailOutlined,
   MinusCircleOutlined,
   PlusOutlined,
-} from "@ant-design/icons";
-import { Button, Col, DatePicker, Form, Input, Row } from "antd";
-import dayjs from "dayjs";
-import moment from "moment";
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import LoadingSkeleton from "../../../components/ui/Loading/LoadingSkeleton";
-import UploadImage from "../../../components/ui/UploadImage";
+} from '@ant-design/icons';
+import { Button, Col, DatePicker, Form, Input, Row } from 'antd';
+import dayjs from 'dayjs';
+import moment from 'moment';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import LoadingSkeleton from '../../../components/ui/Loading/LoadingSkeleton';
+import UploadImage from '../../../components/ui/UploadImage';
 import {
   useAddProjectsMutation,
   useGetSingleProjectsQuery,
   useUpdateProjectsMutation,
-} from "../../../redux/features/admin/projectApi";
-import { ErrorModal, SuccessModal } from "../../../utils/modalHook";
+} from '../../../redux/features/admin/projectApi';
+import { ErrorModal, SuccessModal } from '../../../utils/modalHook';
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -26,7 +26,7 @@ const CreateProject = () => {
   //
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const id = query.get("id");
+  const id = query.get('id');
   //
   const { data: getDate, isLoading: getLoading } = useGetSingleProjectsQuery(
     id as string,
@@ -48,20 +48,20 @@ const CreateProject = () => {
       if (image) {
         values.logo = {
           url: image,
-          mimetype: "image/jpg",
-          filename: "logo.jpg",
-          path: "upload/images/logo.jpg",
-          platform: "imgbb",
+          mimetype: 'image/jpg',
+          filename: 'logo.jpg',
+          path: 'upload/images/logo.jpg',
+          platform: 'imgbb',
         };
       }
       values.startDate = values.dateRange[0];
       values.endDate = values.dateRange[1];
       if (id) {
         const res = await updateProject({ id, data: values }).unwrap();
-        SuccessModal("Project Update Successfully");
+        SuccessModal('Project Update Successfully');
       } else {
         const res = await addProject(values).unwrap();
-        SuccessModal("Project Created Successfully");
+        SuccessModal('Project Created Successfully');
       }
     } catch (error) {
       ErrorModal(error);
@@ -75,13 +75,13 @@ const CreateProject = () => {
         ...getDate?.data,
 
         dateRange: [
-          dayjs(getDate?.data?.startDate, "YYYY-MM-DD"),
-          dayjs(getDate?.data?.endDate, "YYYY-MM-DD"),
+          dayjs(getDate?.data?.startDate, 'YYYY-MM-DD'),
+          dayjs(getDate?.data?.endDate, 'YYYY-MM-DD'),
         ],
       }
     : {};
   return (
-    <div className="shadow-2xl rounded-2xl p-5 shadow-indigo-400">
+    <div className="rounded-2xl p-5 shadow-2xl shadow-indigo-400">
       <Form
         form={form}
         layout="vertical"
@@ -94,7 +94,7 @@ const CreateProject = () => {
               label="Project Title"
               name="title"
               rules={[
-                { required: true, message: "Please enter the project title!" },
+                { required: true, message: 'Please enter the project title!' },
               ]}
             >
               <Input
@@ -105,7 +105,7 @@ const CreateProject = () => {
           </Col>
 
           <Col xs={24} sm={24} md={12} lg={6}>
-            <div className="flex justify-center  my-1">
+            <div className="my-1 flex justify-center">
               <UploadImage
                 setImageState={setImageState}
                 setImageLoading={setImageLoading}
@@ -125,7 +125,7 @@ const CreateProject = () => {
               <RangePicker
                 format="DD/MM/YYYY"
                 disabledDate={(current) =>
-                  current && current < moment().startOf("day")
+                  current && current < moment().startOf('day')
                 }
               />
             </Form.Item>
@@ -160,13 +160,13 @@ const CreateProject = () => {
                         <Col xs={24} sm={12} md={18}>
                           <Form.Item
                             {...restField}
-                            name={[name, "title"]}
+                            name={[name, 'title']}
                             //@ts-ignore
-                            fieldKey={[fieldKey, "title"]}
+                            fieldKey={[fieldKey, 'title']}
                             rules={[
                               {
                                 required: true,
-                                message: "Please enter a feature",
+                                message: 'Please enter a feature',
                               },
                             ]}
                           >

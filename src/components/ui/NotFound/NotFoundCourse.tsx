@@ -1,4 +1,4 @@
-import { Empty } from "antd";
+import { Empty } from 'antd';
 
 export default function NotFoundCourse() {
   return <Empty />;

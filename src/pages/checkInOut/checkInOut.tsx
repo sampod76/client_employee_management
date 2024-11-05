@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Button, message } from "antd";
+import { Button, message } from 'antd';
 
-import LoadingSkeleton from "@components/ui/Loading/LoadingSkeleton";
-import { useRef, useState } from "react";
+import LoadingSkeleton from '@components/ui/Loading/LoadingSkeleton';
+import { useRef, useState } from 'react';
 //@ts-ignore
-import { useScreenshot } from "use-react-screenshot";
-import ClockComponents from "../../components/CheckInOut/clock";
-import LocalIPComponent from "../../components/CheckInOut/IpGet";
-import WebcamCapture from "../../components/CheckInOut/WebCamra";
-import CustomImageTag from "../../components/ui/CustomTag/CustomImage";
-import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { useScreenshot } from 'use-react-screenshot';
+import ClockComponents from '../../components/CheckInOut/clock';
+import LocalIPComponent from '../../components/CheckInOut/IpGet';
+import WebcamCapture from '../../components/CheckInOut/WebCamra';
+import CustomImageTag from '../../components/ui/CustomTag/CustomImage';
+import { selectCurrentUser } from '../../redux/features/auth/authSlice';
 import {
   useAddCheckInMutation,
   useAddCheckOutMutation,
   useGetAllCheckInOutQuery,
-} from "../../redux/features/employee/checkInOutApi";
-import { useAppSelector } from "../../redux/hooks";
-import { ErrorModal } from "../../utils/modalHook";
+} from '../../redux/features/employee/checkInOutApi';
+import { useAppSelector } from '../../redux/hooks';
+import { ErrorModal } from '../../utils/modalHook';
 
 export default function CheckInOut() {
   const user = useAppSelector(selectCurrentUser);
-  console.log("🚀 ~ CheckInOut ~ user:", user);
+  console.log('🚀 ~ CheckInOut ~ user:', user);
   const { data, isLoading: getDateloading } = useGetAllCheckInOutQuery(
-    { employeeUserId: user?.userId, toDay: "yes" },
+    { employeeUserId: user?.userId, toDay: 'yes' },
     { skip: !user?.userId }
   );
   const getData = data?.data || [];
@@ -44,10 +44,10 @@ export default function CheckInOut() {
 
       // Prepare form data
       const formData = new FormData();
-      formData.append("provide", blob, crypto.randomUUID() + "screenshot.png"); // Adjust filename as needed
+      formData.append('provide', blob, crypto.randomUUID() + 'screenshot.png'); // Adjust filename as needed
 
       // Upload the image
-      if (submitType === "check-in") {
+      if (submitType === 'check-in') {
         await addCheckin(formData).unwrap();
       } else {
         await addCheckOut(formData).unwrap();
@@ -74,9 +74,9 @@ export default function CheckInOut() {
     return (
       <p className="text-white">
         {isOnTime ? (
-          <span className="bg-green-500 px-5 py-1 rounded-xl">On time</span>
+          <span className="rounded-xl bg-green-500 px-5 py-1">On time</span>
         ) : (
-          <span className="bg-red-500 px-5 py-1 rounded-xl">Late</span>
+          <span className="rounded-xl bg-red-500 px-5 py-1">Late</span>
         )}
       </p>
     );
@@ -86,41 +86,41 @@ export default function CheckInOut() {
   }
   return (
     <div ref={ref}>
-      <div className="flex justify-center items-center gap-4 border-8 p-5 rounded-lg">
-        <div className="text-lg mx-5 font-bold ">
+      <div className="flex items-center justify-center gap-4 rounded-lg border-8 p-5">
+        <div className="mx-5 text-lg font-bold">
           <CustomImageTag
             src={user?.profileImage}
             width={750}
             height={500}
             preview={true}
-            alt={"Screenshot"}
-            className="w-[200px] h-52 rounded-2xl border p-2 ring-2"
+            alt={'Screenshot'}
+            className="h-52 w-[200px] rounded-2xl border p-2 ring-2"
           />
-          <h1>Name: {user?.name?.firstName + " " + user?.name?.lastName}</h1>
+          <h1>Name: {user?.name?.firstName + ' ' + user?.name?.lastName}</h1>
           <h1>Email: {user?.email}</h1>
         </div>
         <WebcamCapture setImage={setImage} />
-        <div className="flex flex-col justify-center items-center gap-4">
+        <div className="flex flex-col items-center justify-center gap-4">
           <ClockComponents />
           <LocalIPComponent />
           <div className="space-y-4">
-            <h1 className="text-lg flex items-center gap-1">
-              {" "}
-              Official check-in time : 9:00 am{" "}
-              {getData[0]?.checkInTime && LateStatus("start")}
+            <h1 className="flex items-center gap-1 text-lg">
+              {' '}
+              Official check-in time : 9:00 am{' '}
+              {getData[0]?.checkInTime && LateStatus('start')}
             </h1>
             <h1 className="text-lg">Official check-out time : 6:00 pm</h1>
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-center  my-4 gap-4">
+      <div className="my-4 flex items-center justify-center gap-4">
         <Button
           type="primary"
           loading={isLoading}
           disabled={getData[0]?.checkInTime && true}
-          className="w-40 h-full"
-          style={{ marginBottom: "10px" }}
-          onClick={() => getImage("check-in")}
+          className="h-full w-40"
+          style={{ marginBottom: '10px' }}
+          onClick={() => getImage('check-in')}
         >
           Check in
         </Button>
@@ -128,9 +128,9 @@ export default function CheckInOut() {
           type="default"
           disabled={getData[0]?.checkOutTime && true}
           loading={checkoutLoading}
-          className="w-40 h-full bg-indigo-700"
-          style={{ marginBottom: "10px" }}
-          onClick={() => getImage("check-out")}
+          className="h-full w-40 bg-indigo-700"
+          style={{ marginBottom: '10px' }}
+          onClick={() => getImage('check-out')}
         >
           Check out
         </Button>
@@ -145,16 +145,16 @@ export default function CheckInOut() {
           className="w-[500px] h-52 rounded-2xl border p-2 ring-2"
         />
       )} */}
-      <div className="flex justify-start items-center gap-5 flex-wrap">
+      <div className="flex flex-wrap items-center justify-start gap-5">
         {getData.length &&
           getData[0].provide.map((image: any, i: number) => (
             <div key={i} className="text-lg">
               {i == 0 ? (
-                <p className="border p-2 my-1 w-fit rounded-lg text-center">
+                <p className="my-1 w-fit rounded-lg border p-2 text-center">
                   Check in provide
                 </p>
               ) : (
-                <p className="border p-2 my-1 w-fit rounded-lg text-center">
+                <p className="my-1 w-fit rounded-lg border p-2 text-center">
                   check out provide
                 </p>
               )}
@@ -163,8 +163,8 @@ export default function CheckInOut() {
                 height={500}
                 src={image}
                 preview={true}
-                alt={"Screenshot"}
-                className="w-[500px] h-52 rounded-2xl border p-2 ring-2"
+                alt={'Screenshot'}
+                className="h-52 w-[500px] rounded-2xl border p-2 ring-2"
               />
             </div>
           ))}

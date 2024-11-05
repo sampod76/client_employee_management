@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function ClockComponents() {
   const [time, updateTime] = useState(new Date());
@@ -13,13 +13,13 @@ export default function ClockComponents() {
 
   // Bangladesh TimeZone Conversion
   const bangladeshTime = new Date(
-    time.toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
+    time.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' })
   );
 
   return (
     <div className="flex items-center justify-center text-white">
       <div className="text-center">
-        <h1 className="mb-6 text-3xl text-green-700 font-bold">
+        <h1 className="mb-6 text-3xl font-bold text-green-700">
           Digital Clock
         </h1>
         <div className="flex items-center justify-center">

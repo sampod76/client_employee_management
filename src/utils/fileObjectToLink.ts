@@ -12,24 +12,24 @@
 
 export default function fileObjectToLink(src: any) {
   // Backend baseurl
-  const backendBaseUrl = "http://localhost:5000";
+  const backendBaseUrl = 'http://localhost:5000';
 
   let imageSrc;
   if (src?.cdn) {
     // console.log("🚀 ~ sadfsadf", src);
-    imageSrc = src.cdn + "/" + src.path;
-  } else if (typeof src === "object" && src.url) {
+    imageSrc = src.cdn + '/' + src.path;
+  } else if (typeof src === 'object' && src.url) {
     // console.log("🚀 ~ fffasdfnk ~ src:", src);
     imageSrc = src.url;
   } else if (src?.server_url) {
-    imageSrc = backendBaseUrl + "/" + src.server_url;
-  } else if (src && typeof src === "string") {
+    imageSrc = backendBaseUrl + '/' + src.server_url;
+  } else if (src && typeof src === 'string') {
     imageSrc = src;
   } else if (src) {
     imageSrc = src;
   } else {
     imageSrc =
-      "https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg?t=st=1720180742~exp=1720184342~hmac=45367258d48f919941fdf6a910f0fbf3e86f0385c7ad53ec92ecc7b3e7e3c641&w=300";
+      'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg?t=st=1720180742~exp=1720184342~hmac=45367258d48f919941fdf6a910f0fbf3e86f0385c7ad53ec92ecc7b3e7e3c641&w=300';
   }
 
   return imageSrc;

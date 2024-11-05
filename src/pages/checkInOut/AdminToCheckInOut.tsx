@@ -64,8 +64,8 @@ const AdminToCheckInOut: React.FC = (d) => {
   };
 
   return (
-    <div className="max-w-96 mx-auto">
-      <div className="shadow-2xl shadow-purple-500 p-5 rounded-2xl">
+    <div className="mx-auto max-w-96">
+      <div className="rounded-2xl p-5 shadow-2xl shadow-purple-500">
         <Form
           form={form}
           layout="vertical"

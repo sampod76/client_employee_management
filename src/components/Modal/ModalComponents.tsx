@@ -1,5 +1,5 @@
-import { Button, Modal } from "antd";
-import React, { useState } from "react";
+import { Button, Modal } from 'antd';
+import React, { useState } from 'react';
 
 const ModalComponent = ({
   children,
@@ -16,7 +16,7 @@ const ModalComponent = ({
 }) => {
   console.log(buttonText);
   const [open, setOpen] = useState(false);
-  console.log("🚀 ~ open:", open);
+  console.log('🚀 ~ open:', open);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const showModal = () => {
@@ -33,7 +33,7 @@ const ModalComponent = ({
         <div onClick={showModal}>{button}</div>
       ) : (
         <Button type="default" onClick={showModal}>
-          {buttonText || "Open Modal"}
+          {buttonText || 'Open Modal'}
         </Button>
       )}
       <Modal

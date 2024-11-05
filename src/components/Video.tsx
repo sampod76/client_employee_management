@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 const VideoPlayer = ({ videoSrc }: any) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -18,21 +18,21 @@ const VideoPlayer = ({ videoSrc }: any) => {
     const handleCanPlay = () => {
       if (!isPlaying) {
         videoElement?.play().catch((error) => {
-          console.error("Error playing video:", error);
+          console.error('Error playing video:', error);
         });
       }
     };
 
     // Add event listeners to the video element
-    videoElement?.addEventListener("play", handlePlay);
-    videoElement?.addEventListener("pause", handlePause);
-    videoElement?.addEventListener("canplay", handleCanPlay);
+    videoElement?.addEventListener('play', handlePlay);
+    videoElement?.addEventListener('pause', handlePause);
+    videoElement?.addEventListener('canplay', handleCanPlay);
 
     // Clean up event listeners when component unmounts
     return () => {
-      videoElement?.removeEventListener("play", handlePlay);
-      videoElement?.removeEventListener("pause", handlePause);
-      videoElement?.removeEventListener("canplay", handleCanPlay);
+      videoElement?.removeEventListener('play', handlePlay);
+      videoElement?.removeEventListener('pause', handlePause);
+      videoElement?.removeEventListener('canplay', handleCanPlay);
     };
   }, [isPlaying]);
 
@@ -44,7 +44,7 @@ const VideoPlayer = ({ videoSrc }: any) => {
       videoElement.src = videoSrc;
       videoElement.load(); // Reload the video source
       videoElement.play().catch((error) => {
-        console.error("Error playing new video:", error);
+        console.error('Error playing new video:', error);
       });
     }
   }, [videoSrc]);

@@ -1,8 +1,8 @@
-import { IMeta } from "../../../types/common";
-import { baseApi } from "../../api/baseApi";
-import { tagTypes } from "../../tag-types";
+import { IMeta } from '../../../types/common';
+import { baseApi } from '../../api/baseApi';
+import { tagTypes } from '../../tag-types';
 
-const URL = "/leaves";
+const URL = '/leaves';
 
 export const leavesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -10,7 +10,7 @@ export const leavesApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -27,7 +27,7 @@ export const leavesApi = baseApi.injectEndpoints({
       query: (id: string | string[] | undefined) => {
         return {
           url: `${URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       transformResponse: (response: any) => ({ data: response }),
@@ -38,9 +38,9 @@ export const leavesApi = baseApi.injectEndpoints({
       query: (data) => {
         return {
           url: URL,
-          method: "POST",
+          method: 'POST',
           data: data,
-          contentType: "multipart/form-data",
+          contentType: 'multipart/form-data',
         };
       },
       invalidatesTags: [tagTypes.Leaves],
@@ -50,9 +50,9 @@ export const leavesApi = baseApi.injectEndpoints({
       query: ({ data, id }) => {
         return {
           url: `${URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
-          contentType: "multipart/form-data",
+          contentType: 'multipart/form-data',
         };
       },
       invalidatesTags: [tagTypes.Leaves],
@@ -61,9 +61,9 @@ export const leavesApi = baseApi.injectEndpoints({
       query: ({ data, id }) => {
         return {
           url: `${URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
-          contentType: "multipart/form-data",
+          contentType: 'multipart/form-data',
         };
       },
       invalidatesTags: [tagTypes.Leaves],
@@ -72,7 +72,7 @@ export const leavesApi = baseApi.injectEndpoints({
     deleteLeaves: build.mutation({
       query: (id) => ({
         url: `${URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.Leaves],
     }),

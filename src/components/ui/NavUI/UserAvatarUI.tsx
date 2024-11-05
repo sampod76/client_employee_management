@@ -71,12 +71,12 @@ const UserAvatarUI = () => {
               src={user?.profileImage || ''}
               width={550}
               height={550}
-              className="w-8 h-8 md:h-12 md:w-12  rounded-full shadow-2xl shadow-zinc-950"
+              className="h-8 w-8 rounded-full shadow-2xl shadow-zinc-950 md:h-12 md:w-12"
               alt=""
               preview={undefined}
             />
           ) : (
-            <Profile className="w-8 h-8 md:h-12 md:w-12  rounded-full !shadow-2xl !shadow-zinc-950 ring-2 scale-75" />
+            <Profile className="h-8 w-8 scale-75 rounded-full !shadow-2xl !shadow-zinc-950 ring-2 md:h-12 md:w-12" />
           )}
         </button>
       </Dropdown>

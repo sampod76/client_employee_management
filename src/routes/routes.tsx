@@ -105,7 +105,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '', //auto dictator-> "/admin/test"
-        element: <div className="text-7xl text-center">Test</div>,
+        element: <div className="text-center text-7xl">Test</div>,
       },
       {
         path: 'children1',
@@ -119,7 +119,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: '', //auto dictator->"/admin/test"/"children1"
-            element: <div className="text-7xl text-center">children1</div>,
+            element: <div className="text-center text-7xl">children1</div>,
           },
           {
             path: 'children2',
@@ -127,7 +127,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: <div className="text-7xl text-center">children2</div>,
+                element: <div className="text-center text-7xl">children2</div>,
               },
               {
                 path: 'children3',
@@ -136,13 +136,13 @@ const router = createBrowserRouter([
                   {
                     path: '',
                     element: (
-                      <div className="text-7xl text-center">children3</div>
+                      <div className="text-center text-7xl">children3</div>
                     ),
                   },
                   {
                     path: 'children4',
                     element: (
-                      <div className="text-7xl text-center">children4</div>
+                      <div className="text-center text-7xl">children4</div>
                     ),
                   },
                 ],

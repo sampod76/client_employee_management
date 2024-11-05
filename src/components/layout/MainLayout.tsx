@@ -1,9 +1,9 @@
-import { Button, Layout } from "antd";
-import { Link, Outlet } from "react-router-dom";
-import { logout, selectCurrentUser } from "../../redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import UserAvatarUI from "../ui/NavUI/UserAvatarUI";
-import Sidebar from "./Sidebar";
+import { Button, Layout } from 'antd';
+import { Link, Outlet } from 'react-router-dom';
+import { logout, selectCurrentUser } from '../../redux/features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import UserAvatarUI from '../ui/NavUI/UserAvatarUI';
+import Sidebar from './Sidebar';
 const { Header, Content } = Layout;
 
 const MainLayout = () => {
@@ -15,11 +15,11 @@ const MainLayout = () => {
   // };
 
   return (
-    <Layout className="max-w-[1990px] mx-auto" style={{ height: "100%" }}>
+    <Layout className="mx-auto max-w-[1990px]" style={{ height: '100%' }}>
       <Sidebar />
       <Layout>
         <Header>
-          <div className="flex justify-between  items-center h-full">
+          <div className="flex h-full items-center justify-between">
             <div className="flex items-center gap-2">
               <Button type="primary">
                 <Link
@@ -33,8 +33,8 @@ const MainLayout = () => {
                 <Link to={`/screen-recorder`}>Screen-recorder</Link>
               </Button>
             </div>
-            <div className="flex  justify-center items-center gap-4">
-              {user?.role !== "admin" && (
+            <div className="flex items-center justify-center gap-4">
+              {user?.role !== 'admin' && (
                 <Button type="primary">
                   <Link to={`/${user?.role}/check-in-out`}>Check in/out</Link>
                 </Button>
@@ -43,7 +43,7 @@ const MainLayout = () => {
             </div>
           </div>
         </Header>
-        <Content style={{ margin: "24px 16px 0" }}>
+        <Content style={{ margin: '24px 16px 0' }}>
           <div
             style={{
               padding: 24,

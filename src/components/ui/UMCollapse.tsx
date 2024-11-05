@@ -1,4 +1,4 @@
-import { Collapse } from "antd";
+import { Collapse } from 'antd';
 const { Panel } = Collapse;
 
 export type ItemProps = {
@@ -10,14 +10,14 @@ export type ItemProps = {
 
 type UMCollapseProps = {
   items: ItemProps[];
-  onChange?: (el: string | string[] | "") => void;
+  onChange?: (el: string | string[] | '') => void;
   defaultActiveKey?: string | string[];
 };
 
 const UMCollapse = ({
   items,
   onChange,
-  defaultActiveKey = ["1"],
+  defaultActiveKey = ['1'],
 }: UMCollapseProps) => {
   return (
     <Collapse defaultActiveKey={defaultActiveKey} onChange={onChange}>

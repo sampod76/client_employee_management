@@ -23,12 +23,12 @@ export type IGenericErrorMessage = {
   message: string;
 };
 
-export type IBookingStatusType = "pending" | "accept" | "reject" | "complete";
+export type IBookingStatusType = 'pending' | 'accept' | 'reject' | 'complete';
 
 export type ICategoryStatus =
-  | "active"
-  | "deactivate"
-  | "disabled"
-  | "block"
-  | "save";
-export type IPriceTypes = "free" | "paid" | "closed" | "recurring";
+  | 'active'
+  | 'deactivate'
+  | 'disabled'
+  | 'block'
+  | 'save';
+export type IPriceTypes = 'free' | 'paid' | 'closed' | 'recurring';

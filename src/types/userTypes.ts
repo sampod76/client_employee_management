@@ -1,4 +1,4 @@
-import { IFileAfterUpload, I_STATUS, I_YN } from "./globalType";
+import { IFileAfterUpload, I_STATUS, I_YN } from './globalType';
 
 /* export type IUserGeneralData = {
   status: string;
@@ -33,14 +33,14 @@ export type IAdminCreate = {
 };
 
  */
-export type IGender = "male" | "female" | "other";
+export type IGender = 'male' | 'female' | 'other';
 export enum ENUM_USER_ROLE {
-  admin = "admin",
-  superAdmin = "superAdmin",
-  employee = "employee",
-  seller = "seller",
+  admin = 'admin',
+  superAdmin = 'superAdmin',
+  employee = 'employee',
+  seller = 'seller',
 }
-export type I_USER_ROLE = "admin" | "superAdmin" | "employee" | "seller";
+export type I_USER_ROLE = 'admin' | 'superAdmin' | 'employee' | 'seller';
 export type IUser = {
   _id: string;
   userUniqueId: string;
@@ -63,7 +63,7 @@ export type IUser = {
     latitude?: number;
     longitude?: number;
     coordinates: number[]; // first -> longitude,latitude
-    type: string | "Point";
+    type: string | 'Point';
   };
   authentication?: {
     otp: number;

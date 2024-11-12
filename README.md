@@ -1,30 +1,66 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Project Title
 
-Currently, two official plugins are available:
+EmpManage: A Comprehensive Employee Management System
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Clone Front-end & backend
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To clone this project run
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-};
+```bash
+  git clone https://github.com/sampod76/server_employee_management.git
+  git clone https://github.com/sampod76/client_employee_management.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Front-end & Backend same system install dependency and run
+
+Go to the project directory
+```bash
+  cd my-project
+```
+
+Install dependencies
+```bash
+  yarn install
+```
+Start the server
+```bash
+  yarn dev 
+
+```
+
+
+## Full overview Video link
+
+[Overview Video](https://drive.google.com/file/d/1QXWYVE6eyaf_6voQWTRWi06LsUo_EsMr/view?usp=sharing)
+
+
+## ERD diagram
+
+![Logo](https://res.cloudinary.com/dqvhxpu11/image/upload/v1727379181/kraftwerk_o5enar.jpg)
+
+
+## Overview
+EmpManage is an all-in-one solution for managing employees in an organization. This system includes features such as employee authentication, check-in/check-out tracking, project and task management, and screen recording for productivity monitoring. The system is designed to streamline operations and provide managers with insights into their team's progress and performance.
+
+
+## Features
+ 
+- Authentication
+- Secure login system for employees.
+- Password recovery and email verification.
+- Role-based access control (Admin,Employee).
+- Employees can check in and check out with timestamps and valide proved
+- Create, assign, and track multiple projects.
+- Set deadlines and priorities for each project.
+- Overview dashboard to monitor ongoing projects and completion status
+- Create tasks within projects and assign them to employees
+- Employee management
+- Leaves management
+- Track task status (To-Do, In Progress, Completed)
+- Screen Recording
+
+
+ 
+

@@ -1,5 +1,5 @@
-import { Form, Input } from "antd";
-import { Controller } from "react-hook-form";
+import { Form, Input } from 'antd';
+import { Controller } from 'react-hook-form';
 
 type TInputProps = {
   type: string;
@@ -11,7 +11,7 @@ type TInputProps = {
 
 const PHInput = ({ type, name, label, disabled, className }: TInputProps) => {
   return (
-    <div className={className} style={{ marginBottom: "20px" }}>
+    <div className={className} style={{ marginBottom: '20px' }}>
       <Controller
         name={name}
         render={({ field }) => (

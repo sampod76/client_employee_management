@@ -1,109 +1,109 @@
-import ProjectView from "@pages/admin/project/ViewProject";
-import ChangePassword from "@pages/ChangePassword";
-import CreateTask from "@pages/teskManagement/CreateTask";
-import SubmitTask from "@pages/teskManagement/SubmitTask";
-import TaskList from "@pages/teskManagement/TaskList";
-import ViewTask from "@pages/teskManagement/ViewTask";
-import CreateProject from "../pages/admin/project/CreateProject";
-import ProjectList from "../pages/admin/project/ProjectList";
-import CheckInOut from "../pages/checkInOut/checkInOut";
-import CheckInOutList from "../pages/checkInOut/checkInOutList";
-import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
-import LeaveApplication from "../pages/employee/LeaveManagement/LeaveApplication";
-import LeaveList from "../pages/employee/LeaveManagement/LeaveList";
-import LoginHistory from "../pages/LoginHistory";
-import Profile from "../pages/Profile";
-import ProfileUpdate from "@pages/UpdataProfile";
+import ProjectView from '@pages/admin/project/ViewProject';
+import ChangePassword from '@pages/ChangePassword';
+import CreateTask from '@pages/teskManagement/CreateTask';
+import SubmitTask from '@pages/teskManagement/SubmitTask';
+import TaskList from '@pages/teskManagement/TaskList';
+import ViewTask from '@pages/teskManagement/ViewTask';
+import ProfileUpdate from '@pages/UpdataProfile';
+import CreateProject from '../pages/admin/project/CreateProject';
+import ProjectList from '../pages/admin/project/ProjectList';
+import CheckInOut from '../pages/checkInOut/checkInOut';
+import CheckInOutList from '../pages/checkInOut/checkInOutList';
+import EmployeeDashboard from '../pages/employee/EmployeeDashboard';
+import LeaveApplication from '../pages/employee/LeaveManagement/LeaveApplication';
+import LeaveList from '../pages/employee/LeaveManagement/LeaveList';
+import LoginHistory from '../pages/LoginHistory';
+import Profile from '../pages/Profile';
 
 export const employeePaths = [
   {
-    name: "Dashboard",
-    path: "dashboard",
+    name: 'Dashboard',
+    path: 'dashboard',
     element: <EmployeeDashboard />,
   },
   {
-    path: "check-in-out",
+    path: 'check-in-out',
     element: <CheckInOut />,
   },
   {
-    path: "profile",
+    path: 'profile',
     element: <Profile />,
   },
   {
-    name: "Login history",
-    path: "login-history",
+    name: 'Login history',
+    path: 'login-history',
     element: <LoginHistory />,
   },
   {
-    name: "Check In/Out List",
-    path: "check-in-out-list",
+    name: 'Check In/Out List',
+    path: 'check-in-out-list',
     element: <CheckInOutList />,
   },
   {
-    name: "Leave management",
+    name: 'Leave management',
     children: [
       {
-        name: "Leave Application",
-        path: "leave-application-and-editor",
+        name: 'Leave Application',
+        path: 'leave-application-and-editor',
         element: <LeaveApplication />,
       },
       {
-        name: "Leave List",
-        path: "leave-list",
+        name: 'Leave List',
+        path: 'leave-list',
         element: <LeaveList />,
       },
     ],
   },
   {
-    name: "Project management",
+    name: 'Project management',
     children: [
       {
-        name: "Create Project",
-        path: "create-edit-project",
+        name: 'Create Project',
+        path: 'create-edit-project',
         element: <CreateProject />,
       },
       {
-        name: "Project List",
-        path: "project-list",
+        name: 'Project List',
+        path: 'project-list',
         element: <ProjectList />,
       },
       {
-        path: "project-view/:id",
+        path: 'project-view/:id',
         element: <ProjectView />,
       },
     ],
   },
   {
-    name: "Task management",
+    name: 'Task management',
     children: [
       {
-        name: "Create Task",
-        path: "create-edit-task",
+        name: 'Create Task',
+        path: 'create-edit-task',
         element: <CreateTask />,
       },
       {
-        name: "Task List",
-        path: "task-list",
+        name: 'Task List',
+        path: 'task-list',
         element: <TaskList />,
       },
       {
         // name: "Task List",
-        path: "task-view/:id",
+        path: 'task-view/:id',
         element: <ViewTask />,
       },
       {
         // name: "Task List",
-        path: "task-submit/:id",
+        path: 'task-submit/:id',
         element: <SubmitTask />,
       },
     ],
   },
   {
-    path: "change-password",
+    path: 'change-password',
     element: <ChangePassword />,
   },
   {
-    path: "profile-update",
+    path: 'profile-update',
     element: <ProfileUpdate />,
   },
   // {

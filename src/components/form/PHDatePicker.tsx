@@ -1,5 +1,5 @@
-import { DatePicker, Form } from "antd";
-import { Controller } from "react-hook-form";
+import { DatePicker, Form } from 'antd';
+import { Controller } from 'react-hook-form';
 
 type TDatePickerProps = {
   name: string;
@@ -8,12 +8,12 @@ type TDatePickerProps = {
 
 const PHDatePicker = ({ name, label }: TDatePickerProps) => {
   return (
-    <div style={{ marginBottom: "20px" }}>
+    <div style={{ marginBottom: '20px' }}>
       <Controller
         name={name}
         render={({ field }) => (
           <Form.Item label={label}>
-            <DatePicker {...field} size="large" style={{ width: "100%" }} />
+            <DatePicker {...field} size="large" style={{ width: '100%' }} />
           </Form.Item>
         )}
       />

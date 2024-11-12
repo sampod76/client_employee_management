@@ -1,8 +1,8 @@
-import { IMeta } from "../../../types/common";
-import { baseApi } from "../../api/baseApi";
-import { tagTypes } from "../../tag-types";
+import { IMeta } from '../../../types/common';
+import { baseApi } from '../../api/baseApi';
+import { tagTypes } from '../../tag-types';
 
-const URL = "/admins";
+const URL = '/admins';
 
 export const adminApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -10,7 +10,7 @@ export const adminApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -25,8 +25,8 @@ export const adminApi = baseApi.injectEndpoints({
     getDashboard: build.query({
       query: (arg) => {
         return {
-          url: URL + "/dashboard",
-          method: "GET",
+          url: URL + '/dashboard',
+          method: 'GET',
           params: arg,
         };
       },
@@ -43,7 +43,7 @@ export const adminApi = baseApi.injectEndpoints({
       query: (id: string | string[] | undefined) => {
         return {
           url: `${URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       transformResponse: (response: any) => ({ data: response }),
@@ -54,7 +54,7 @@ export const adminApi = baseApi.injectEndpoints({
       query: (data) => {
         return {
           url: URL,
-          method: "POST",
+          method: 'POST',
           data: data,
         };
       },
@@ -65,7 +65,7 @@ export const adminApi = baseApi.injectEndpoints({
       query: ({ data, id }) => {
         return {
           url: `${URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
         };
       },
@@ -75,7 +75,7 @@ export const adminApi = baseApi.injectEndpoints({
     deleteadmin: build.mutation({
       query: (id) => ({
         url: `${URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.admin],
     }),

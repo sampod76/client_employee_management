@@ -46,7 +46,7 @@ export default function SelectEmployee({
             src={item?.profileImage || ''}
             width={550}
             height={550}
-            className="w-8 h-8 md:h-12 md:w-12  rounded-full"
+            className="h-8 w-8 rounded-full md:h-12 md:w-12"
             alt=""
           />
           <h1 className="truncate">
@@ -63,15 +63,15 @@ export default function SelectEmployee({
       (item: { _id: any }) => item._id === defaultData
     );
     return (
-      <div className="flex justify-between  items-center border-2 px-2 rounded-lg">
+      <div className="flex items-center justify-between rounded-lg border-2 px-2">
         <CustomImageTag
           src={de?.profileImage || ''}
           width={550}
           height={550}
-          className="w-8 h-8 md:h-12 md:w-12  rounded-full mx-2"
+          className="mx-2 h-8 w-8 rounded-full md:h-12 md:w-12"
           alt=""
         />
-        <h1 className="truncate ">
+        <h1 className="truncate">
           {de?.name?.firstName + ' ' + de?.name?.lastName}
         </h1>
       </div>

@@ -9,10 +9,10 @@ const ActionBar = ({ title, children }: ActionBarProps) => {
       <h1 className="text-base font-normal">{title}</h1>
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: "10px 0px",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: '10px 0px',
         }}
       >
         {children}

@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
-import * as faceapi from "face-api.js";
-import { message } from "antd";
+import React, { useRef, useEffect, useState } from 'react';
+import * as faceapi from 'face-api.js';
+import { message } from 'antd';
 
 const FaceRecognition = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -12,13 +12,13 @@ const FaceRecognition = () => {
 
   // List of stored images for multiple users
   const storedImages = [
-    { label: "myImage", src: "/my.jpg" },
-    { label: "anotherPerson", src: "/4.jpg" },
+    { label: 'myImage', src: '/my.jpg' },
+    { label: 'anotherPerson', src: '/4.jpg' },
   ];
 
   // Load models for face detection, face landmarks, and recognition
   const loadModels = async (): Promise<void> => {
-    const MODEL_URL = "/models"; // specify where you store models (like in public/models)
+    const MODEL_URL = '/models'; // specify where you store models (like in public/models)
     await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL); // tiny face detector
     await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL); // face landmarks
     await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL); // face recognition
@@ -62,7 +62,7 @@ const FaceRecognition = () => {
   const handleVideoOnPlay = async (): Promise<void> => {
     const labeledDescriptors = await loadStoredImageDescriptors();
     if (labeledDescriptors.length === 0) {
-      console.error("No stored images detected!");
+      console.error('No stored images detected!');
       return;
     }
 
@@ -86,7 +86,7 @@ const FaceRecognition = () => {
           displaySize
         );
         canvasRef.current
-          .getContext("2d")
+          .getContext('2d')
           ?.clearRect(0, 0, displaySize.width, displaySize.height);
 
         faceapi.draw.drawDetections(canvasRef.current, resizedDetections);
@@ -95,7 +95,7 @@ const FaceRecognition = () => {
         // Compare each detected face with all stored face descriptors
         resizedDetections.forEach((detection) => {
           const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
-          if (bestMatch.label !== "unknown" && bestMatch.distance < 0.6) {
+          if (bestMatch.label !== 'unknown' && bestMatch.distance < 0.6) {
             console.log(`Face matched with: ${bestMatch.label}`);
             setIsAuthenticated(true); // Set state to true for authentication
             setAuthenticatedUser(bestMatch.label); // Save the authenticated user
@@ -117,7 +117,7 @@ const FaceRecognition = () => {
 
   return (
     <div>
-      <div className="flex justify-start items-center gap-3">
+      <div className="flex items-center justify-start gap-3">
         <video
           ref={videoRef}
           onPlay={handleVideoOnPlay}
@@ -139,7 +139,7 @@ const FaceRecognition = () => {
               alt={image.label}
               width="150"
               height="150"
-              style={{ marginRight: "10px" }}
+              style={{ marginRight: '10px' }}
             />
           ))}
         </div>

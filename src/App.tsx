@@ -1,10 +1,10 @@
-import { Navigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 import {
   logout,
   selectCurrentUser,
   useCurrentToken,
-} from "./redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "./redux/hooks";
+} from './redux/features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 
 const App = () => {
   const user = useAppSelector(selectCurrentUser);

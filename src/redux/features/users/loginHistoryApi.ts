@@ -1,10 +1,10 @@
 // import { tagTypes.LoginHistoryg-types";
 
-import { IMeta } from "../../../types/common";
-import { baseApi } from "../../api/baseApi";
-import { tagTypes } from "../../tag-types";
+import { IMeta } from '../../../types/common';
+import { baseApi } from '../../api/baseApi';
+import { tagTypes } from '../../tag-types';
 
-const LOGIN_HISTORY = "/login_history";
+const LOGIN_HISTORY = '/login_history';
 
 export const loginHistoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -13,7 +13,7 @@ export const loginHistoryApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: LOGIN_HISTORY,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -29,7 +29,7 @@ export const loginHistoryApi = baseApi.injectEndpoints({
     getSingleLoginHistory: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `${LOGIN_HISTORY}/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       providesTags: [tagTypes.LoginHistory],
     }),
@@ -38,7 +38,7 @@ export const loginHistoryApi = baseApi.injectEndpoints({
     deleteLoginHistory: build.mutation({
       query: (id) => ({
         url: `${LOGIN_HISTORY}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.LoginHistory],
     }),

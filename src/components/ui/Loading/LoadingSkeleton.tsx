@@ -1,4 +1,4 @@
-import { Skeleton } from "antd";
+import { Skeleton } from 'antd';
 const LoadingSkeleton = ({
   number,
   sectionNumber = 2,
@@ -11,7 +11,7 @@ const LoadingSkeleton = ({
       <Skeleton
         avatar
         key={index}
-        style={{ marginTop: "1rem" }}
+        style={{ marginTop: '1rem' }}
         paragraph={{
           rows: number || 4,
         }}

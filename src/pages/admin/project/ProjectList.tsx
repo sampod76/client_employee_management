@@ -1,27 +1,27 @@
-import { Button, Dropdown, Input, Menu, Space } from "antd";
+import { Button, Dropdown, Input, Menu, Space } from 'antd';
 
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
+} from '@ant-design/icons';
+import { useState } from 'react';
 
-import { Link } from "react-router-dom";
-import ActionBar from "../../../components/ui/ActionBar";
-import CustomImageTag from "../../../components/ui/CustomTag/CustomImage";
-import UMTable from "../../../components/ui/UMTable";
+import { Link } from 'react-router-dom';
+import ActionBar from '../../../components/ui/ActionBar';
+import CustomImageTag from '../../../components/ui/CustomTag/CustomImage';
+import UMTable from '../../../components/ui/UMTable';
 import {
   useDeleteProjectsMutation,
   useGetAllProjectsQuery,
-} from "../../../redux/features/admin/projectApi";
-import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
-import { useAppSelector, useDebounced } from "../../../redux/hooks";
+} from '../../../redux/features/admin/projectApi';
+import { selectCurrentUser } from '../../../redux/features/auth/authSlice';
+import { useAppSelector, useDebounced } from '../../../redux/hooks';
 import {
   ConfirmModal,
   ErrorModal,
   SuccessModal,
-} from "../../../utils/modalHook";
+} from '../../../utils/modalHook';
 export default function ProjectList() {
   const [deleteLeaves, { isLoading: deleteLoading }] =
     useDeleteProjectsMutation();
@@ -30,16 +30,16 @@ export default function ProjectList() {
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("createdAt");
-  const [sortOrder, setSortOrder] = useState<string>("decs");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('createdAt');
+  const [sortOrder, setSortOrder] = useState<string>('decs');
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  if (user?.role !== "admin") {
-    query["authorUserId"] = user?.userId;
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
+  if (user?.role !== 'admin') {
+    query['authorUserId'] = user?.userId;
   }
 
   const debouncedSearchTerm = useDebounced({
@@ -48,7 +48,7 @@ export default function ProjectList() {
   });
 
   if (debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
   const { data, isLoading, isFetching } = useGetAllProjectsQuery({ ...query });
 
@@ -63,7 +63,7 @@ export default function ProjectList() {
         if (res.isConfirmed) {
           try {
             const res = await deleteLeaves(id).unwrap();
-            SuccessModal("Successfully Deleted");
+            SuccessModal('Successfully Deleted');
           } catch (error: any) {
             ErrorModal(error);
           }
@@ -73,17 +73,17 @@ export default function ProjectList() {
   };
   const columns = [
     {
-      title: "Logo",
-      dataIndex: ["logo"],
+      title: 'Logo',
+      dataIndex: ['logo'],
       ellipsis: true,
       render: (record: any) => (
-        <div className="flex justify-start items-center gap-1">
+        <div className="flex items-center justify-start gap-1">
           <CustomImageTag
             src={record}
             width={550}
             height={550}
             preview={true}
-            className="w-8 h-8 md:h-12 md:w-12  rounded-full"
+            className="h-8 w-8 rounded-full md:h-12 md:w-12"
             alt=""
           />
         </div>
@@ -91,22 +91,22 @@ export default function ProjectList() {
       width: 100,
     },
     {
-      title: "Title",
-      dataIndex: ["title"],
+      title: 'Title',
+      dataIndex: ['title'],
       width: 250,
     },
     {
-      title: "Title",
-      dataIndex: ["title"],
+      title: 'Title',
+      dataIndex: ['title'],
       width: 250,
     },
 
     {
-      title: "Action",
+      title: 'Action',
       width: 120,
       render: (record: any) => {
         let editAuthor = false;
-        if (record.author.userId === user?.userId || user?.role === "admin") {
+        if (record.author.userId === user?.userId || user?.role === 'admin') {
           editAuthor = true;
         }
         return (
@@ -145,9 +145,9 @@ export default function ProjectList() {
                       <Menu.Item key="delete">
                         <Button
                           type="link"
-                          style={{ color: "red" }}
+                          style={{ color: 'red' }}
                           loading={deleteLoading}
-                          icon={<DeleteOutlined style={{ color: "red" }} />}
+                          icon={<DeleteOutlined style={{ color: 'red' }} />}
                           onClick={() => handleDelete(record._id)}
                         >
                           Delete
@@ -175,13 +175,13 @@ export default function ProjectList() {
     const { order, field } = sorter;
     //
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
 
   return (
@@ -194,12 +194,12 @@ export default function ProjectList() {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "250px",
+              width: '250px',
             }}
           />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ margin: '0px 5px' }}
               type="default"
               onClick={resetFilters}
             >

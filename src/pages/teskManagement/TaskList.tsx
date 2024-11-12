@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable no-extra-boolean-cast */
-import { Button, Dropdown, Input, Menu, Space, TableProps, Tag } from "antd";
+import { Button, Dropdown, Input, Menu, Space, TableProps, Tag } from 'antd';
 
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
+} from '@ant-design/icons';
+import { useState } from 'react';
 
-import ActionBar from "@components/ui/ActionBar";
-import CustomImageTag from "@components/ui/CustomTag/CustomImage";
-import UMTable from "@components/ui/UMTable";
+import ActionBar from '@components/ui/ActionBar';
+import CustomImageTag from '@components/ui/CustomTag/CustomImage';
+import UMTable from '@components/ui/UMTable';
 import {
   useDeleteTaskManagementMutation,
   useGetAllTaskManagementQuery,
-} from "@redux/features/admin/taskManagementApi";
-import { selectCurrentUser } from "@redux/features/auth/authSlice";
-import { useAppSelector, useDebounced } from "@redux/hooks";
-import { ConfirmModal, ErrorModal, SuccessModal } from "@utils/modalHook";
-import { Link } from "react-router-dom";
+} from '@redux/features/admin/taskManagementApi';
+import { selectCurrentUser } from '@redux/features/auth/authSlice';
+import { useAppSelector, useDebounced } from '@redux/hooks';
+import { ConfirmModal, ErrorModal, SuccessModal } from '@utils/modalHook';
+import { Link } from 'react-router-dom';
 
 export default function TaskList() {
   const [deleteLeaves, { isLoading: deleteLoading }] =
@@ -29,16 +29,16 @@ export default function TaskList() {
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("createdAt");
-  const [sortOrder, setSortOrder] = useState<string>("decs");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('createdAt');
+  const [sortOrder, setSortOrder] = useState<string>('decs');
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  if (user?.role !== "admin") {
-    query["authorUserId"] = user?.userId;
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
+  if (user?.role !== 'admin') {
+    query['authorUserId'] = user?.userId;
   }
 
   const debouncedSearchTerm = useDebounced({
@@ -47,7 +47,7 @@ export default function TaskList() {
   });
 
   if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
   const { data, isLoading, isFetching } = useGetAllTaskManagementQuery({
     ...query,
@@ -55,7 +55,7 @@ export default function TaskList() {
 
   //@ts-ignore
   const checkInOutData = data?.data;
-  console.log("🚀 ~ TaskList ~ checkInOutData:", checkInOutData);
+  console.log('🚀 ~ TaskList ~ checkInOutData:', checkInOutData);
   //@ts-ignore
   const meta = data?.meta;
 
@@ -65,7 +65,7 @@ export default function TaskList() {
         if (res.isConfirmed) {
           try {
             const res = await deleteLeaves(id).unwrap();
-            SuccessModal("Successfully Deleted");
+            SuccessModal('Successfully Deleted');
           } catch (error: any) {
             ErrorModal(error);
           }
@@ -73,28 +73,28 @@ export default function TaskList() {
       }
     );
   };
-  const columns: TableProps<any>["columns"] = [
+  const columns: TableProps<any>['columns'] = [
     {
-      title: "Title",
-      dataIndex: ["title"],
+      title: 'Title',
+      dataIndex: ['title'],
       width: 250,
       ellipsis: true,
     },
     {
-      title: "Author",
-      dataIndex: ["author", "details"],
+      title: 'Author',
+      dataIndex: ['author', 'details'],
       render: (record: any) => (
-        <div className="flex justify-start items-center gap-1">
+        <div className="flex items-center justify-start gap-1">
           <CustomImageTag
             src={record.profileImage}
             width={550}
             height={550}
             preview={true}
-            className="w-8 h-8 md:h-12 md:w-12  rounded-full"
+            className="h-8 w-8 rounded-full md:h-12 md:w-12"
             alt=""
           />
           <p className="truncate">
-            {record.name.firstName + " " + record.name.lastName}
+            {record.name.firstName + ' ' + record.name.lastName}
           </p>
         </div>
       ),
@@ -102,57 +102,57 @@ export default function TaskList() {
     },
 
     {
-      title: "Start Date",
-      dataIndex: ["startDate"],
+      title: 'Start Date',
+      dataIndex: ['startDate'],
       render: (date: string) => new Date(date).toLocaleDateString(),
     },
     {
-      title: "End Date",
-      dataIndex: "endDate",
+      title: 'End Date',
+      dataIndex: 'endDate',
       render: (date: string) => new Date(date).toLocaleDateString(),
     },
     {
-      title: "Total task",
-      dataIndex: "taskList",
+      title: 'Total task',
+      dataIndex: 'taskList',
       render: (taskList: any[]) => {
-        console.log("🚀 ~ TaskList ~ taskList:", taskList);
+        console.log('🚀 ~ TaskList ~ taskList:', taskList);
         // Ensure taskList is an array and return its length, or '0' if undefined or empty
-        return Array.isArray(taskList) ? taskList.length.toString() : "0";
+        return Array.isArray(taskList) ? taskList.length.toString() : '0';
       },
     },
     {
-      title: "Complete task",
-      dataIndex: "completedTaskList",
+      title: 'Complete task',
+      dataIndex: 'completedTaskList',
       render: (taskList: any[]) => {
-        console.log("🚀 ~ TaskList ~ taskList:", taskList);
+        console.log('🚀 ~ TaskList ~ taskList:', taskList);
         // Ensure taskList is an array and return its length, or '0' if undefined or empty
-        return Array.isArray(taskList) ? taskList.length.toString() : "0";
+        return Array.isArray(taskList) ? taskList.length.toString() : '0';
       },
     },
 
     {
-      title: "Task progress status",
-      dataIndex: "taskProgressStatus",
+      title: 'Task progress status',
+      dataIndex: 'taskProgressStatus',
       render: (status: string) => {
-        let color = "";
-        let text = "";
+        let color = '';
+        let text = '';
 
         switch (status) {
-          case "toDo":
-            color = "orange";
-            text = "ToDo";
+          case 'toDo':
+            color = 'orange';
+            text = 'ToDo';
             break;
-          case "inProgress":
-            color = "blue";
-            text = "In Progress";
+          case 'inProgress':
+            color = 'blue';
+            text = 'In Progress';
             break;
-          case "done":
-            color = "green";
-            text = "Done";
+          case 'done':
+            color = 'green';
+            text = 'Done';
             break;
           default:
-            color = "gray";
-            text = "Unknown";
+            color = 'gray';
+            text = 'Unknown';
         }
 
         return <Tag color={color}>{text}</Tag>;
@@ -160,11 +160,11 @@ export default function TaskList() {
       // width: 120,
     },
     {
-      title: "Action",
+      title: 'Action',
       width: 120,
       render: (record: any) => {
         let editAuthor = false;
-        if (record.author.userId === user?.userId || user?.role === "admin") {
+        if (record.author.userId === user?.userId || user?.role === 'admin') {
           editAuthor = true;
         }
         return (
@@ -214,9 +214,9 @@ export default function TaskList() {
                       <Menu.Item key="delete">
                         <Button
                           type="link"
-                          style={{ color: "red" }}
+                          style={{ color: 'red' }}
                           loading={deleteLoading}
-                          icon={<DeleteOutlined style={{ color: "red" }} />}
+                          icon={<DeleteOutlined style={{ color: 'red' }} />}
                           onClick={() => handleDelete(record._id)}
                         >
                           Delete
@@ -244,13 +244,13 @@ export default function TaskList() {
     const { order, field } = sorter;
     //
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
 
   return (
@@ -263,12 +263,12 @@ export default function TaskList() {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "250px",
+              width: '250px',
             }}
           />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ margin: '0px 5px' }}
               type="default"
               onClick={resetFilters}
             >

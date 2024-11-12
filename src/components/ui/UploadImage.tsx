@@ -1,28 +1,28 @@
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Image as AntImage, Upload } from "antd";
-import type { UploadChangeParam } from "antd/es/upload";
-import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
-import { useEffect, useState } from "react";
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Image as AntImage, Upload } from 'antd';
+import type { UploadChangeParam } from 'antd/es/upload';
+import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import { useEffect, useState } from 'react';
 
-import { ErrorModal } from "../../utils/modalHook";
-import uploadImgBB from "../../utils/UploadSIngleImgBB";
+import { ErrorModal } from '../../utils/modalHook';
+import uploadImgBB from '../../utils/UploadSIngleImgBB';
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result as string));
+  reader.addEventListener('load', () => callback(reader.result as string));
   reader.readAsDataURL(img);
 };
 
 const beforeUpload = (file: RcFile) => {
   const isJpgOrPng =
-    file.type === "image/jpeg" ||
-    file.type === "image/png" ||
-    file.type === "image/jpg";
+    file.type === 'image/jpeg' ||
+    file.type === 'image/png' ||
+    file.type === 'image/jpg';
   if (!isJpgOrPng) {
-    ErrorModal("You can only upload JPG/PNG file!");
+    ErrorModal('You can only upload JPG/PNG file!');
   }
   const isLt2M = file.size / 1024 / 1024 < 5;
   if (!isLt2M) {
-    ErrorModal("Image must smaller than 5MB!");
+    ErrorModal('Image must smaller than 5MB!');
   }
   return isJpgOrPng && isLt2M;
 };
@@ -49,10 +49,10 @@ const UploadImage = ({
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
 
-  const handleChange: UploadProps["onChange"] = async (
+  const handleChange: UploadProps['onChange'] = async (
     info: UploadChangeParam<UploadFile>
   ) => {
-    if (info.file.status === "uploading") {
+    if (info.file.status === 'uploading') {
       setLoading(true);
       if (setImageLoading) {
         setImageLoading(true);
@@ -65,7 +65,7 @@ const UploadImage = ({
         setImageLoading(false);
       }
       setImageState(imgUrl);
-      console.log("🚀 ~ imgUrl:", imgUrl);
+      console.log('🚀 ~ imgUrl:', imgUrl);
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
         if (setState) {
@@ -92,7 +92,7 @@ const UploadImage = ({
 
   useEffect(() => {
     if (isReset) {
-      setImageUrl("");
+      setImageUrl('');
     }
   }, [isReset]);
 
@@ -104,12 +104,12 @@ const UploadImage = ({
   );
 
   return (
-    <div className="flex justify-start items-center gap-2">
+    <div className="flex items-center justify-start gap-2">
       {imageUrl || defaultImage ? (
         <AntImage
           src={imageUrl ? imageUrl : (defaultImage as string)}
           alt="avatar"
-          style={{ width: "150px" }}
+          style={{ width: '150px' }}
           width={200}
 
           // fill

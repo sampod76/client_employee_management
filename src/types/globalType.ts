@@ -1,22 +1,22 @@
 export type IUploadFile = {
-    fieldname: string;
-    originalname: string;
-    encoding: string;
-    mimetype: string;
-    destination: string;
-    filename: string;
-    path: string;
-    size: number;
-  };
-  export type IFileAfterUpload = {
-    fileMimeType?: string;
-    server_url?: string;
-    url?:string;
-    path?: string;
-    // fileId: Types.ObjectId | string | IFileUploade;
-  };
-  
-  /* 
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  destination: string;
+  filename: string;
+  path: string;
+  size: number;
+};
+export type IFileAfterUpload = {
+  fileMimeType?: string;
+  server_url?: string;
+  url?: string;
+  path?: string;
+  // fileId: Types.ObjectId | string | IFileUploade;
+};
+
+/* 
   {
   fieldname: 'image',
   originalname: 'download.png',

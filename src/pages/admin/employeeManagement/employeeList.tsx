@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Button, Dropdown, Input, Menu, Space, Tag } from "antd";
+import { Button, Dropdown, Input, Menu, Space, Tag } from 'antd';
 
 import {
   CloseSquareOutlined,
   DeleteOutlined,
   ReloadOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
+} from '@ant-design/icons';
+import { useState } from 'react';
 
-import { Link } from "react-router-dom";
-import ActionBar from "../../../components/ui/ActionBar";
-import CustomImageTag from "../../../components/ui/CustomTag/CustomImage";
-import UMTable from "../../../components/ui/UMTable";
+import { Link } from 'react-router-dom';
+import ActionBar from '../../../components/ui/ActionBar';
+import CustomImageTag from '../../../components/ui/CustomTag/CustomImage';
+import UMTable from '../../../components/ui/UMTable';
 import {
   useDeleteEmployeeMutation,
   useGetAllEmployeeQuery,
   useUpdateEmployeeMutation,
-} from "../../../redux/features/admin/employeeApi";
-import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
-import { useAppSelector, useDebounced } from "../../../redux/hooks";
+} from '../../../redux/features/admin/employeeApi';
+import { selectCurrentUser } from '../../../redux/features/auth/authSlice';
+import { useAppSelector, useDebounced } from '../../../redux/hooks';
 import {
   ConfirmModal,
   ErrorModal,
   SuccessModal,
-} from "../../../utils/modalHook";
+} from '../../../utils/modalHook';
 export default function EmployeeList({ status }: { status?: string }) {
   const [deleteLeaves, { isLoading: deleteLoading }] =
     useDeleteEmployeeMutation();
@@ -35,17 +35,17 @@ export default function EmployeeList({ status }: { status?: string }) {
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("createdAt");
-  const [sortOrder, setSortOrder] = useState<string>("decs");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('createdAt');
+  const [sortOrder, setSortOrder] = useState<string>('decs');
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
 
   if (status) {
-    query["verify"] = status;
+    query['verify'] = status;
   }
 
   const debouncedSearchTerm = useDebounced({
@@ -54,7 +54,7 @@ export default function EmployeeList({ status }: { status?: string }) {
   });
 
   if (debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
   const { data, isLoading, isFetching } = useGetAllEmployeeQuery({ ...query });
 
@@ -69,10 +69,10 @@ export default function EmployeeList({ status }: { status?: string }) {
         if (res.isConfirmed) {
           try {
             const res = await deleteLeaves(id).unwrap();
-            console.log("🚀 ~ res:", res);
-            SuccessModal("Successfully Deleted");
+            console.log('🚀 ~ res:', res);
+            SuccessModal('Successfully Deleted');
           } catch (error: any) {
-            console.log("🚀 ~ error:", error);
+            console.log('🚀 ~ error:', error);
             ErrorModal(error);
           }
         }
@@ -87,12 +87,12 @@ export default function EmployeeList({ status }: { status?: string }) {
           try {
             const res = await updateEmployee({
               id,
-              data: { verify: "accept" },
+              data: { verify: 'accept' },
             }).unwrap();
-            SuccessModal("Successfully Approved");
-            console.log("🚀 ~ res:", res);
+            SuccessModal('Successfully Approved');
+            console.log('🚀 ~ res:', res);
           } catch (error: any) {
-            console.log("🚀 ~ error:", error);
+            console.log('🚀 ~ error:', error);
             ErrorModal(error);
           }
         }
@@ -107,9 +107,9 @@ export default function EmployeeList({ status }: { status?: string }) {
           try {
             const res = await updateEmployee({
               id,
-              data: { verify: "cancel" },
+              data: { verify: 'cancel' },
             }).unwrap();
-            SuccessModal("Successfully Declined");
+            SuccessModal('Successfully Declined');
           } catch (error: any) {
             ErrorModal(error);
           }
@@ -119,77 +119,77 @@ export default function EmployeeList({ status }: { status?: string }) {
   };
   const columns = [
     {
-      title: "",
+      title: '',
       //   dataIndex: ["employee", "details"],
       ellipsis: true,
       render: (record: any) => (
-        <div className="flex justify-start items-center gap-1">
+        <div className="flex items-center justify-start gap-1">
           <CustomImageTag
             src={record.profileImage}
             width={550}
             height={550}
             preview={true}
-            className="w-8 h-8 md:h-12 md:w-12  rounded-full"
+            className="h-8 w-8 rounded-full md:h-12 md:w-12"
             alt=""
           />
           <p className="truncate">
-            {record.name.firstName + " " + record.name.lastName}
+            {record.name.firstName + ' ' + record.name.lastName}
           </p>
         </div>
       ),
       // width: 250,
     },
     {
-      title: "Email",
-      dataIndex: ["email"],
+      title: 'Email',
+      dataIndex: ['email'],
       width: 300,
       ellipsis: true,
     },
     {
-      title: "ContactNumber",
-      dataIndex: ["contactNumber"],
+      title: 'ContactNumber',
+      dataIndex: ['contactNumber'],
       width: 200,
       ellipsis: true,
     },
     {
-      title: "nid",
-      dataIndex: "nid",
-      key: "nid",
+      title: 'nid',
+      dataIndex: 'nid',
+      key: 'nid',
       ellipsis: true,
       width: 200,
     },
     {
-      title: "gender",
-      dataIndex: "gender",
-      key: "gender",
+      title: 'gender',
+      dataIndex: 'gender',
+      key: 'gender',
       width: 200,
     },
 
     {
-      title: "Status",
-      dataIndex: "verify",
-      key: "verify",
+      title: 'Status',
+      dataIndex: 'verify',
+      key: 'verify',
       width: 100,
       render: (status: string) => {
-        let color = "";
-        let text = "";
+        let color = '';
+        let text = '';
 
         switch (status) {
-          case "pending":
-            color = "orange";
-            text = "Pending";
+          case 'pending':
+            color = 'orange';
+            text = 'Pending';
             break;
-          case "accept":
-            color = "green";
-            text = "Approved";
+          case 'accept':
+            color = 'green';
+            text = 'Approved';
             break;
-          case "cancel":
-            color = "red";
-            text = "Declined";
+          case 'cancel':
+            color = 'red';
+            text = 'Declined';
             break;
           default:
-            color = "gray";
-            text = "Unknown";
+            color = 'gray';
+            text = 'Unknown';
         }
 
         return <Tag color={color}>{text}</Tag>;
@@ -197,7 +197,7 @@ export default function EmployeeList({ status }: { status?: string }) {
     },
 
     {
-      title: "Action",
+      title: 'Action',
       width: 120,
       render: (record: any) => (
         <>
@@ -208,7 +208,7 @@ export default function EmployeeList({ status }: { status?: string }) {
                   <Menu.Item key="View">
                     <Button
                       type="link"
-                      style={{ color: "red" }}
+                      style={{ color: 'red' }}
                       loading={deleteLoading}
                       //   icon={<DeleteOutlined style={{ color: "red" }} />}
                     >
@@ -219,11 +219,11 @@ export default function EmployeeList({ status }: { status?: string }) {
                       </Link>
                     </Button>
                   </Menu.Item>
-                  {user?.role === "admin" && record.verify === "pending" && (
+                  {user?.role === 'admin' && record.verify === 'pending' && (
                     <Menu.Item key="approved">
                       <Button
                         type="link"
-                        style={{ color: "green" }}
+                        style={{ color: 'green' }}
                         loading={ApprovedLoading}
                         // icon={<DeleteOutlined style={{ color: "green" }} />}
                         onClick={() => handleApproved(record._id)}
@@ -232,13 +232,13 @@ export default function EmployeeList({ status }: { status?: string }) {
                       </Button>
                     </Menu.Item>
                   )}
-                  {user?.role === "admin" && record.verify === "pending" && (
+                  {user?.role === 'admin' && record.verify === 'pending' && (
                     <Menu.Item key="Declined">
                       <Button
                         type="link"
-                        style={{ color: "blue" }}
+                        style={{ color: 'blue' }}
                         loading={deleteLoading}
-                        icon={<CloseSquareOutlined style={{ color: "blue" }} />}
+                        icon={<CloseSquareOutlined style={{ color: 'blue' }} />}
                         onClick={() => handleDeclined(record._id)}
                       >
                         Declined
@@ -248,9 +248,9 @@ export default function EmployeeList({ status }: { status?: string }) {
                   <Menu.Item key="Delete">
                     <Button
                       type="link"
-                      style={{ color: "red" }}
+                      style={{ color: 'red' }}
                       loading={deleteLoading}
-                      icon={<DeleteOutlined style={{ color: "red" }} />}
+                      icon={<DeleteOutlined style={{ color: 'red' }} />}
                       onClick={() => handleDelete(record._id)}
                     >
                       Delete
@@ -276,31 +276,31 @@ export default function EmployeeList({ status }: { status?: string }) {
     const { order, field } = sorter;
     //
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
 
   return (
     <div>
       <div>
-        <h1 className="capitalize text-lg font-bold">{status} Leave list</h1>
+        <h1 className="text-lg font-bold capitalize">{status} Leave list</h1>
         <ActionBar>
           <Input
             size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "250px",
+              width: '250px',
             }}
           />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ margin: '0px 5px' }}
               type="default"
               onClick={resetFilters}
             >

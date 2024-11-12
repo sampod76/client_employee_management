@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useCallback, useRef, useState } from "react";
-import Webcam from "react-webcam";
-import CustomImageTag from "../ui/CustomTag/CustomImage";
+import { useCallback, useRef, useState } from 'react';
+import Webcam from 'react-webcam';
+import CustomImageTag from '../ui/CustomTag/CustomImage';
 
 const videoConstraints = {
   width: 750,
   height: 500,
-  facingMode: "user",
+  facingMode: 'user',
 };
 
 const WebcamCapture = ({ setImage }: any) => {

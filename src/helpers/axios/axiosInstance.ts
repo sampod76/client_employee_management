@@ -1,21 +1,21 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   getFromLocalStorage,
   setToLocalStorage,
-} from "../../utils/local-storage";
-import { getBaseUrl } from "../config/envConfig";
+} from '../../utils/local-storage';
+import { getBaseUrl } from '../config/envConfig';
 // import { message } from 'antd';
 // const token = useAppSelector(useCurrentToken);
 const instance = axios.create();
-instance.defaults.headers.post["Content-Type"] = "application/json";
-instance.defaults.headers["Accept"] = "application/json";
+instance.defaults.headers.post['Content-Type'] = 'application/json';
+instance.defaults.headers['Accept'] = 'application/json';
 instance.defaults.timeout = 60000;
 
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    const accessToken = getFromLocalStorage("token");
+    const accessToken = getFromLocalStorage('token');
 
     if (accessToken) {
       config.headers.Authorization = accessToken;
@@ -24,7 +24,7 @@ instance.interceptors.request.use(
     return config;
   },
   function (error) {
-    console.log("🚀 ~ error:", error);
+    console.log('🚀 ~ error:', error);
     // Do something with request error
     return Promise.reject(error);
   }
@@ -58,14 +58,14 @@ instance.interceptors.response.use(
         );
         const accessToken = response?.data?.data?.accessToken;
         // axios.defaults.headers.common['Authorization'] = accessToken;
-        config.headers["Authorization"] = accessToken;
-        setToLocalStorage("token", accessToken);
+        config.headers['Authorization'] = accessToken;
+        setToLocalStorage('token', accessToken);
         // console.log(JSON.parse(localStorage.getItem("persist:auth")));
         return instance(config);
       } catch (error: any) {
         // removeUserInfo(authKey);
         localStorage.clear();
-        window.location.href = "/login";
+        window.location.href = '/login';
         return Promise.reject(error?.response?.data);
       }
     } else {
@@ -81,7 +81,7 @@ instance.interceptors.response.use(
     */
       const responseObject: any = {
         statusCode: error?.response?.status || 500,
-        message: "Something went wrong",
+        message: 'Something went wrong',
         success: false,
         errorMessages: [],
       };

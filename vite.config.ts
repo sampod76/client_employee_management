@@ -1,7 +1,7 @@
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
-import tsconfigPaths from "vite-tsconfig-paths";
+import tsconfigPaths from 'vite-tsconfig-paths';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
@@ -12,20 +12,20 @@ export default defineConfig({
     port: 3001,
   },
   optimizeDeps: {
-    include: ["@tensorflow-models/face-landmarks-detection", "react-webcam"],
+    include: ['@tensorflow-models/face-landmarks-detection', 'react-webcam'],
   },
   resolve: {
     alias: {
-      "@assets": "/src/assets",
-      "@components": "/src/components",
-      "@constants": "/src/constants",
-      "@helpers": "/src/helpers",
-      "@pages": "/src/pages",
-      "@redux": "/src/redux",
-      "@routes": "/src/routes",
-      "@schemas": "/src/schemas",
-      "@types": "/src/types",
-      "@utils": "/src/utils",
+      '@assets': '/src/assets',
+      '@components': '/src/components',
+      '@constants': '/src/constants',
+      '@helpers': '/src/helpers',
+      '@pages': '/src/pages',
+      '@redux': '/src/redux',
+      '@routes': '/src/routes',
+      '@schemas': '/src/schemas',
+      '@types': '/src/types',
+      '@utils': '/src/utils',
     },
   },
 });

@@ -48,7 +48,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 py-5 px-8 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] ">
+    <div className="mx-auto mt-10 max-w-md px-8 py-5 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
       <div className="mb-6">
         {/* <Link href={`/${lang}/verify-otp`}>
           <ArrowLeftOutlined />

@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-screen justify-center items-center container mx-auto">
+    <div className="container mx-auto flex h-screen items-center justify-center">
       <Row
         style={{
           borderRadius: '30px',
@@ -53,9 +53,9 @@ const Login = () => {
         justify="center"
         align="middle"
         // style={{ height: "100vh" }}
-        className="w-fit h-fit p-16"
+        className="h-fit w-fit p-16"
       >
-        <div className="py-5 px-8  ">
+        <div className="px-8 py-5">
           <div className="mb-6">
             <h1 className="font-sans">{'Welcome'}</h1>
             <p className="font-sans">
@@ -118,17 +118,17 @@ const Login = () => {
               >
                 {'Login'}
               </Button>
-              <div className="flex justify-end mt-2 text-lg">
+              <div className="mt-2 flex justify-end text-lg">
                 <Link className="login-form-forgot" to={`/register`}>
-                  <span className="font-sans text-end">
+                  <span className="text-end font-sans">
                     {'New Account Register'}
                   </span>
                 </Link>
               </div>
-              <p className="text-red-500 text-center">{error}</p>
+              <p className="text-center text-red-500">{error}</p>
             </Form.Item>
           </Form>
-          <div className="border-2 p-2 border-blue-200 rounded-lg ">
+          <div className="rounded-lg border-2 border-blue-200 p-2">
             <h1>
               {' '}
               Admin email : <span>admin@gmail.com</span> <br />

@@ -1,4 +1,4 @@
-import { IUser } from "./userTypes";
+import { IUser } from './userTypes';
 
 // TypeScript type
 type OsType = {

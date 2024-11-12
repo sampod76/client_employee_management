@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import CustomImageTag from "@components/ui/CustomTag/CustomImage";
-import LoadingSkeleton from "@components/ui/Loading/LoadingSkeleton";
-import UploadImage from "@components/ui/UploadImage";
-import { useUpdateadminMutation } from "@redux/features/admin/adminApi";
-import { useUpdateEmployeeMutation } from "@redux/features/admin/employeeApi";
-import { useGetProfileQuery } from "@redux/features/auth/authApi";
-import { selectCurrentUser } from "@redux/features/auth/authSlice";
-import { useAppSelector } from "@redux/hooks";
-import { ErrorModal, SuccessModal } from "@utils/modalHook";
-import { Button, DatePicker, Form, Input, Row, Skeleton } from "antd";
-import dayjs from "dayjs";
-import { useState } from "react";
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import CustomImageTag from '@components/ui/CustomTag/CustomImage';
+import LoadingSkeleton from '@components/ui/Loading/LoadingSkeleton';
+import UploadImage from '@components/ui/UploadImage';
+import { useUpdateadminMutation } from '@redux/features/admin/adminApi';
+import { useUpdateEmployeeMutation } from '@redux/features/admin/employeeApi';
+import { useGetProfileQuery } from '@redux/features/auth/authApi';
+import { selectCurrentUser } from '@redux/features/auth/authSlice';
+import { useAppSelector } from '@redux/hooks';
+import { ErrorModal, SuccessModal } from '@utils/modalHook';
+import { Button, DatePicker, Form, Input, Row, Skeleton } from 'antd';
+import dayjs from 'dayjs';
+import { useState } from 'react';
 
 const ProfileUpdate = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -19,26 +19,26 @@ const ProfileUpdate = () => {
   const [fileList, setFileList] = useState([]);
 
   const [image, setImageState] = useState([]);
-  console.log("🚀 ~ ProfileUpdate ~ image:", image);
+  console.log('🚀 ~ ProfileUpdate ~ image:', image);
   const [imageLoading, setImageLoading] = useState(false);
   const [updateEmployee, { isLoading: tempLoading }] =
     useUpdateEmployeeMutation();
   const [updateAdmin, { isLoading: adminLoading }] = useUpdateadminMutation();
 
   const onFinish = async (data: any) => {
-    console.log("🚀 ~ onFinish ~ data:", data);
+    console.log('🚀 ~ onFinish ~ data:', data);
     try {
       if (image.length) {
         data.profileImage = {
           url: image,
-          mimetype: "image/jpg",
-          filename: crypto.randomUUID() + "profileImage.jpg",
-          path: "upload/images/logo.jpg",
-          platform: "imgbb",
+          mimetype: 'image/jpg',
+          filename: crypto.randomUUID() + 'profileImage.jpg',
+          path: 'upload/images/logo.jpg',
+          platform: 'imgbb',
         };
       }
 
-      if (user?.role === "admin") {
+      if (user?.role === 'admin') {
         await updateAdmin({
           id: getProfile?.roleInfo._id,
           data: data,
@@ -49,7 +49,7 @@ const ProfileUpdate = () => {
           data: data,
         }).unwrap();
       }
-      SuccessModal("Profile updated successfully");
+      SuccessModal('Profile updated successfully');
     } catch (err) {
       ErrorModal(err);
     } finally {
@@ -67,31 +67,32 @@ const ProfileUpdate = () => {
       <div style={{ marginTop: 8 }}>Upload Profile</div>
     </div>
   );
+
   if (isLoading) {
     return <LoadingSkeleton />;
   }
   console.log(getProfile);
   const initial = getProfile?.roleInfo
     ? {
-        "name.firstName": getProfile?.roleInfo?.name?.firstName,
-        "name.lastName": getProfile?.roleInfo?.name?.lastName,
+        'name.firstName': getProfile?.roleInfo?.name?.firstName,
+        'name.lastName': getProfile?.roleInfo?.name?.lastName,
         email: getProfile?.roleInfo?.email,
         contactNumber: getProfile?.roleInfo?.contactNumber,
-        dateOfBirth: dayjs(getProfile?.roleInfo.dateOfBirth, "YYYY-MM-DD"),
+        dateOfBirth: dayjs(getProfile?.roleInfo.dateOfBirth, 'YYYY-MM-DD'),
         nid: getProfile?.roleInfo?.nid,
         passport: getProfile?.roleInfo?.passport,
       }
     : {};
-  console.log(initial, "dd");
+  console.log(initial, 'dd');
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <div className="border p-5 min-w-96">
+    <Row justify="center" align="middle" style={{ height: '100vh' }}>
+      <div className="min-w-96 border p-5">
         <Form onFinish={onFinish} layout="vertical" initialValues={initial}>
-          <h1 className="text-center text-2xl my-1">Update Profile</h1>
+          <h1 className="my-1 text-center text-2xl">Update Profile</h1>
           <hr />
 
           <div className="grid grid-cols-2 gap-2">
-            <div className="flex justify-center gap-1 col-span-full  my-1">
+            <div className="col-span-full my-1 flex justify-center gap-1">
               {
                 <CustomImageTag
                   src={getProfile?.roleInfo?.profileImage}
@@ -107,7 +108,7 @@ const ProfileUpdate = () => {
               />
             </div>
             {imageLoading && (
-              <Skeleton.Input active={true} size={"small"} block={true} />
+              <Skeleton.Input active={true} size={'small'} block={true} />
             )}
 
             <Form.Item name="name.firstName" label="First Name">

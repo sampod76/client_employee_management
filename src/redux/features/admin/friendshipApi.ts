@@ -1,8 +1,8 @@
-import { IMeta } from "../../../types/common";
-import { baseApi } from "../../api/baseApi";
-import { tagTypes } from "../../tag-types";
+import { IMeta } from '../../../types/common';
+import { baseApi } from '../../api/baseApi';
+import { tagTypes } from '../../tag-types';
 
-const URL = "/friend-ship";
+const URL = '/friend-ship';
 
 export const friendshipApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -10,7 +10,7 @@ export const friendshipApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -27,7 +27,7 @@ export const friendshipApi = baseApi.injectEndpoints({
       query: (id: string | string[] | undefined) => {
         return {
           url: `${URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       transformResponse: (response: any) => ({ data: response }),
@@ -38,7 +38,7 @@ export const friendshipApi = baseApi.injectEndpoints({
       query: (data) => {
         return {
           url: URL,
-          method: "POST",
+          method: 'POST',
           data: data,
         };
       },
@@ -49,7 +49,7 @@ export const friendshipApi = baseApi.injectEndpoints({
       query: ({ data, id }) => {
         return {
           url: `${URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
         };
       },
@@ -59,7 +59,7 @@ export const friendshipApi = baseApi.injectEndpoints({
     deleteFriendship: build.mutation({
       query: (id) => ({
         url: `${URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.Friendship],
     }),

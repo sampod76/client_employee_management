@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Button, message } from 'antd';
 
@@ -86,6 +87,9 @@ export default function CheckInOut() {
   }
   return (
     <div ref={ref}>
+      <p className="text-center text-lg text-red-500">
+        (Please check in/out from your office computer)
+      </p>
       <div className="flex items-center justify-center gap-4 rounded-lg border-8 p-5">
         <div className="mx-5 text-lg font-bold">
           <CustomImageTag

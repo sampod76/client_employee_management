@@ -7,12 +7,13 @@ import { useGetAllCheckInOutQuery } from '@redux/features/employee/checkInOutApi
 import { Dropdown, Menu, Space } from 'antd';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import Marquee from 'react-fast-marquee';
 import { Link } from 'react-router-dom';
 import { selectCurrentUser } from '../../redux/features/auth/authSlice';
 import { useAppSelector } from '../../redux/hooks';
 export default function EmployeeDashboard() {
   const { data, isLoading } = useGetEmployeeDashboardQuery({});
-  console.log('🚀 ~ EmployeeDashboard ~ data:', data);
+
   const user = useAppSelector(selectCurrentUser);
 
   const [page, setPage] = useState<number>(1);
@@ -46,7 +47,7 @@ export default function EmployeeDashboard() {
   };
   //
   const checkInOut = checkInOutData?.data;
-  console.log(data);
+
   const LateStatus = (date: string) => {
     // Ensure getData and getData[0] exist to prevent errors
 
@@ -178,14 +179,19 @@ export default function EmployeeDashboard() {
           <div className="absolute -inset-5">
             <div className="mx-auto h-full w-full max-w-sm bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600 opacity-30 blur-lg lg:mx-0"></div>
           </div>
-          <Link
-            to={`/${user?.role}/check-in-out`}
-            title=""
-            className="font-pj relative z-10 inline-flex w-full animate-pulse items-center justify-center rounded-3xl border-2 border-transparent bg-gray-900 px-8 py-3 text-lg font-bold text-white transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 sm:w-auto"
-            role="button"
-          >
-            Please check in/out
-          </Link>
+          <Marquee gradient={false} speed={50}>
+            <p> Please Click this button and Must be check in/out</p>
+          </Marquee>
+          <div className="flex items-center justify-center">
+            <Link
+              to={`/${user?.role}/check-in-out`}
+              title="Check In/Out"
+              className="font-pj relative z-10 inline-flex w-full animate-pulse items-center justify-center rounded-3xl border-2 border-transparent bg-gray-900 px-8 py-3 text-center text-lg font-bold text-white transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 sm:w-auto"
+              role="button"
+            >
+              Please Check in/out
+            </Link>
+          </div>
         </div>
       </div>
       <br />

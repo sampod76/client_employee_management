@@ -6,10 +6,12 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   server: {
-    port: 3001, // Set the dev server port to 3001
+    host: '127.0.0.1',
+    port: 3005, // Set the dev server port to 3001
   },
   preview: {
-    port: 3001,
+    host: '127.0.0.1',
+    port: 3005,
   },
   optimizeDeps: {
     include: ['@tensorflow-models/face-landmarks-detection', 'react-webcam'],

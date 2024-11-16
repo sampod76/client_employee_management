@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import CustomImageTag from '@components/ui/CustomTag/CustomImage';
 import LoadingSkeleton from '@components/ui/Loading/LoadingSkeleton';

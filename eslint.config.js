@@ -20,19 +20,24 @@ export default [
           jsx: true,
         },
       },
+      globals: {
+        console: 'readonly', // Ensures console is recognized globally
+      },
     },
+
     plugins: {
       react,
       '@typescript-eslint': typescript,
       prettier,
     },
+
     rules: {
       ...js.configs.recommended.rules,
       ...typescript.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...prettier.configs.recommended.rules,
       // Example of skipping or turning off specific rules
-      'no-console': 'off', // Allows console statements
+
       'react/prop-types': 'off', // Disables prop-types rule (if using TypeScript)
       '@typescript-eslint/explicit-module-boundary-types': 'off', // Disables explicit return type for functions
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -47,6 +52,8 @@ export default [
           varsIgnorePattern: '^_',
         },
       ],
+
+      'no-console': 'off',
     },
     settings: {
       react: {

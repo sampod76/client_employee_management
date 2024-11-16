@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { logout, useCurrentToken } from '../../redux/features/auth/authSlice';

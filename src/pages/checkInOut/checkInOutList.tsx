@@ -36,7 +36,7 @@ const CheckInOutList = () => {
     delay: 600,
   });
 
-  if (!!debouncedSearchTerm) {
+  if (debouncedSearchTerm) {
     query['searchTerm'] = debouncedSearchTerm;
   }
   const { data, isLoading, isFetching } = useGetAllCheckInOutQuery({

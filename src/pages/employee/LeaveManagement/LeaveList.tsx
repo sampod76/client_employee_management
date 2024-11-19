@@ -56,7 +56,7 @@ export default function LeaveList({ status }: { status?: string }) {
     delay: 600,
   });
 
-  if (!!debouncedSearchTerm) {
+  if (debouncedSearchTerm) {
     query['searchTerm'] = debouncedSearchTerm;
   }
   const { data, isLoading, isFetching } = useGetAllLeavesQuery({ ...query });

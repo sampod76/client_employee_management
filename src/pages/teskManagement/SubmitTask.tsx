@@ -109,6 +109,10 @@ function SubmitTask() {
               render={(item) => (
                 <div style={{ whiteSpace: 'normal' }}>{item.title}</div>
               )}
+              listStyle={{
+                width: 600,
+                height: 800,
+              }}
               oneWay={oneWay}
               pagination
             />

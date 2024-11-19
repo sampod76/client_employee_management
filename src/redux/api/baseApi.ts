@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { axiosBaseQuery } from '../../helpers/axios/axiosBaseQuery';
 import { getBaseUrl } from '../../helpers/config/envConfig';

@@ -34,7 +34,7 @@ const LeaveForm = () => {
   //
   const { data: leaveDate, isLoading: leaveLoading } = useGetSingleLeavesQuery(
     id as string,
-    { skip: !Boolean(id) }
+    { skip: !id }
   );
 
   const [updateLeaves, { isLoading: updateLoading }] =
